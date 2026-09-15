@@ -1,0 +1,274 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { FileText, ArrowRight, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
+import { validateStrictName } from "@/lib/validations/name";
+
+export default function RegisterPage() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pin, setPin] = useState("");
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Live validation for redundant name
+  const nameValidation = name.trim().length >= 2 ? validateStrictName(name) : null;
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    // Client-side strict name redundancy check
+    const validation = validateStrictName(name);
+    if (!validation.isValid) {
+      setError(validation.error || "Please enter a valid, non-redundant full name.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      // 1. Register user
+      const registerRes = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: validation.cleanedName, email, pin }),
+      });
+
+      const registerData = await registerRes.json();
+
+      if (!registerRes.ok) {
+        throw new Error(registerData.error || "Failed to register account");
+      }
+
+      // 2. Automatically log in
+      const signInRes = await signIn("credentials", {
+        email,
+        pin,
+        redirect: false,
+      });
+
+      if (signInRes?.error) {
+        // Redirect to login page if auto-sign in has issue
+        router.push("/login");
+      } else {
+        setIsRedirecting(true);
+        try {
+          localStorage.setItem(
+            "resuma_remembered_profile",
+            JSON.stringify({
+              email: email.toLowerCase().trim(),
+              name: validation.cleanedName,
+              hasPin: true,
+            })
+          );
+        } catch {
+          // Ignore localStorage errors
+        }
+        router.push("/dashboard");
+        router.refresh();
+      }
+    } catch (err: unknown) {
+      console.error(err);
+      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (isRedirecting) {
+    return (
+      <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col justify-center items-center px-4 relative overflow-hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
+        <div className="relative z-10 flex flex-col items-center text-center p-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl shadow-2xl max-w-sm w-full">
+          <div className="relative mb-5">
+            <div className="absolute inset-0 rounded-2xl bg-red-600/25 blur-xl animate-pulse" />
+            <div className="h-16 w-16 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl flex items-center justify-center relative z-10">
+              <FileText className="h-8 w-8 text-zinc-100" />
+              <span className="absolute -top-1 -right-1 flex h-4 w-4">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
+                <span className="relative inline-flex rounded-full h-4 w-4 bg-red-600" />
+              </span>
+            </div>
+          </div>
+          <div className="text-2xl font-extrabold tracking-tight text-white mb-1.5">
+            Resuma<span className="text-[#dc2626]">.</span>
+          </div>
+          <p className="text-xs text-zinc-400 font-medium mb-6">
+            Account created! Initializing your workspace...
+          </p>
+          <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden relative">
+            <div className="h-full w-full bg-gradient-to-r from-red-600 to-amber-500 rounded-full animate-indeterminate" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      {/* Brand Header */}
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        <Link href="/" className="inline-flex items-center gap-2 group">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800 transition-colors group-hover:border-zinc-700">
+            <FileText className="h-5 w-5 text-zinc-300" />
+          </div>
+          <span className="text-2xl font-extrabold tracking-tight text-[#fafafa]">
+            Resuma<span className="text-[#dc2626]">.</span>
+          </span>
+        </Link>
+        <h2 className="mt-6 text-2xl font-bold tracking-tight text-white">
+          Create your free account
+        </h2>
+        <p className="mt-2 text-xs text-zinc-400">
+          Already have an account?{" "}
+          <Link
+            href="/login"
+            className="font-medium text-red-500 hover:text-red-400 underline"
+          >
+            Sign in here
+          </Link>
+        </p>
+      </div>
+
+      {/* Form Card */}
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8 shadow-xl backdrop-blur-md">
+          {error && (
+            <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-300">
+              <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
+              <span>{error}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-xs font-semibold text-zinc-300 mb-1"
+              >
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                required
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="e.g. Alex Morgan"
+                className={`w-full rounded-lg border bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-1 ${
+                  name.trim().length >= 3 && nameValidation && !nameValidation.isValid
+                    ? "border-amber-500/60 focus:border-amber-500 focus:ring-amber-500"
+                    : "border-zinc-700 focus:border-red-500 focus:ring-red-500"
+                }`}
+              />
+              {name.trim().length >= 3 && nameValidation && !nameValidation.isValid && (
+                <p className="mt-1 text-[11px] text-amber-400">
+                  {nameValidation.error}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-xs font-semibold text-zinc-300 mb-1"
+              >
+                Email Address
+              </label>
+              <input
+                id="email"
+                type="email"
+                required
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="alex@example.com"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="pin"
+                className="block text-xs font-semibold text-zinc-300 mb-1"
+              >
+                Secure 6-Digit PIN
+              </label>
+              <input
+                id="pin"
+                type="password"
+                inputMode="numeric"
+                pattern="\d{6}"
+                maxLength={6}
+                required
+                autoComplete="new-password"
+                value={pin}
+                onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
+                placeholder="••••••"
+                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-center tracking-widest text-lg text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+              />
+            </div>
+
+            <div className="flex items-start gap-2 pt-2">
+              <input
+                id="terms"
+                type="checkbox"
+                required
+                checked={termsAccepted}
+                onChange={(e) => setTermsAccepted(e.target.checked)}
+                className="mt-1 h-4 w-4 rounded border-zinc-700 bg-zinc-950 text-red-600 focus:ring-red-500 focus:ring-offset-zinc-900"
+              />
+              <label htmlFor="terms" className="text-xs text-zinc-400">
+                I agree to the{" "}
+                <Link href="/terms" className="text-red-500 hover:underline">
+                  Terms and Conditions
+                </Link>{" "}
+                and{" "}
+                <Link href="/privacy" className="text-red-500 hover:underline">
+                  Privacy Policy
+                </Link>
+                .
+              </label>
+            </div>
+
+            <div className="pt-2 border-t border-zinc-800/50">
+              <ul className="space-y-1.5 text-[11px] text-zinc-400">
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>1 Free ATS-ready resume included</span>
+                </li>
+                <li className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Bank-grade encryption & anti-bot protection</span>
+                </li>
+              </ul>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full mt-3 flex items-center justify-center gap-2 rounded-lg bg-red-600 py-2.5 text-sm font-semibold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95"
+            >
+              {loading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <>
+                  <span>Create Account</span>
+                  <ArrowRight className="h-4 w-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

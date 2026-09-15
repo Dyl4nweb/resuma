@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubscriptionTier {
+  FREE
+  PRO
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id                    String            @id @default(cuid())
+  name                  String?
+  email                 String            @unique
+  emailVerified         DateTime?
+  passwordHash          String?
+  pinHash               String?
+  image                 String?
+  role                  Role              @default(USER)
+  subscriptionTier      SubscriptionTier  @default(FREE)
+  stripeCustomerId      String?           @unique
+  stripeSubscriptionId  String?           @unique
+  stripePriceId         String?
+  stripeCurrentPeriodEnd DateTime?
+
+  resumes               Resume[]
+  accounts              Account[]
+  sessions              Session[]
+  manualPayments        ManualPayment[]
+
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+
+  @@index([email])
+  @@index([stripeCustomerId])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Resume {
+  id             String       @id @default(cuid())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title          String       @default("Untitled Resume")
+  slug           String?      @unique
+  isPublished    Boolean      @default(false)
+  template       String       @default("modern") // "modern", "classic", "minimalist", "compact"
+  themeColor     String       @default("#dc2626") // Resuma red dot brand color by default
+  fontFamily     String       @default("sans")   // "sans", "serif", "mono"
+  
+  // Custom ordering of sections: ["summary", "experience", "education", "skills", "projects", "certifications"]
+  sectionOrder   Json         @default("[\"summary\", \"experience\", \"education\", \"skills\", \"projects\", \"certifications\"]")
+
+  // Content JSON structures
+  personalInfo   Json         @default("{\"fullName\": \"\", \"jobTitle\": \"\", \"email\": \"\", \"phone\": \"\", \"location\": \"\", \"website\": \"\", \"linkedin\": \"\", \"github\": \"\"}")
+  summary        String?      @db.Text
+  experience     Json         @default("[]")
+  education      Json         @default("[]")
+  skills         Json         @default("[]")
+  projects       Json         @default("[]")
+  certifications Json         @default("[]")
+  customSections Json?        @default("[]")
+
+  viewsCount     Int          @default(0)
+  views          ResumeView[]
+
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([slug])
+  @@index([userId, createdAt])
+}
+
+model ResumeView {
+  id        String   @id @default(cuid())
+  resumeId  String
+  resume    Resume   @relation(fields: [resumeId], references: [id], onDelete: Cascade)
+  viewedAt  DateTime @default(now())
+  referrer  String?
+  userAgent String?
+  ipHash    String?
+
+  @@index([resumeId, viewedAt])
+}
+
+model ManualPayment {
+  id              String   @id @default(cuid())
+  referenceNumber String   @unique
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+
+  @@index([userId])
+}

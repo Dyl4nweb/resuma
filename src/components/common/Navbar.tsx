@@ -1,0 +1,364 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import {
+  FileText,
+  LayoutDashboard,
+  CreditCard,
+  LogOut,
+  ArrowRight,
+  Shield,
+  Settings,
+  Menu,
+  X,
+} from "lucide-react";
+
+interface NavbarProps {
+  user?: {
+    name?: string | null;
+    email?: string | null;
+    role?: string | null;
+    subscriptionTier?: string | null;
+  } | null;
+}
+
+export function Navbar({ user }: NavbarProps) {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  const isAuthPage = pathname === "/login" || pathname === "/register";
+
+  // Mobile menu open/close state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Automatically close mobile menu when navigating to a new route
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  // On the home page, the navbar is hidden until the user scrolls past the solo Resuma assembly
+  const [scrolledPastHero, setScrolledPastHero] = useState(!isHomePage);
+
+  useEffect(() => {
+    if (!isHomePage) {
+      setScrolledPastHero(true);
+      return;
+    }
+
+    const checkScroll = () => {
+      const scrollY =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        window.scrollY ||
+        0;
+
+      // The "Resuma." text finishes assembling around 65%-70% of hero scroll (~450px-500px)
+      const threshold = Math.min(window.innerHeight * 0.65, 480);
+      setScrolledPastHero(scrollY >= threshold);
+    };
+
+    checkScroll();
+    window.addEventListener("scroll", checkScroll, { passive: true });
+    window.addEventListener("resize", checkScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", checkScroll);
+      window.removeEventListener("resize", checkScroll);
+    };
+  }, [isHomePage]);
+
+  // On the homepage, navbar drops down only when "Resuma." has assembled;
+  // On other pages (dashboard, login, etc.), always visible
+  const isVisible = !isHomePage || scrolledPastHero;
+
+  const isAdmin =
+    user?.role === "ADMIN" ||
+    (user?.email &&
+      ["kurtdylanviray@gmail.com", "viraykurt09@gmail.com", "demo@resuma.dev"].includes(
+        user.email.toLowerCase()
+      ));
+
+  return (
+    <header
+      className={`${
+        isHomePage ? "fixed" : "sticky"
+      } top-0 left-0 right-0 z-50 w-full border-b border-zinc-800/80 bg-[#09090b]/80 backdrop-blur-md transition-all duration-500 ease-out ${
+        isVisible
+          ? "translate-y-0 opacity-100 pointer-events-auto shadow-lg shadow-black/40"
+          : "-translate-y-full opacity-0 pointer-events-none"
+      }`}
+    >
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Brand Logo */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 transition-colors group-hover:border-zinc-700">
+            <FileText className="h-4 w-4 text-zinc-300" />
+          </div>
+          <span className="text-xl font-bold tracking-tight text-[#fafafa]">
+            Resuma<span className="text-[#dc2626]">.</span>
+          </span>
+        </Link>
+
+        {/* Desktop Navigation / Actions */}
+        <nav className="hidden md:flex items-center gap-3">
+          {user ? (
+            <>
+              <Link
+                href="/dashboard"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  pathname === "/dashboard"
+                    ? "bg-zinc-800 text-[#fafafa]"
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                }`}
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                <span>Dashboard</span>
+              </Link>
+
+              <Link
+                href="/dashboard/billing"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  pathname === "/dashboard/billing"
+                    ? "bg-zinc-800 text-[#fafafa]"
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                }`}
+              >
+                <CreditCard className="h-4 w-4" />
+                <span>Billing</span>
+                {user.subscriptionTier === "PRO" ? (
+                  <span className="ml-1 inline-flex items-center rounded-full bg-red-500/10 px-1.5 py-0.2 text-[10px] font-semibold text-red-400 border border-red-500/20">
+                    PRO
+                  </span>
+                ) : (
+                  <span className="ml-1 inline-flex items-center rounded-full bg-zinc-800 px-1.5 py-0.2 text-[10px] font-medium text-zinc-400 border border-zinc-700">
+                    FREE
+                  </span>
+                )}
+              </Link>
+
+              <Link
+                href="/dashboard/settings"
+                className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                  pathname === "/dashboard/settings"
+                    ? "bg-zinc-800 text-[#fafafa]"
+                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                }`}
+              >
+                <Settings className="h-4 w-4" />
+                <span>Settings</span>
+              </Link>
+
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
+                    pathname === "/admin"
+                      ? "bg-red-950/60 text-red-400 border border-red-500/30"
+                      : "text-zinc-400 hover:text-red-400 hover:bg-zinc-800/50"
+                  }`}
+                >
+                  <Shield className="h-4 w-4 text-red-500" />
+                  <span>Admin</span>
+                </Link>
+              )}
+
+              <a
+                href="/api/auth/logout"
+                title="Sign out"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800/60 rounded-md transition-colors cursor-pointer border border-transparent hover:border-zinc-700"
+              >
+                <LogOut className="h-4 w-4 text-red-400" />
+                <span>Sign Out</span>
+              </a>
+            </>
+          ) : isAuthPage ? (
+            <Link
+              href="/"
+              className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+            >
+              Back to Home
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="px-3.5 py-1.5 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                className="flex items-center gap-1.5 rounded-lg bg-zinc-100 px-3.5 py-1.5 text-sm font-medium text-zinc-900 transition-all hover:bg-white hover:shadow-md active:scale-95"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </>
+          )}
+        </nav>
+
+        {/* Mobile Menu Button (Hamburger) */}
+        <div className="flex items-center gap-2 md:hidden">
+          {/* Quick status badge if user logged in */}
+          {user && (
+            <span className="inline-flex items-center rounded-full bg-zinc-800/80 px-2 py-0.5 text-[10px] font-medium text-zinc-400 border border-zinc-700/60">
+              {user.subscriptionTier === "PRO" ? "PRO" : "FREE"}
+            </span>
+          )}
+
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/90 text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors"
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? (
+              <X className="h-5 w-5 text-zinc-200" />
+            ) : (
+              <Menu className="h-5 w-5 text-zinc-200" />
+            )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Drawer / Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-b border-zinc-800 bg-[#09090b]/95 backdrop-blur-xl px-4 pt-3 pb-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+          {user ? (
+            <div className="space-y-3">
+              {/* User Profile Card */}
+              <div className="flex items-center justify-between rounded-lg border border-zinc-800/90 bg-zinc-900/70 p-2.5">
+                <div className="flex items-center gap-2.5 overflow-hidden">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-600/10 border border-red-500/20 text-red-400 font-bold text-xs">
+                    {(user.name || user.email || "U").charAt(0).toUpperCase()}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-white truncate">
+                      {user.name || "Resuma User"}
+                    </p>
+                    <p className="text-[11px] text-zinc-400 truncate">{user.email}</p>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex items-center gap-1.5 pl-2">
+                  {user.subscriptionTier === "PRO" ? (
+                    <span className="rounded-full bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-400 border border-red-500/20">
+                      PRO
+                    </span>
+                  ) : (
+                    <span className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] font-medium text-zinc-400 border border-zinc-700">
+                      FREE
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Navigation Links */}
+              <div className="space-y-0.5 pt-1">
+                <Link
+                  href="/dashboard"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                    pathname === "/dashboard"
+                      ? "bg-zinc-800 text-white font-semibold"
+                      : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                  }`}
+                >
+                  <LayoutDashboard className="h-4 w-4 text-zinc-400" />
+                  <span>Dashboard</span>
+                </Link>
+
+                <Link
+                  href="/dashboard/billing"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                    pathname === "/dashboard/billing"
+                      ? "bg-zinc-800 text-white font-semibold"
+                      : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <CreditCard className="h-4 w-4 text-zinc-400" />
+                    <span>Billing</span>
+                  </div>
+                  <span className="text-[11px] text-zinc-400">
+                    {user.subscriptionTier === "PRO" ? "Pro Plan" : "Free Plan"}
+                  </span>
+                </Link>
+
+                <Link
+                  href="/dashboard/settings"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                    pathname === "/dashboard/settings"
+                      ? "bg-zinc-800 text-white font-semibold"
+                      : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                  }`}
+                >
+                  <Settings className="h-4 w-4 text-zinc-400" />
+                  <span>Settings</span>
+                </Link>
+
+                {isAdmin && (
+                  <Link
+                    href="/admin"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                      pathname === "/admin"
+                        ? "bg-red-950/60 text-red-400 border border-red-500/30"
+                        : "text-zinc-300 hover:text-red-400 hover:bg-zinc-800/60"
+                    }`}
+                  >
+                    <Shield className="h-4 w-4 text-red-500" />
+                    <span>Admin</span>
+                  </Link>
+                )}
+              </div>
+
+              {/* Sign out */}
+              <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
+                <span className="text-xs text-zinc-500">Account Session</span>
+                <a
+                  href="/api/auth/logout"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/25 bg-red-950/30 px-3 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-950/50 transition-colors"
+                >
+                  <LogOut className="h-3.5 w-3.5" />
+                  <span>Sign Out</span>
+                </a>
+              </div>
+            </div>
+          ) : isAuthPage ? (
+            <div className="py-2">
+              <Link
+                href="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="inline-flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/60 px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:text-white"
+              >
+                Back to Home
+              </Link>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 py-1">
+              <Link
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex-1 text-center rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs font-medium text-zinc-300 hover:text-white transition-colors"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/register"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-500 shadow-sm transition-colors"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
+          )}
+        </div>
+      )}
+    </header>
+  );
+}
