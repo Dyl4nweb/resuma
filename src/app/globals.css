@@ -21,7 +21,7 @@
 /* Document Page Settings for Standard A4 Printing */
 @page {
   size: A4 portrait;
-  margin: 0;
+  margin: 12mm 15mm;
 }
 
 /* Print Styles for ATS Resumes and Clean Document Output */
@@ -103,8 +103,8 @@
     border-radius: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin: 0 auto !important;
-    padding: 16mm 20mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
     min-height: 0 !important;
     height: auto !important;
     background: #ffffff !important;
@@ -123,11 +123,27 @@
     opacity: 1 !important;
     height: auto !important;
     overflow: visible !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Section heading should never be orphaned at the bottom of a page */
+  .resume-section h2,
+  .resume-section-title {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  /* Prevent individual resume entries from being sliced across pages */
+  .resume-item,
+  .resume-section > div > div {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
   .resume-section {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: auto;
+    page-break-inside: auto;
     margin-bottom: 12px !important;
   }
 }
