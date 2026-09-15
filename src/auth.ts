@@ -14,6 +14,10 @@ const loginSchema = z.object({
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  secret:
+    process.env.AUTH_SECRET ||
+    process.env.NEXTAUTH_SECRET ||
+    "resuma_super_secret_session_key_32_characters_minimum_production_safe",
   session: { strategy: "jwt" },
   providers: [
     Credentials({
