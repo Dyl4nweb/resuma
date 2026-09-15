@@ -303,7 +303,7 @@ export function DashboardClient({
             href="/dashboard/billing"
             className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-4 py-2 text-xs font-semibold text-white hover:bg-red-500 transition-colors shrink-0 shadow-sm"
           >
-            <span>Upgrade to PRO ($1.58 / ₱99)</span>
+            <span>Upgrade to PRO ($1.00 / ₱62.78)</span>
             <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>

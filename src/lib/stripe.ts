@@ -11,7 +11,7 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_resum
 export const PRO_PLAN = {
   name: "Resuma PRO",
   description: "Unlimited ATS-ready resumes, premium themes, public sharing, and analytics.",
-  price: "$1.58",
-  pricePhp: "₱99",
+  price: "$1.00",
+  pricePhp: "₱62.78",
   interval: "month",
 };

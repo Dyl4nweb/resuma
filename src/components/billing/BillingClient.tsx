@@ -162,7 +162,7 @@ export function BillingClient({ user }: BillingClientProps) {
               </span>
             </div>
             <h2 className="text-2xl font-bold text-white mt-1">
-              {isPro ? "$1.58 / mo (₱99)" : "$0 / forever"}
+              {isPro ? "$1.00 / mo (₱62.78)" : "$0 / forever"}
             </h2>
             <p className="text-xs text-zinc-400 mt-1">
               {isPro
@@ -248,7 +248,7 @@ export function BillingClient({ user }: BillingClientProps) {
                         <span>Instant Philippine Mobile Payment</span>
                       </span>
                       <h4 className="text-xl font-bold text-white">
-                        Scan QR &bull; ₱99 / month
+                        Scan QR &bull; ₱62.78 / month
                       </h4>
                       <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
                         Open <strong>GCash</strong>, <strong>Maya</strong>, <strong>BDO</strong>, <strong>BPI</strong>, <strong>UnionBank</strong>, or any mobile banking app supporting <strong>QR Ph / InstaPay</strong>.
@@ -257,7 +257,7 @@ export function BillingClient({ user }: BillingClientProps) {
 
                     <ol className="list-decimal list-inside space-y-1 text-xs text-zinc-300">
                       <li>Scan the QR code with your phone camera or banking app.</li>
-                      <li>Send payment of <strong>₱99.00</strong>.</li>
+                      <li>Send payment of <strong>₱62.78</strong>.</li>
                       <li>Copy the <strong>Reference Number / Transaction ID</strong> from your receipt.</li>
                       <li>Enter it below to activate your PRO account immediately.</li>
                     </ol>
@@ -308,7 +308,7 @@ export function BillingClient({ user }: BillingClientProps) {
                     <span>Credit / Debit Card Checkout</span>
                   </h4>
                   <p className="text-xs text-zinc-400 mt-1">
-                    International card processing via Stripe ($1.58 / month). Auto-renews monthly.
+                    International card processing via Stripe ($1.00 / month). Auto-renews monthly.
                   </p>
                 </div>
                 <button
@@ -318,7 +318,7 @@ export function BillingClient({ user }: BillingClientProps) {
                   className="flex items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                  <span>Pay with Card ($1.58/mo)</span>
+                  <span>Pay with Card ($1.00/mo)</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -382,7 +382,7 @@ export function BillingClient({ user }: BillingClientProps) {
                   <span>Pro Plan</span>
                   <Sparkles className="h-4 w-4 text-red-400" />
                 </h3>
-                <span className="text-base font-bold text-white">$1.58 / mo (₱99)</span>
+                <span className="text-base font-bold text-white">$1.00 / mo (₱62.78)</span>
               </div>
               <p className="text-xs text-zinc-400 mt-1">
                 For active job seekers who need customized resumes tailored to every role.

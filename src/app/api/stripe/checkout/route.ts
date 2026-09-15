@@ -81,7 +81,7 @@ export async function POST(req: Request) {
               name: "Resuma PRO Subscription",
               description: "Unlimited resumes, custom styling, ATS export, and sharing analytics",
             },
-            unit_amount: 158, // $1.58
+            unit_amount: 100, // $1.00
             recurring: {
               interval: "month",
             },

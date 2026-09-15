@@ -221,7 +221,7 @@ export default async function MarketingPage() {
                       <Sparkles className="h-4 w-4 text-red-400" />
                     </h3>
                     <div className="text-right">
-                      <span className="text-2xl font-bold text-white">$1.58 / ₱99</span>
+                      <span className="text-2xl font-bold text-white">$1.00 / ₱62.78</span>
                       <span className="text-xs text-zinc-400"> / month</span>
                     </div>
                   </div>
@@ -258,11 +258,11 @@ export default async function MarketingPage() {
                     href="/register"
                     className="w-full flex items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm active:scale-95"
                   >
-                    <span>Start with Pro ($1.58 / ₱99)</span>
+                    <span>Start with Pro ($1.00 / ₱62.78)</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                   <span className="text-[11px] text-zinc-400 block">
-                    Card (Stripe $1.58) &bull; InstaPay / GCash / Maya QR Ph (₱99)
+                    Card (Stripe $1.00) &bull; InstaPay / GCash / Maya QR Ph (₱62.78)
                   </span>
                 </div>
               </div>
