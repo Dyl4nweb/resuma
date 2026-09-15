@@ -38,7 +38,7 @@ export function TemplateRenderer({ data, scale = 1 }: TemplateRendererProps) {
 
   return (
     <div
-      className={`resume-paper-container ${getFontFamilyClass(data.fontFamily)}`}
+      className={`resume-paper-container print:!transform-none print:!w-full print:!m-0 print:!p-0 ${getFontFamilyClass(data.fontFamily)}`}
       style={{
         transform: scale !== 1 ? `scale(${scale})` : undefined,
         transformOrigin: "top center",

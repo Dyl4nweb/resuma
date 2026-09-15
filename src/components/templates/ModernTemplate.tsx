@@ -207,7 +207,7 @@ export function ModernTemplate({ data }: TemplateProps) {
   };
 
   return (
-    <div className="bg-white text-zinc-900 p-8 sm:p-12 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper">
+    <div className="bg-white text-zinc-900 p-8 sm:p-12 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper print:!min-h-0 print:!h-auto print:!shadow-none print:!border-none print:!rounded-none print:!max-w-none print:!w-full print:!m-0">
       {/* Header */}
       <header className="resume-header border-b-2 pb-5 mb-5" style={{ borderColor: themeColor }}>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2">

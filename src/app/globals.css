@@ -18,18 +18,20 @@
   }
 }
 
+/* Document Page Settings for Standard A4 Printing */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
 /* Print Styles for ATS Resumes and Clean Document Output */
 @media print {
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
-
   *,
   *::before,
   *::after {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    box-sizing: border-box !important;
   }
 
   html,
@@ -54,7 +56,7 @@
     width: 100% !important;
     max-width: 100% !important;
     height: auto !important;
-    min-height: auto !important;
+    min-height: 0 !important;
     max-height: none !important;
     overflow: visible !important;
     background: #ffffff !important;
@@ -64,6 +66,7 @@
     border: none !important;
     position: static !important;
     box-shadow: none !important;
+    transform: none !important;
   }
 
   /* Hide interactive editor UI, navigation, sidebars, modals when printing */
@@ -80,7 +83,7 @@
     display: block !important;
   }
 
-  /* Force preview canvas to full width and remove zoomScale (0.85) when printing */
+  /* Force preview canvas to full width and remove zoomScale when printing */
   .resume-paper-container {
     transform: none !important;
     padding: 0 !important;
@@ -93,15 +96,17 @@
     display: block !important;
   }
 
-  /* Document format: standard clean A4 document page */
+  /* Document format: standard clean A4 document page matching target reference */
   .resume-paper {
     box-shadow: none !important;
     border: none !important;
+    border-radius: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 28px 36px !important;
-    min-height: auto !important;
+    padding: 16mm 20mm !important;
+    min-height: 0 !important;
+    height: auto !important;
     background: #ffffff !important;
     background-color: #ffffff !important;
     color: #111827 !important;
@@ -123,7 +128,7 @@
   .resume-section {
     break-inside: avoid;
     page-break-inside: avoid;
-    margin-bottom: 14px !important;
+    margin-bottom: 12px !important;
   }
 }
 

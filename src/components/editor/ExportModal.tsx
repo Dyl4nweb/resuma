@@ -11,6 +11,7 @@ interface ExportModalProps {
   onImportData: (data: Partial<ResumeData>) => void;
   onTogglePublish: () => Promise<void>;
   isPublishing: boolean;
+  onPrint?: () => void;
 }
 
 export function ExportModal({
@@ -20,6 +21,7 @@ export function ExportModal({
   onImportData,
   onTogglePublish,
   isPublishing,
+  onPrint,
 }: ExportModalProps) {
   const [copied, setCopied] = useState(false);
 
@@ -27,9 +29,13 @@ export function ExportModal({
 
   const handlePrint = () => {
     onClose();
-    setTimeout(() => {
-      window.print();
-    }, 150);
+    if (onPrint) {
+      onPrint();
+    } else {
+      setTimeout(() => {
+        window.print();
+      }, 150);
+    }
   };
 
   const handleExportJson = () => {

@@ -144,6 +144,27 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
     }
   };
 
+  const triggerPrint = useCallback(() => {
+    setIsExportOpen(false);
+    const prevScale = zoomScale;
+    setZoomScale(1);
+    setTimeout(() => {
+      window.print();
+      setZoomScale(prevScale);
+    }, 150);
+  }, [zoomScale]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p") {
+        e.preventDefault();
+        triggerPrint();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [triggerPrint]);
+
   useEffect(() => {
     return () => {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
@@ -470,6 +491,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
         onImportData={(imported) => updateData(imported)}
         onTogglePublish={handleTogglePublish}
         isPublishing={isPublishing}
+        onPrint={triggerPrint}
       />
     </div>
   );

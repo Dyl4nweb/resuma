@@ -183,7 +183,7 @@ export function CompactTemplate({ data }: TemplateProps) {
   ].filter(Boolean);
 
   return (
-    <div className="bg-white text-zinc-900 p-6 sm:p-10 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper text-xs">
+    <div className="bg-white text-zinc-900 p-6 sm:p-10 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper text-xs print:!min-h-0 print:!h-auto print:!shadow-none print:!border-none print:!rounded-none print:!max-w-none print:!w-full print:!m-0">
       {/* Compact Header */}
       <header className="resume-header border-b pb-2.5 mb-3" style={{ borderColor: themeColor }}>
         <div className="flex justify-between items-baseline">
