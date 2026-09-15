@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import {
   FileText,
   LayoutDashboard,
@@ -31,6 +32,28 @@ export function Navbar({ user }: NavbarProps) {
 
   // Mobile menu open/close state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (loggingOut) return;
+    setLoggingOut(true);
+
+    try {
+      await signOut({ redirect: false });
+    } catch (err) {
+      console.error("Client signOut error:", err);
+    }
+
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch (err) {
+      console.error("Server logout fetch error:", err);
+    }
+
+    // Force hard browser navigation to /login to completely bust all caches
+    window.location.href = "/login";
+  };
 
   // Automatically close mobile menu when navigating to a new route
   useEffect(() => {
@@ -162,14 +185,16 @@ export function Navbar({ user }: NavbarProps) {
                 </Link>
               )}
 
-              <a
-                href="/api/auth/logout"
+              <button
+                type="button"
+                onClick={handleLogout}
+                disabled={loggingOut}
                 title="Sign out"
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800/60 rounded-md transition-colors cursor-pointer border border-transparent hover:border-zinc-700"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800/60 rounded-md transition-colors cursor-pointer border border-transparent hover:border-zinc-700 disabled:opacity-50"
               >
                 <LogOut className="h-4 w-4 text-red-400" />
-                <span>Sign Out</span>
-              </a>
+                <span>{loggingOut ? "Signing out..." : "Sign Out"}</span>
+              </button>
             </>
           ) : isAuthPage ? (
             <Link
@@ -319,13 +344,15 @@ export function Navbar({ user }: NavbarProps) {
               {/* Sign out */}
               <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
                 <span className="text-xs text-zinc-500">Account Session</span>
-                <a
-                  href="/api/auth/logout"
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/25 bg-red-950/30 px-3 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-950/50 transition-colors"
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  disabled={loggingOut}
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-red-500/25 bg-red-950/30 px-3 py-1.5 text-xs font-semibold text-red-400 hover:bg-red-950/50 transition-colors disabled:opacity-50"
                 >
                   <LogOut className="h-3.5 w-3.5" />
-                  <span>Sign Out</span>
-                </a>
+                  <span>{loggingOut ? "Signing out..." : "Sign Out"}</span>
+                </button>
               </div>
             </div>
           ) : isAuthPage ? (
