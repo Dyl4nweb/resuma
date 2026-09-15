@@ -189,54 +189,54 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
               </span>
             )}
             {saveStatus === "unsaved" && (
-              <span className="inline-flex items-center gap-1 text-zinc-400 text-[11px]">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                <span className="hidden sm:inline">Unsaved</span>
+              <span className="text-[11px] text-amber-400 hidden md:inline">
+                Unsaved changes
               </span>
             )}
             {saveStatus === "error" && (
-              <span className="inline-flex items-center gap-1 text-red-400 text-[11px]">
+              <span className="flex items-center gap-1 text-[11px] text-red-400" title={errorMessage || "Error saving"}>
                 <AlertCircle className="h-3 w-3" />
-                <span>Save error</span>
+                <span className="hidden md:inline">Save error</span>
               </span>
             )}
           </div>
         </div>
 
-        {/* Center / Right Action Controls */}
+        {/* Center / Right controls */}
         <div className="flex items-center gap-2">
-          {/* Mobile Tab Toggle */}
-          <div className="flex sm:hidden rounded-lg bg-zinc-900 p-0.5 border border-zinc-800">
+          {/* Mobile Tab Switcher */}
+          <div className="flex sm:hidden rounded-lg bg-zinc-900 border border-zinc-800 p-0.5">
             <button
+              type="button"
               onClick={() => setMobileTab("editor")}
-              className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md ${
+              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                 mobileTab === "editor" ? "bg-zinc-800 text-white" : "text-zinc-400"
               }`}
             >
               <FileEdit className="h-3.5 w-3.5" />
-              <span>Edit</span>
             </button>
             <button
+              type="button"
               onClick={() => setMobileTab("preview")}
-              className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md ${
+              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                 mobileTab === "preview" ? "bg-zinc-800 text-white" : "text-zinc-400"
               }`}
             >
               <Eye className="h-3.5 w-3.5" />
-              <span>Preview</span>
             </button>
           </div>
 
-          {/* Quick Panel Buttons */}
-          <div className="hidden sm:flex items-center gap-1 bg-zinc-900 p-0.5 rounded-lg border border-zinc-800">
+          {/* Desktop Drawer Selector Buttons */}
+          <div className="hidden sm:flex items-center rounded-lg bg-zinc-900 border border-zinc-800 p-0.5">
             <button
               type="button"
               onClick={() => setActivePanel("content")}
-              className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
+              className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
                 activePanel === "content" ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              Content
+              <FileEdit className="h-3 w-3 text-red-400" />
+              <span>Content</span>
             </button>
             <button
               type="button"
@@ -245,7 +245,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 activePanel === "design" ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-zinc-200"
               }`}
             >
-              <Sliders className="h-3 w-3 text-red-400" />
+              <Sliders className="h-3 w-3 text-amber-400" />
               <span>Design</span>
             </button>
             <button
@@ -273,10 +273,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
       </nav>
 
       {/* Main Workspace Split View */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden print:block print:overflow-visible print:h-auto">
         {/* Left Side: Form Editor */}
         <div
-          className={`w-full sm:w-[500px] lg:w-[560px] border-r border-zinc-800 flex flex-col bg-[#0b0b0e] shrink-0 ${
+          className={`w-full sm:w-[500px] lg:w-[560px] border-r border-zinc-800 flex flex-col bg-[#0b0b0e] shrink-0 no-print ${
             mobileTab === "preview" ? "hidden sm:flex" : "flex"
           }`}
         >
@@ -420,7 +420,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
 
         {/* Right Side: Live Resume Preview */}
         <div
-          className={`flex-1 bg-zinc-950/90 relative overflow-auto flex flex-col items-center p-4 sm:p-8 ${
+          className={`flex-1 bg-zinc-950/90 relative overflow-auto flex flex-col items-center p-4 sm:p-8 print:p-0 print:m-0 print:bg-white print:overflow-visible print:w-full print:block ${
             mobileTab === "editor" ? "hidden sm:flex" : "flex"
           }`}
         >
@@ -456,7 +456,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
           </div>
 
           {/* Render Paper Canvas */}
-          <div className="w-full flex justify-center py-4">
+          <div className="w-full flex justify-center py-4 print:py-0 print:m-0 print:w-full print:block">
             <TemplateRenderer data={data} scale={zoomScale} />
           </div>
         </div>

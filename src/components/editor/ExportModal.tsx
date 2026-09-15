@@ -26,7 +26,10 @@ export function ExportModal({
   if (!isOpen) return null;
 
   const handlePrint = () => {
-    window.print();
+    onClose();
+    setTimeout(() => {
+      window.print();
+    }, 150);
   };
 
   const handleExportJson = () => {
