@@ -4,8 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 import { FileText, ArrowRight, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { validateStrictName } from "@/lib/validations/name";
+import { LegalModals, LegalModalType } from "@/components/legal/LegalModals";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -16,6 +18,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [legalModal, setLegalModal] = useState<LegalModalType>(null);
 
   // Live validation for redundant name
   const nameValidation = name.trim().length >= 2 ? validateStrictName(name) : null;
@@ -87,17 +90,7 @@ export default function RegisterPage() {
       <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col justify-center items-center px-4 relative overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
         <div className="relative z-10 flex flex-col items-center text-center p-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl shadow-2xl max-w-sm w-full">
-          <div className="relative mb-5">
-            <div className="absolute inset-0 rounded-2xl bg-red-600/25 blur-xl animate-pulse" />
-            <div className="h-16 w-16 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl flex items-center justify-center relative z-10">
-              <FileText className="h-8 w-8 text-zinc-100" />
-              <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-red-600" />
-              </span>
-            </div>
-          </div>
-          <div className="text-2xl font-extrabold tracking-tight text-white mb-1.5">
+          <div className="text-4xl font-extrabold tracking-tight text-white mb-2">
             Resuma<span className="text-[#dc2626]">.</span>
           </div>
           <p className="text-xs text-zinc-400 font-medium mb-6">
@@ -115,11 +108,8 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <Link href="/" className="inline-flex items-center gap-2 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800 transition-colors group-hover:border-zinc-700">
-            <FileText className="h-5 w-5 text-zinc-300" />
-          </div>
-          <span className="text-2xl font-extrabold tracking-tight text-[#fafafa]">
+        <Link href="/" className="inline-block group">
+          <span className="text-3xl font-extrabold tracking-tight text-[#fafafa]">
             Resuma<span className="text-[#dc2626]">.</span>
           </span>
         </Link>
@@ -228,13 +218,13 @@ export default function RegisterPage() {
               />
               <label htmlFor="terms" className="text-xs text-zinc-400">
                 I agree to the{" "}
-                <Link href="/terms" className="text-red-500 hover:underline">
+                <button type="button" onClick={() => setLegalModal("terms")} className="text-red-500 hover:underline font-medium">
                   Terms and Conditions
-                </Link>{" "}
+                </button>{" "}
                 and{" "}
-                <Link href="/privacy" className="text-red-500 hover:underline">
+                <button type="button" onClick={() => setLegalModal("privacy")} className="text-red-500 hover:underline font-medium">
                   Privacy Policy
-                </Link>
+                </button>
                 .
               </label>
             </div>
@@ -269,6 +259,8 @@ export default function RegisterPage() {
           </form>
         </div>
       </div>
+      
+      <LegalModals type={legalModal} onClose={() => setLegalModal(null)} />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import {
   FileText,
   LayoutDashboard,
@@ -114,12 +115,7 @@ export function Navbar({ user }: NavbarProps) {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2 group">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-zinc-900 border border-zinc-800 transition-colors group-hover:border-zinc-700">
-            <FileText className="h-4 w-4 text-zinc-300" />
-          </div>
-          <span className="text-xl font-bold tracking-tight text-[#fafafa]">
-            Resuma<span className="text-[#dc2626]">.</span>
-          </span>
+          <Image src="/logo.png" alt="Resuma Logo" width={36} height={36} className="h-9 w-9 object-contain shadow-sm transition-transform group-hover:scale-105" />
         </Link>
 
         {/* Desktop Navigation / Actions */}
