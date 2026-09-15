@@ -151,7 +151,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
   }, []);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-[#09090b] text-[#fafafa]">
+    <div className="flex flex-col h-screen overflow-hidden bg-[#09090b] text-[#fafafa] print:!h-auto print:!min-h-0 print:!overflow-visible print:!bg-white print:!text-black print:!block editor-root-container">
       {/* Top Action Toolbar */}
       <nav className="h-14 border-b border-zinc-800 bg-[#09090b] px-4 flex items-center justify-between no-print z-30 shrink-0">
         <div className="flex items-center gap-3">
@@ -273,7 +273,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
       </nav>
 
       {/* Main Workspace Split View */}
-      <div className="flex flex-1 overflow-hidden print:block print:overflow-visible print:h-auto">
+      <div className="flex flex-1 overflow-hidden print:!block print:!overflow-visible print:!h-auto print:!bg-white editor-split-view">
         {/* Left Side: Form Editor */}
         <div
           className={`w-full sm:w-[500px] lg:w-[560px] border-r border-zinc-800 flex flex-col bg-[#0b0b0e] shrink-0 no-print ${
@@ -420,7 +420,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
 
         {/* Right Side: Live Resume Preview */}
         <div
-          className={`flex-1 bg-zinc-950/90 relative overflow-auto flex flex-col items-center p-4 sm:p-8 print:p-0 print:m-0 print:bg-white print:overflow-visible print:w-full print:block ${
+          className={`flex-1 bg-zinc-950/90 relative overflow-auto flex flex-col items-center p-4 sm:p-8 print:!p-0 print:!m-0 print:!bg-white print:!overflow-visible print:!w-full print:!block print:!static editor-preview-wrapper ${
             mobileTab === "editor" ? "hidden sm:flex" : "flex"
           }`}
         >
@@ -456,7 +456,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
           </div>
 
           {/* Render Paper Canvas */}
-          <div className="w-full flex justify-center py-4 print:py-0 print:m-0 print:w-full print:block">
+          <div className="w-full flex justify-center py-4 print:!py-0 print:!m-0 print:!w-full print:!block print:!bg-white editor-canvas-wrapper">
             <TemplateRenderer data={data} scale={zoomScale} />
           </div>
         </div>

@@ -209,7 +209,7 @@ export function ModernTemplate({ data }: TemplateProps) {
   return (
     <div className="bg-white text-zinc-900 p-8 sm:p-12 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper">
       {/* Header */}
-      <header className="border-b-2 pb-5 mb-5" style={{ borderColor: themeColor }}>
+      <header className="resume-header border-b-2 pb-5 mb-5" style={{ borderColor: themeColor }}>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2">
           <div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-900">

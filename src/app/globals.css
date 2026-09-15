@@ -36,18 +36,39 @@
   body {
     width: 100% !important;
     height: auto !important;
-    min-height: 100% !important;
+    min-height: auto !important;
     margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #111827 !important;
     overflow: visible !important;
+  }
+
+  /* Reset all editor wrapper containers during print so they never clip or add dark backgrounds */
+  .editor-root-container,
+  .editor-split-view,
+  .editor-preview-wrapper,
+  .editor-canvas-wrapper {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    position: static !important;
+    box-shadow: none !important;
   }
 
   /* Hide interactive editor UI, navigation, sidebars, modals when printing */
   .no-print,
   nav,
-  header:not(.resume-header),
   aside,
   footer,
   [role="dialog"],
@@ -79,17 +100,30 @@
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
-    padding: 32px 42px !important;
+    padding: 28px 36px !important;
     min-height: auto !important;
     background: #ffffff !important;
+    background-color: #ffffff !important;
     color: #111827 !important;
     page-break-after: auto;
     break-inside: auto;
   }
 
+  /* Ensure the resume header is always completely visible */
+  .resume-header,
+  header.resume-header,
+  .resume-paper header {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
   .resume-section {
     break-inside: avoid;
     page-break-inside: avoid;
+    margin-bottom: 14px !important;
   }
 }
 

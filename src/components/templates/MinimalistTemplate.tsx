@@ -166,7 +166,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
   return (
     <div className="bg-white text-zinc-900 p-8 sm:p-14 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper">
       {/* Minimal Header */}
-      <header className="mb-8">
+      <header className="resume-header mb-8">
         <h1 className="text-3xl font-light tracking-tight text-zinc-900">
           {personalInfo.fullName || "Your Full Name"}
         </h1>

@@ -185,7 +185,7 @@ export function CompactTemplate({ data }: TemplateProps) {
   return (
     <div className="bg-white text-zinc-900 p-6 sm:p-10 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper text-xs">
       {/* Compact Header */}
-      <header className="border-b pb-2.5 mb-3" style={{ borderColor: themeColor }}>
+      <header className="resume-header border-b pb-2.5 mb-3" style={{ borderColor: themeColor }}>
         <div className="flex justify-between items-baseline">
           <h1 className="text-2xl font-extrabold tracking-tight text-zinc-950">
             {personalInfo.fullName || "Your Full Name"}

@@ -185,7 +185,7 @@ export function ClassicTemplate({ data }: TemplateProps) {
   return (
     <div className="bg-white text-zinc-900 p-8 sm:p-12 shadow-md rounded-sm border border-zinc-200 min-h-[1050px] w-full max-w-[850px] mx-auto resume-paper font-serif">
       {/* Header */}
-      <header className="text-center pb-4 mb-4 border-b-2" style={{ borderColor: themeColor }}>
+      <header className="resume-header text-center pb-4 mb-4 border-b-2" style={{ borderColor: themeColor }}>
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 uppercase mb-1">
           {personalInfo.fullName || "Your Full Name"}
         </h1>
