@@ -41,10 +41,10 @@ export function HeroIntroSection({ user }: HeroIntroSectionProps) {
         <div className="mt-7 sm:mt-8 flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto">
           <Link
             href={user ? "/dashboard" : "/register"}
-            className="w-auto min-w-[200px] max-w-[280px] flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 sm:px-7 sm:py-3.5 text-xs sm:text-base font-bold text-white hover:bg-red-500 transition-all shadow-lg shadow-red-600/25 active:scale-95 text-center"
+            className="w-full sm:w-auto min-w-[200px] max-w-xs sm:max-w-sm flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 sm:px-7 sm:py-3.5 text-xs sm:text-base font-bold text-white hover:bg-red-500 transition-all shadow-lg shadow-red-600/25 active:scale-95 text-center"
           >
-            <span>{user ? "Go to Dashboard" : "Build Your Resume for Free"}</span>
-            <ArrowRight className="h-4 w-4" />
+            <span className="whitespace-nowrap">{user ? "Go to Dashboard" : "Build Your Resume for Free"}</span>
+            <ArrowRight className="h-4 w-4 shrink-0" />
           </Link>
 
           {!user && (

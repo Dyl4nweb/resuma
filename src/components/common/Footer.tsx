@@ -35,17 +35,17 @@ export function Footer() {
           </div>
 
           <div className="flex flex-col items-center md:items-end gap-2 text-xs text-zinc-500">
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+              <p>&copy; {new Date().getFullYear()} Resuma. All rights reserved.</p>
+              <span className="hidden sm:inline">&bull;</span>
               <button onClick={() => setLegalModal("terms")} className="hover:text-zinc-300 transition-colors">
                 Terms
               </button>
+              <span className="hidden sm:inline">&bull;</span>
               <button onClick={() => setLegalModal("privacy")} className="hover:text-zinc-300 transition-colors">
                 Privacy
               </button>
             </div>
-            <p>
-              &copy; {new Date().getFullYear()} Resuma. All rights reserved.
-            </p>
           </div>
         </div>
       </div>
