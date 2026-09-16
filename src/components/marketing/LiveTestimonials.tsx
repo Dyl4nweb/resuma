@@ -53,7 +53,7 @@ export function LiveTestimonials() {
     // How long a toast stays visible before hiding
     const hideTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 6000); // Visible for 6 seconds
+    }, 2500); // Visible for 2.5 seconds
 
     return () => clearTimeout(hideTimer);
   }, [isVisible, isDismissed]);
@@ -65,7 +65,7 @@ export function LiveTestimonials() {
     const nextTimer = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
       setIsVisible(true);
-    }, 15000); // Wait 15 seconds before the next one pops up
+    }, 500); // Wait 0.5s after hiding before showing the next one (Total cycle ~3s)
 
     return () => clearTimeout(nextTimer);
   }, [isVisible, isDismissed]);
