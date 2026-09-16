@@ -43,6 +43,24 @@ export function LiveTestimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [combinedTestimonials, setCombinedTestimonials] = useState(TESTIMONIALS);
+
+  useEffect(() => {
+    const fetchFeedbacks = async () => {
+      try {
+        const res = await fetch("/api/feedback/public");
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.length > 0) {
+            setCombinedTestimonials([...TESTIMONIALS, ...data]);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch public feedbacks", error);
+      }
+    };
+    fetchFeedbacks();
+  }, []);
 
   useEffect(() => {
     if (isDismissed) return;
@@ -71,16 +89,16 @@ export function LiveTestimonials() {
 
     // How long to wait before showing the next toast
     const nextTimer = setTimeout(() => {
-      setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+      setCurrentIndex((prev) => (prev + 1) % combinedTestimonials.length);
       setIsVisible(true);
     }, 500); // Wait 0.5s after hiding before showing the next one (Total cycle ~5s)
 
     return () => clearTimeout(nextTimer);
-  }, [isVisible, isDismissed]);
+  }, [isVisible, isDismissed, combinedTestimonials.length]);
 
   if (isDismissed) return null;
 
-  const currentTestimonial = TESTIMONIALS[currentIndex];
+  const currentTestimonial = combinedTestimonials[currentIndex];
 
   return (
     <div

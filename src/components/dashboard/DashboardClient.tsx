@@ -43,6 +43,8 @@ interface DashboardClientProps {
   userName: string;
 }
 
+import { FeedbackModal } from "./FeedbackModal";
+
 export function DashboardClient({
   initialResumes,
   initialUsage,
@@ -177,19 +179,27 @@ export function DashboardClient({
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleCreateResume}
-          disabled={isCreating}
-          className="w-fit self-start sm:self-auto sm:w-auto flex items-center justify-center gap-2 rounded-lg bg-red-600 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
-        >
-          {isCreating ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : (
-            <Plus className="h-4 w-4" />
-          )}
-          <span>Create New Resume</span>
-        </button>
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="hidden sm:block">
+            <FeedbackModal />
+          </div>
+          <button
+            type="button"
+            onClick={handleCreateResume}
+            disabled={isCreating}
+            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg bg-red-600 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
+          >
+            {isCreating ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Plus className="h-4 w-4" />
+            )}
+            <span>Create New Resume</span>
+          </button>
+        </div>
+        <div className="sm:hidden block">
+          <FeedbackModal />
+        </div>
       </div>
 
       {/* Error / Limit Banner */}
