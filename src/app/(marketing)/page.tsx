@@ -55,21 +55,21 @@ export default async function MarketingPage() {
         </section>
 
         {/* Feature Highlights Grid */}
-        <section className="py-20 border-t border-zinc-800/80 bg-zinc-950/40">
+        <section className="py-14 sm:py-20 border-t border-zinc-800/80 bg-zinc-950/40">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
               <h2 className="text-xs font-bold uppercase tracking-widest text-red-500 mb-2">
                 Built for Precision
               </h2>
-              <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+              <p className="text-xl sm:text-3xl font-bold text-white tracking-tight">
                 Everything you need to showcase your career
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
               {/* Feature 1 */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-zinc-700 transition-colors">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-red-400 mb-5">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-8 hover:border-zinc-700 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-red-400 mb-4 sm:mb-5">
                   <GripVertical className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -81,8 +81,8 @@ export default async function MarketingPage() {
               </div>
 
               {/* Feature 2 */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-zinc-700 transition-colors">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-blue-400 mb-5">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-8 hover:border-zinc-700 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-blue-400 mb-4 sm:mb-5">
                   <FileText className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -94,8 +94,8 @@ export default async function MarketingPage() {
               </div>
 
               {/* Feature 3 */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-zinc-700 transition-colors">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-emerald-400 mb-5">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-8 hover:border-zinc-700 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-emerald-400 mb-4 sm:mb-5">
                   <Eye className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -107,8 +107,8 @@ export default async function MarketingPage() {
               </div>
 
               {/* Feature 4 */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-zinc-700 transition-colors">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-purple-400 mb-5">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-8 hover:border-zinc-700 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-purple-400 mb-4 sm:mb-5">
                   <Sliders className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -120,8 +120,8 @@ export default async function MarketingPage() {
               </div>
 
               {/* Feature 5 */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-zinc-700 transition-colors">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-amber-400 mb-5">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-8 hover:border-zinc-700 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-amber-400 mb-4 sm:mb-5">
                   <Printer className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -133,8 +133,8 @@ export default async function MarketingPage() {
               </div>
 
               {/* Feature 6 */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 hover:border-zinc-700 transition-colors">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-red-500 mb-5">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-5 sm:p-8 hover:border-zinc-700 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 text-red-500 mb-4 sm:mb-5">
                   <Sparkles className="h-5 w-5" />
                 </div>
                 <h3 className="text-base font-bold text-white">
@@ -149,20 +149,20 @@ export default async function MarketingPage() {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-20 border-t border-zinc-800/80">
+        <section className="py-14 sm:py-20 border-t border-zinc-800/80">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
               <h2 className="text-xs font-bold uppercase tracking-widest text-red-500 mb-2">
                 Simple, Transparent Pricing
               </h2>
-              <p className="text-3xl font-bold text-white tracking-tight">
+              <p className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                 Start for free. Upgrade when you need more.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 sm:gap-8">
               {/* Free Plan */}
-              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-8 flex flex-col justify-between">
+              <div className="rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 sm:p-8 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg font-bold text-white">Free Plan</h3>
@@ -174,7 +174,7 @@ export default async function MarketingPage() {
                     Perfect for crafting and maintaining a single primary resume.
                   </p>
 
-                  <ul className="mt-8 space-y-3.5 text-xs text-zinc-300">
+                  <ul className="mt-6 sm:mt-8 space-y-3 sm:space-y-3.5 text-xs text-zinc-300">
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-zinc-400" />
                       <span><strong>1 Full Resume Included</strong></span>
@@ -198,10 +198,10 @@ export default async function MarketingPage() {
                   </ul>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-zinc-800">
+                <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-zinc-800 flex justify-center">
                   <Link
                     href="/register"
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-zinc-800 py-3 text-xs font-bold text-white hover:bg-zinc-700 transition-colors"
+                    className="w-full max-w-xs flex items-center justify-center gap-2 rounded-xl bg-zinc-800 py-2.5 sm:py-3 text-xs font-bold text-white hover:bg-zinc-700 transition-colors"
                   >
                     <span>Get Started Free</span>
                   </Link>
@@ -209,7 +209,7 @@ export default async function MarketingPage() {
               </div>
 
               {/* Pro Plan */}
-              <div className="relative rounded-2xl border border-red-500/40 bg-gradient-to-b from-red-950/20 via-zinc-900 to-zinc-900 p-8 flex flex-col justify-between shadow-xl shadow-red-950/20">
+              <div className="relative rounded-2xl border border-red-500/40 bg-gradient-to-b from-red-950/20 via-zinc-900 to-zinc-900 p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-red-950/20">
                 <div className="absolute -top-3.5 right-6 rounded-full bg-red-600 px-3 py-1 text-[11px] font-bold text-white tracking-wide uppercase shadow">
                   Pro Plan
                 </div>
@@ -221,15 +221,15 @@ export default async function MarketingPage() {
                       <Sparkles className="h-4 w-4 text-red-400" />
                     </h3>
                     <div className="text-right">
-                      <span className="text-2xl font-bold text-white">$1.00 / ₱62.78</span>
-                      <span className="text-xs text-zinc-400"> / month</span>
+                      <span className="text-xl sm:text-2xl font-bold text-white">$1.00 / ₱62.78</span>
+                      <span className="text-xs text-zinc-400"> / mo</span>
                     </div>
                   </div>
                   <p className="text-xs text-zinc-400 mt-2">
                     For active job hunters targeting different companies and roles.
                   </p>
 
-                  <ul className="mt-8 space-y-3.5 text-xs text-zinc-200">
+                  <ul className="mt-6 sm:mt-8 space-y-3 sm:space-y-3.5 text-xs text-zinc-200">
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-red-400" />
                       <span><strong className="text-white">Unlimited Resumes</strong> (Create variations for every role)</span>
@@ -253,15 +253,15 @@ export default async function MarketingPage() {
                   </ul>
                 </div>
 
-                <div className="mt-8 pt-6 border-t border-zinc-800 space-y-2 text-center">
+                <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-zinc-800 space-y-2 text-center flex flex-col items-center">
                   <Link
                     href="/register"
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-red-600 py-3 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm active:scale-95"
+                    className="w-full max-w-xs flex items-center justify-center gap-2 rounded-xl bg-red-600 py-2.5 sm:py-3 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm active:scale-95"
                   >
                     <span>Start with Pro ($1.00 / ₱62.78)</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
-                  <span className="text-[11px] text-zinc-400 block">
+                  <span className="text-[10px] sm:text-[11px] text-zinc-400 block max-w-xs">
                     Card (Stripe $1.00) &bull; InstaPay / GCash / Maya QR Ph (₱62.78)
                   </span>
                 </div>
@@ -271,19 +271,19 @@ export default async function MarketingPage() {
         </section>
 
         {/* Final CTA Banner */}
-        <section className="py-20 border-t border-zinc-800 text-center">
+        <section className="py-14 sm:py-20 border-t border-zinc-800 text-center">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               Ready to upgrade your job search
               <span className="text-[#dc2626]">?</span>
             </h2>
-            <p className="mt-3 text-sm text-zinc-400 max-w-xl mx-auto">
+            <p className="mt-3 text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto">
               Join engineers, designers, and managers building clean, standout resumes with Resuma.
             </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-6 sm:mt-8 flex justify-center">
               <Link
                 href="/register"
-                className="inline-flex items-center gap-2 rounded-xl bg-red-600 px-7 py-3.5 text-sm font-bold text-white hover:bg-red-500 transition-all shadow-lg shadow-red-600/25 active:scale-95"
+                className="w-auto min-w-[200px] max-w-xs inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 sm:px-7 sm:py-3.5 text-xs sm:text-sm font-bold text-white hover:bg-red-500 transition-all shadow-lg shadow-red-600/25 active:scale-95 text-center"
               >
                 <span>Create Your Resume Now</span>
                 <ArrowRight className="h-4 w-4" />

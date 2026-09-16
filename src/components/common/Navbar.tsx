@@ -362,7 +362,7 @@ export function Navbar({ user }: NavbarProps) {
               </Link>
             </div>
           ) : (
-            <div className="flex items-center gap-2 py-1">
+            <div className="flex items-center gap-2 py-1 max-w-xs mx-auto">
               <Link
                 href="/login"
                 onClick={() => setIsMobileMenuOpen(false)}

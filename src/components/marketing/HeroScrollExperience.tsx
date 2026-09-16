@@ -94,7 +94,7 @@ export function HeroScrollExperience() {
           className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
           style={{ transformStyle: "preserve-3d" }}
         >
-          <h1 className="text-7xl sm:text-9xl lg:text-[11.5rem] font-black tracking-tighter select-none inline-flex items-baseline justify-center cursor-default">
+          <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[11.5rem] font-black tracking-tighter select-none inline-flex items-baseline justify-center cursor-default">
             {LETTER_CONFIG.map((item, idx) => {
               const curX = item.x * factor * (1 - letterT);
               const curY = item.y * factor * (1 - letterT);
@@ -130,7 +130,7 @@ export function HeroScrollExperience() {
                 opacity: dotT,
                 willChange: "transform, filter, opacity",
               }}
-              className="inline-block w-5 h-5 sm:w-7 sm:h-7 lg:w-9 lg:h-9 bg-[#dc2626] ml-2 sm:ml-4 rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)] align-baseline self-end mb-2 sm:mb-3 lg:mb-4 transition-[filter] duration-75"
+              className="inline-block w-3.5 h-3.5 sm:w-6 sm:h-6 lg:w-9 lg:h-9 bg-[#dc2626] ml-1.5 sm:ml-3 lg:ml-4 rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)] align-baseline self-end mb-1 sm:mb-2.5 lg:mb-4 transition-[filter] duration-75"
             />
           </h1>
         </div>

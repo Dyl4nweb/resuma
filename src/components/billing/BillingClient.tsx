@@ -144,7 +144,7 @@ export function BillingClient({ user }: BillingClientProps) {
       )}
 
       {/* Current Plan Card */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-8">
+      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 sm:p-8">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
           <div>
             <div className="flex items-center gap-2">
@@ -161,7 +161,7 @@ export function BillingClient({ user }: BillingClientProps) {
                 {isPro ? "PRO UNLIMITED" : "FREE PLAN"}
               </span>
             </div>
-            <h2 className="text-2xl font-bold text-white mt-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mt-1">
               {isPro ? "$1.00 / mo (₱62.78)" : "$0 / forever"}
             </h2>
             <p className="text-xs text-zinc-400 mt-1">
@@ -177,7 +177,7 @@ export function BillingClient({ user }: BillingClientProps) {
                 type="button"
                 onClick={handleManagePortal}
                 disabled={loading}
-                className="flex items-center gap-2 rounded-lg bg-zinc-800 px-4 py-2.5 text-xs font-semibold text-white hover:bg-zinc-700 transition-colors border border-zinc-700 disabled:opacity-50"
+                className="w-auto min-w-[160px] max-w-[220px] flex items-center justify-center gap-2 rounded-lg bg-zinc-800 px-3.5 py-2 text-xs font-semibold text-white hover:bg-zinc-700 transition-colors border border-zinc-700 disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
                 <span>Manage Subscription</span>
@@ -188,7 +188,7 @@ export function BillingClient({ user }: BillingClientProps) {
 
         {/* Upgrade / Payment Options Area (Shown if on Free plan) */}
         {!isPro && (
-          <div className="mt-8 space-y-6">
+          <div className="mt-6 sm:mt-8 space-y-5 sm:space-y-6">
             <div>
               <h3 className="text-base font-bold text-white">Upgrade to Resuma PRO</h3>
               <p className="text-xs text-zinc-400 mt-0.5">
@@ -197,57 +197,57 @@ export function BillingClient({ user }: BillingClientProps) {
             </div>
 
             {/* Payment Method Switcher Tabs */}
-            <div className="flex items-center gap-2 p-1 bg-zinc-950 rounded-xl border border-zinc-800 max-w-md">
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-zinc-950 rounded-xl border border-zinc-800 max-w-md">
               <button
                 type="button"
                 onClick={() => setActivePaymentMethod("qr")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all ${
+                className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
                   activePaymentMethod === "qr"
                     ? "bg-red-600 text-white shadow"
                     : "text-zinc-400 hover:text-white"
                 }`}
               >
-                <QrCode className="h-4 w-4" />
-                <span>InstaPay / GCash / Maya</span>
+                <QrCode className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span>InstaPay / GCash</span>
               </button>
               <button
                 type="button"
                 onClick={() => setActivePaymentMethod("card")}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 text-xs font-semibold rounded-lg transition-all ${
+                className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
                   activePaymentMethod === "card"
                     ? "bg-red-600 text-white shadow"
                     : "text-zinc-400 hover:text-white"
                 }`}
               >
-                <CreditCard className="h-4 w-4" />
+                <CreditCard className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span>Credit / Debit Card</span>
               </button>
             </div>
 
             {/* Option 1: InstaPay QR Code Payment */}
             {activePaymentMethod === "qr" && (
-              <div className="rounded-xl border border-red-500/30 bg-gradient-to-br from-red-950/20 via-zinc-950 to-zinc-950 p-6 sm:p-8 space-y-6">
-                <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="rounded-xl border border-red-500/30 bg-gradient-to-br from-red-950/20 via-zinc-950 to-zinc-950 p-4 sm:p-8 space-y-5 sm:space-y-6">
+                <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
                   {/* QR Code Container */}
-                  <div className="bg-white p-3.5 rounded-2xl shadow-2xl border-4 border-zinc-800 shrink-0 text-center">
+                  <div className="bg-white p-2.5 sm:p-3.5 rounded-2xl shadow-2xl border-4 border-zinc-800 shrink-0 text-center">
                     <img
                       src="/images/instapay-qr.jpg"
                       alt="InstaPay QR Code"
-                      className="w-56 h-56 object-contain rounded-lg"
+                      className="w-44 h-44 sm:w-56 sm:h-56 object-contain rounded-lg"
                     />
-                    <span className="text-[10px] font-bold text-zinc-800 tracking-wider uppercase block mt-1.5 font-mono">
+                    <span className="text-[10px] font-bold text-zinc-800 tracking-wider uppercase block mt-1 font-mono">
                       QR Ph · InstaPay
                     </span>
                   </div>
 
                   {/* Payment Instructions & Submission Form */}
-                  <div className="flex-1 space-y-4 text-left">
+                  <div className="flex-1 space-y-3.5 sm:space-y-4 text-left">
                     <div>
                       <span className="inline-flex items-center gap-1.5 rounded-md bg-red-500/10 px-2 py-0.5 text-xs font-semibold text-red-400 border border-red-500/20 mb-1.5">
                         <Smartphone className="h-3.5 w-3.5" />
                         <span>Instant Philippine Mobile Payment</span>
                       </span>
-                      <h4 className="text-xl font-bold text-white">
+                      <h4 className="text-lg sm:text-xl font-bold text-white">
                         Scan QR &bull; ₱62.78 / month
                       </h4>
                       <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
@@ -271,7 +271,7 @@ export function BillingClient({ user }: BillingClientProps) {
                         </div>
                       )}
 
-                      <div className="flex flex-col sm:flex-row items-center gap-2">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                         <input
                           type="text"
                           required
@@ -283,7 +283,7 @@ export function BillingClient({ user }: BillingClientProps) {
                         <button
                           type="submit"
                           disabled={submittingRef}
-                          className="w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-lg bg-red-600 px-5 py-2 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
+                          className="w-auto min-w-[130px] max-w-[180px] self-center sm:self-auto flex items-center justify-center gap-1.5 rounded-lg bg-red-600 px-4 py-2 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
                         >
                           {submittingRef ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -301,7 +301,7 @@ export function BillingClient({ user }: BillingClientProps) {
 
             {/* Option 2: Credit / Debit Card (Stripe) */}
             {activePaymentMethod === "card" && (
-              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                   <h4 className="text-base font-bold text-white flex items-center gap-2">
                     <CreditCard className="h-4 w-4 text-red-400" />
@@ -315,7 +315,7 @@ export function BillingClient({ user }: BillingClientProps) {
                   type="button"
                   onClick={handleStripeUpgrade}
                   disabled={loading}
-                  className="flex items-center justify-center gap-2 rounded-lg bg-red-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
+                  className="w-auto min-w-[160px] max-w-[220px] self-start sm:self-auto flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 sm:px-5 sm:py-2.5 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
                 >
                   {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                   <span>Pay with Card ($1.00/mo)</span>
