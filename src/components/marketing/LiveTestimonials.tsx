@@ -29,6 +29,14 @@ const TESTIMONIALS = [
     text: "Your web app is really good and very useful.",
     rating: 5,
   },
+  {
+    id: 4,
+    name: "Vhan Jasfer",
+    role: "User",
+    location: "Philippines",
+    text: "I don't see any problems with it so far. Everything looks well put together, and your marketing strategy is really good—it caught my attention right away.",
+    rating: 5,
+  },
 ];
 
 export function LiveTestimonials() {
@@ -53,7 +61,7 @@ export function LiveTestimonials() {
     // How long a toast stays visible before hiding
     const hideTimer = setTimeout(() => {
       setIsVisible(false);
-    }, 2500); // Visible for 2.5 seconds
+    }, 4500); // Visible for 4.5 seconds
 
     return () => clearTimeout(hideTimer);
   }, [isVisible, isDismissed]);
@@ -65,7 +73,7 @@ export function LiveTestimonials() {
     const nextTimer = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % TESTIMONIALS.length);
       setIsVisible(true);
-    }, 500); // Wait 0.5s after hiding before showing the next one (Total cycle ~3s)
+    }, 500); // Wait 0.5s after hiding before showing the next one (Total cycle ~5s)
 
     return () => clearTimeout(nextTimer);
   }, [isVisible, isDismissed]);
