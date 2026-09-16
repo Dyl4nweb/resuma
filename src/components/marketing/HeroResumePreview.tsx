@@ -42,7 +42,7 @@ export function HeroResumePreview() {
   return (
     <div className="relative mx-auto max-w-5xl mt-6 sm:mt-8 text-left">
       {/* Ambient background accent glow */}
-      <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-red-600/15 blur-[140px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[300px] h-[300px] sm:w-[700px] sm:h-[400px] bg-red-600/10 blur-[80px] sm:blur-[140px] rounded-full pointer-events-none -z-10 hidden sm:block" />
 
       {/* Floating Showcase Frame */}
       <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/70 p-3 sm:p-5 shadow-2xl backdrop-blur-xl ring-1 ring-white/10">

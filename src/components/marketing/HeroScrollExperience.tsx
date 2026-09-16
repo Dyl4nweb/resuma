@@ -85,8 +85,7 @@ export function HeroScrollExperience() {
       >
         {/* Ambient Crimson Glow - Soft, deep, elegant backdrop */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[380px] bg-red-600/[0.08] blur-[130px] rounded-full pointer-events-none -z-10 transition-opacity duration-300"
-          style={{ opacity: 0.35 + letterT * 0.65 }}
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10"
         />
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
@@ -115,7 +114,7 @@ export function HeroScrollExperience() {
                     willChange: "transform, filter, opacity",
                     transformStyle: "preserve-3d",
                   }}
-                  className="resuma-text-effect inline-block drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                  className="resuma-text-effect inline-block sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
                 >
                   {item.char}
                 </span>
