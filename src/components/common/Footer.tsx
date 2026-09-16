@@ -22,7 +22,7 @@ export function Footer() {
             </span>
           </div>
 
-          <div className="flex items-center gap-6 text-sm">
+          <div className="flex flex-wrap justify-center items-center gap-4 sm:gap-6 text-sm">
             <span className="flex items-center gap-1 text-zinc-400">
               <Zap className="h-3.5 w-3.5 text-red-500" /> ATS-Friendly
             </span>
@@ -34,7 +34,7 @@ export function Footer() {
             </span>
           </div>
 
-          <div className="flex flex-col md:items-end gap-2 text-xs text-zinc-500">
+          <div className="flex flex-col items-center md:items-end gap-2 text-xs text-zinc-500">
             <div className="flex items-center gap-4">
               <button onClick={() => setLegalModal("terms")} className="hover:text-zinc-300 transition-colors">
                 Terms
