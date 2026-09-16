@@ -236,12 +236,20 @@ export default function LoginPage() {
                   </div>
                 ) : (
                   <div>
-                    <label
-                      htmlFor="recognized-password"
-                      className="block text-xs font-semibold text-zinc-300 mb-1"
-                    >
-                      Account Password
-                    </label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label
+                        htmlFor="recognized-password"
+                        className="block text-xs font-semibold text-zinc-300"
+                      >
+                        Account Password
+                      </label>
+                      <Link 
+                        href="/forgot-password" 
+                        className="text-[11px] text-zinc-400 hover:text-red-400 transition-colors"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
                     <input
                       id="recognized-password"
                       type="password"
@@ -359,6 +367,12 @@ export default function LoginPage() {
                       >
                         Account Password
                       </label>
+                      <Link 
+                        href="/forgot-password" 
+                        className="text-[11px] text-zinc-400 hover:text-red-400 transition-colors"
+                      >
+                        Forgot password?
+                      </Link>
                     </div>
                     <input
                       id="password"
