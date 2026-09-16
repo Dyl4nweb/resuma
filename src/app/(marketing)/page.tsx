@@ -215,14 +215,14 @@ export default async function MarketingPage() {
                 </div>
 
                 <div>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
                     <h3 className="text-lg font-bold text-white flex items-center gap-2">
                       <span>Resuma PRO</span>
                       <Sparkles className="h-4 w-4 text-red-400" />
                     </h3>
-                    <div className="text-right">
-                      <span className="text-xl sm:text-2xl font-bold text-white">$1.00 / ₱62.78</span>
-                      <span className="text-xs text-zinc-400"> / mo</span>
+                    <div className="text-right shrink-0">
+                      <span className="text-lg sm:text-2xl font-bold text-white whitespace-nowrap">$1.00 / ₱62.78</span>
+                      <span className="text-xs text-zinc-400 whitespace-nowrap"> / mo</span>
                     </div>
                   </div>
                   <p className="text-xs text-zinc-400 mt-2">
