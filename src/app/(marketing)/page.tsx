@@ -17,6 +17,7 @@ import {
   Eye,
   Sliders,
 } from "lucide-react";
+import { LiveTestimonials } from "@/components/marketing/LiveTestimonials";
 
 export const metadata = {
   title: "Resuma — Lightweight Production Resume Builder",
@@ -293,6 +294,7 @@ export default async function MarketingPage() {
         </section>
       </main>
 
+      <LiveTestimonials />
       <Footer />
     </div>
   );
