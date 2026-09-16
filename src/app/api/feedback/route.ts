@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/session";
+import { auth } from "@/auth";
 import { z } from "zod";
 
 const feedbackSchema = z.object({
@@ -10,9 +10,9 @@ const feedbackSchema = z.object({
 
 export async function POST(req: Request) {
   try {
-    const user = await getCurrentUser();
+    const session = await auth();
 
-    if (!user) {
+    if (!session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       data: {
         rating: body.rating,
         text: body.text,
-        userId: user.id,
+        userId: session.user.id,
       },
     });
 
