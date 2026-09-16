@@ -43,6 +43,7 @@ export function LiveTestimonials() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const [combinedTestimonials, setCombinedTestimonials] = useState(TESTIMONIALS);
 
   useEffect(() => {
@@ -63,18 +64,32 @@ export function LiveTestimonials() {
   }, []);
 
   useEffect(() => {
-    if (isDismissed) return;
-
-    // Initial delay before showing the first toast
-    const initialTimer = setTimeout(() => {
-      setIsVisible(true);
-    }, 3000); // 3 seconds after page load
-
-    return () => clearTimeout(initialTimer);
-  }, [isDismissed]);
+    const handleScroll = () => {
+      // Show when user scrolls past 50% of viewport height
+      if (window.scrollY > window.innerHeight * 0.5) {
+        setHasScrolled(true);
+      } else {
+        setHasScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
-    if (isDismissed || !isVisible) return;
+    if (isDismissed || !hasScrolled) return;
+
+    // Initial delay before showing the first toast after scroll
+    const initialTimer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000); 
+
+    return () => clearTimeout(initialTimer);
+  }, [isDismissed, hasScrolled]);
+
+  useEffect(() => {
+    if (isDismissed || !isVisible || !hasScrolled) return;
 
     // How long a toast stays visible before hiding
     const hideTimer = setTimeout(() => {
@@ -82,19 +97,19 @@ export function LiveTestimonials() {
     }, 4500); // Visible for 4.5 seconds
 
     return () => clearTimeout(hideTimer);
-  }, [isVisible, isDismissed]);
+  }, [isVisible, isDismissed, hasScrolled]);
 
   useEffect(() => {
-    if (isDismissed || isVisible) return;
+    if (isDismissed || isVisible || !hasScrolled) return;
 
     // How long to wait before showing the next toast
     const nextTimer = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % combinedTestimonials.length);
       setIsVisible(true);
-    }, 500); // Wait 0.5s after hiding before showing the next one (Total cycle ~5s)
+    }, 500); 
 
     return () => clearTimeout(nextTimer);
-  }, [isVisible, isDismissed, combinedTestimonials.length]);
+  }, [isVisible, isDismissed, combinedTestimonials.length, hasScrolled]);
 
   if (isDismissed) return null;
 
@@ -102,39 +117,39 @@ export function LiveTestimonials() {
 
   return (
     <div
-      className={`fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-full max-w-[320px] transition-all duration-700 ease-out ${
-        isVisible
+      className={`fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50 w-[calc(100%-2rem)] sm:w-full max-w-[280px] sm:max-w-[320px] transition-all duration-700 ease-out ${
+        isVisible && hasScrolled
           ? "translate-y-0 opacity-100 scale-100"
           : "translate-y-12 opacity-0 scale-95 pointer-events-none"
       }`}
     >
-      <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/90 p-4 shadow-2xl backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/90 p-3 sm:p-4 shadow-2xl backdrop-blur-xl">
         <button
           onClick={() => setIsDismissed(true)}
           className="absolute right-2 top-2 rounded-md p-1 text-zinc-500 hover:bg-zinc-800 hover:text-white transition-colors"
           aria-label="Dismiss"
         >
-          <X className="h-4 w-4" />
+          <X className="h-3 w-3 sm:h-4 sm:w-4" />
         </button>
 
-        <div className="mb-2 flex items-center gap-1">
+        <div className="mb-1.5 sm:mb-2 flex items-center gap-1">
           {[...Array(currentTestimonial.rating)].map((_, i) => (
-            <Star key={i} className="h-3 w-3 fill-amber-400 text-amber-400" />
+            <Star key={i} className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-amber-400 text-amber-400" />
           ))}
-          <span className="ml-1 text-[10px] text-zinc-500 font-medium">Just now</span>
+          <span className="ml-1 text-[9px] sm:text-[10px] text-zinc-500 font-medium">Just now</span>
         </div>
 
-        <p className="mb-3 text-sm text-zinc-200 leading-relaxed italic">
+        <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-zinc-200 leading-relaxed italic">
           "{currentTestimonial.text}"
         </p>
 
-        <div className="flex items-center gap-3">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-red-900 text-xs font-bold text-white shadow-inner">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-red-900 text-[10px] sm:text-xs font-bold text-white shadow-inner">
             {currentTestimonial.name.charAt(0)}
           </div>
           <div>
-            <p className="text-xs font-bold text-white">{currentTestimonial.name}</p>
-            <p className="text-[10px] text-zinc-400">
+            <p className="text-[11px] sm:text-xs font-bold text-white">{currentTestimonial.name}</p>
+            <p className="text-[9px] sm:text-[10px] text-zinc-400">
               {currentTestimonial.role} &bull; {currentTestimonial.location}
             </p>
           </div>
