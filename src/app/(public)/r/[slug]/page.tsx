@@ -94,7 +94,7 @@ export default async function PublicResumePage({ params }: PageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col">
+    <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col print:!h-auto print:!min-h-0 print:!overflow-visible print:!bg-white print:!text-black print:!block">
       {/* Top Banner for Public Viewers */}
       <header className="no-print sticky top-0 z-30 border-b border-zinc-800 bg-[#09090b]/80 backdrop-blur-md px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
@@ -119,8 +119,8 @@ export default async function PublicResumePage({ params }: PageProps) {
       </header>
 
       {/* Main Resume Canvas */}
-      <main className="flex-1 flex justify-center py-6 sm:py-12 px-2 sm:px-4">
-        <div className="w-full max-w-[850px]">
+      <main className="flex-1 flex justify-center py-6 sm:py-12 px-2 sm:px-4 print:!p-0 print:!m-0 print:!bg-white print:!overflow-visible print:!w-full print:!block print:!static">
+        <div className="w-full max-w-[850px] print:!max-w-none print:!w-full print:!m-0 print:!p-0 print:!block print:!bg-white">
           <TemplateRenderer data={resumeData} />
         </div>
       </main>

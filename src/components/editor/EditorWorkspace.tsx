@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ResumeData, SectionKey, TemplateType, FontFamilyType } from "@/types/resume";
 import { TemplateRenderer } from "@/components/templates/TemplateRenderer";
@@ -58,6 +59,14 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
   // Debounced auto-save logic
   const isFirstRender = useRef(true);
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams?.get("export") === "true") {
+      setIsExportOpen(true);
+    }
+  }, [searchParams]);
 
   const saveResume = useCallback(
     async (resumeData: ResumeData) => {

@@ -15,6 +15,7 @@ import {
   ArrowRight,
   AlertCircle,
   Loader2,
+  Download,
 } from "lucide-react";
 
 interface ResumeListItem {
@@ -410,6 +411,14 @@ export function DashboardClient({
                           <ExternalLink className="h-3.5 w-3.5" />
                         </Link>
                       )}
+
+                      <Link
+                        href={`/resumes/${resume.id}?export=true`}
+                        title="Download PDF"
+                        className="p-1.5 text-zinc-400 hover:text-white rounded hover:bg-zinc-800 transition-colors"
+                      >
+                        <Download className="h-3.5 w-3.5" />
+                      </Link>
 
                       <button
                         type="button"
