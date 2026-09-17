@@ -15,6 +15,7 @@ import {
   Copy,
   AlertCircle,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 interface BillingClientProps {
   user: {
@@ -101,12 +102,15 @@ export function BillingClient({ user }: BillingClientProps) {
       }
 
       setRefMessage(data.message);
+      toast.success("Payment submitted successfully! Your account is now PRO.");
       setTimeout(() => {
         router.refresh();
       }, 1500);
     } catch (err: unknown) {
       console.error(err);
-      setRefError(err instanceof Error ? err.message : "Error submitting reference");
+      const errorMsg = err instanceof Error ? err.message : "Error submitting reference";
+      setRefError(errorMsg);
+      toast.error(errorMsg);
     } finally {
       setSubmittingRef(false);
     }
