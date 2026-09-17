@@ -67,7 +67,7 @@ export function Navbar({ user }: NavbarProps) {
 
   useEffect(() => {
     const checkScroll = () => {
-      setScrolled(window.scrollY > (window.innerHeight * 1.2));
+      setScrolled(window.scrollY > (window.innerHeight * 0.75));
     };
 
     checkScroll();

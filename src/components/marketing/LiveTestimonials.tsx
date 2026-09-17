@@ -74,7 +74,7 @@ export function LiveTestimonials() {
   useEffect(() => {
     const handleScroll = () => {
       // Show when user scrolls past the hero section (sync with navbar)
-      if (window.scrollY > (window.innerHeight * 1.2)) {
+      if (window.scrollY > (window.innerHeight * 0.75)) {
         setHasScrolled(true);
       } else {
         setHasScrolled(false);
