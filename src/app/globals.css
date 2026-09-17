@@ -64,15 +64,15 @@
 /* Print Styles for ATS Resumes and Clean Document Output */
 @media print {
   :root, .dark {
-    --background: #ffffff !important;
-    --foreground: #000000 !important;
-    --card: #ffffff !important;
-    --card-foreground: #000000 !important;
-    --border: #e2e8f0 !important;
-    --muted: #f1f5f9 !important;
-    --muted-foreground: #475569 !important;
-    --accent: #f1f5f9 !important;
-    --accent-foreground: #000000 !important;
+    --background: #ffffff;
+    --foreground: #000000;
+    --card: #ffffff;
+    --card-foreground: #000000;
+    --border: #e2e8f0;
+    --muted: #f1f5f9;
+    --muted-foreground: #475569;
+    --accent: #f1f5f9;
+    --accent-foreground: #000000;
   }
   *,
   *::before,
@@ -93,6 +93,7 @@
     background-color: #ffffff !important;
     color: #111827 !important;
     overflow: visible !important;
+    color-scheme: light !important;
   }
 
   /* Reset all editor wrapper containers during print so they never clip or add dark backgrounds */
