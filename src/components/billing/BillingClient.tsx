@@ -125,11 +125,11 @@ export function BillingClient({ user }: BillingClientProps) {
 
       {/* Success Notification */}
       {(success || refMessage) && (
-        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex items-center gap-3 text-sm text-emerald-200">
-          <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
+        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex items-center gap-3 text-sm text-emerald-800 dark:text-emerald-200">
+          <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <div>
             <p className="font-semibold">PRO Plan Active!</p>
-            <p className="text-xs text-emerald-300/90 mt-0.5">
+            <p className="text-xs text-emerald-700/90 dark:text-emerald-300/90 mt-0.5">
               {refMessage || "You have successfully upgraded to Resuma PRO. Unlimited resumes are now unlocked."}
             </p>
           </div>
@@ -265,8 +265,8 @@ export function BillingClient({ user }: BillingClientProps) {
                     {/* Reference Submission Form */}
                     <form onSubmit={handleSubmitReference} className="pt-2 space-y-3">
                       {refError && (
-                        <div className="rounded border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-300 flex items-center gap-1.5">
-                          <AlertCircle className="h-4 w-4 shrink-0 text-red-400" />
+                        <div className="rounded border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-800 dark:text-red-300 flex items-center gap-1.5">
+                          <AlertCircle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400" />
                           <span>{refError}</span>
                         </div>
                       )}
