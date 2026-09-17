@@ -83,14 +83,14 @@ export function ExportModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4 no-print">
-      <div className="relative w-full max-w-lg rounded-xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl">
-        <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
-          <h2 className="text-lg font-bold text-[#fafafa] flex items-center gap-2">
+      <div className="relative w-full max-w-lg rounded-xl border border-border bg-background p-6 shadow-2xl">
+        <div className="flex items-center justify-between pb-4 border-b border-border">
+          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
             <span>Export & Share Resume</span>
           </h2>
           <button
             onClick={onClose}
-            className="p-1 rounded text-zinc-400 hover:text-white transition-colors"
+            className="p-1 rounded text-muted-foreground hover:text-accent-foreground transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -98,13 +98,13 @@ export function ExportModal({
 
         <div className="mt-5 space-y-4">
           {/* Action 1: Print / PDF */}
-          <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/60 flex items-center justify-between">
+          <div className="p-4 rounded-lg border border-border bg-card flex items-center justify-between">
             <div>
-              <div className="font-semibold text-sm text-zinc-100 flex items-center gap-2">
+              <div className="font-semibold text-sm text-foreground flex items-center gap-2">
                 <Printer className="h-4 w-4 text-red-500" />
                 <span>Save as PDF / Print</span>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Generates a clean, vector ATS-friendly PDF formatted to standard A4/Letter size.
               </p>
             </div>
@@ -118,14 +118,14 @@ export function ExportModal({
           </div>
 
           {/* Action 2: Public Share Link */}
-          <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/60 space-y-3">
+          <div className="p-4 rounded-lg border border-border bg-card space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <div className="font-semibold text-sm text-zinc-100 flex items-center gap-2">
+                <div className="font-semibold text-sm text-foreground flex items-center gap-2">
                   <Share2 className="h-4 w-4 text-blue-400" />
                   <span>Public Web Link</span>
                 </div>
-                <p className="text-xs text-zinc-400 mt-0.5">
+                <p className="text-xs text-muted-foreground mt-0.5">
                   Share a live link to your resume with recruiters or clients.
                 </p>
               </div>
@@ -136,7 +136,7 @@ export function ExportModal({
                 className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
                   data.isPublished
                     ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30"
-                    : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+                    : "bg-muted text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700"
                 }`}
               >
                 {isPublishing
@@ -148,17 +148,17 @@ export function ExportModal({
             </div>
 
             {data.isPublished && publicUrl && (
-              <div className="flex items-center gap-2 pt-2 border-t border-zinc-800/80">
+              <div className="flex items-center gap-2 pt-2 border-t border-border">
                 <input
                   type="text"
                   readOnly
                   value={publicUrl}
-                  className="flex-1 rounded border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300 font-mono focus:outline-none select-all"
+                  className="flex-1 rounded border border-border bg-card px-3 py-1.5 text-xs text-foreground font-mono focus:outline-none select-all"
                 />
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="flex items-center gap-1 rounded bg-zinc-800 px-3 py-1.5 text-xs font-medium text-zinc-200 hover:bg-zinc-700 transition-colors"
+                  className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
                 >
                   {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
                   <span>{copied ? "Copied" : "Copy"}</span>
@@ -167,7 +167,7 @@ export function ExportModal({
                   href={publicUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 rounded bg-zinc-800 text-zinc-300 hover:text-white transition-colors"
+                  className="p-2 rounded bg-muted text-foreground hover:text-accent-foreground transition-colors"
                   title="Open live link"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -177,13 +177,13 @@ export function ExportModal({
           </div>
 
           {/* Action 3: JSON Backup and Import */}
-          <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/60 flex items-center justify-between">
+          <div className="p-4 rounded-lg border border-border bg-card flex items-center justify-between">
             <div>
-              <div className="font-semibold text-sm text-zinc-100 flex items-center gap-2">
+              <div className="font-semibold text-sm text-foreground flex items-center gap-2">
                 <Download className="h-4 w-4 text-purple-400" />
                 <span>JSON Data Portability</span>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Export raw backup JSON or restore data from a previous export.
               </p>
             </div>
@@ -191,12 +191,12 @@ export function ExportModal({
               <button
                 type="button"
                 onClick={handleExportJson}
-                className="flex items-center gap-1 rounded bg-zinc-800 px-3 py-1.5 text-xs font-medium text-zinc-200 hover:bg-zinc-700 transition-colors"
+                className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
               >
                 <Download className="h-3.5 w-3.5" />
                 <span>Backup</span>
               </button>
-              <label className="flex items-center gap-1 rounded bg-zinc-800 px-3 py-1.5 text-xs font-medium text-zinc-200 hover:bg-zinc-700 transition-colors cursor-pointer">
+              <label className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer">
                 <Upload className="h-3.5 w-3.5" />
                 <span>Restore</span>
                 <input
@@ -214,7 +214,7 @@ export function ExportModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-zinc-800 px-4 py-2 text-xs font-medium text-zinc-300 hover:bg-zinc-700 transition-colors"
+            className="rounded-lg bg-muted px-4 py-2 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
           >
             Close
           </button>

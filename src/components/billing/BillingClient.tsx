@@ -115,10 +115,10 @@ export function BillingClient({ user }: BillingClientProps) {
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Plans & Billing
         </h1>
-        <p className="text-sm text-zinc-400 mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Manage your Resuma subscription, upgrade to unlimited resumes, and manage invoices.
         </p>
       </div>
@@ -138,33 +138,33 @@ export function BillingClient({ user }: BillingClientProps) {
 
       {/* Canceled Notification */}
       {canceled && (
-        <div className="rounded-xl border border-zinc-700 bg-zinc-900 p-4 text-xs text-zinc-400">
+        <div className="rounded-xl border border-border bg-card p-4 text-xs text-muted-foreground">
           Checkout was canceled. No charges were made.
         </div>
       )}
 
       {/* Current Plan Card */}
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-4 sm:p-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
+      <div className="rounded-2xl border border-border bg-card p-4 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+              <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Current Plan
               </span>
               <span
                 className={`rounded-full px-2.5 py-0.5 text-xs font-bold border ${
                   isPro
                     ? "bg-red-500/20 text-red-400 border-red-500/30"
-                    : "bg-zinc-800 text-zinc-300 border-zinc-700"
+                    : "bg-muted text-foreground border-border"
                 }`}
               >
                 {isPro ? "PRO UNLIMITED" : "FREE PLAN"}
               </span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mt-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mt-1">
               {isPro ? "$1.00 / mo (₱62.78)" : "$0 / forever"}
             </h2>
-            <p className="text-xs text-zinc-400 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               {isPro
                 ? "You have full access to unlimited resumes, duplicate features, and public sharing."
                 : "You can create and maintain 1 resume on the Free plan."}
@@ -177,7 +177,7 @@ export function BillingClient({ user }: BillingClientProps) {
                 type="button"
                 onClick={handleManagePortal}
                 disabled={loading}
-                className="w-auto min-w-[160px] max-w-[220px] flex items-center justify-center gap-2 rounded-lg bg-zinc-800 px-3.5 py-2 text-xs font-semibold text-white hover:bg-zinc-700 transition-colors border border-zinc-700 disabled:opacity-50"
+                className="w-auto min-w-[160px] max-w-[220px] flex items-center justify-center gap-2 rounded-lg bg-muted px-3.5 py-2 text-xs font-semibold text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-border disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
                 <span>Manage Subscription</span>
@@ -190,21 +190,21 @@ export function BillingClient({ user }: BillingClientProps) {
         {!isPro && (
           <div className="mt-6 sm:mt-8 space-y-5 sm:space-y-6">
             <div>
-              <h3 className="text-base font-bold text-white">Upgrade to Resuma PRO</h3>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <h3 className="text-base font-bold text-foreground">Upgrade to Resuma PRO</h3>
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Choose your preferred payment method below to unlock unlimited resumes:
               </p>
             </div>
 
             {/* Payment Method Switcher Tabs */}
-            <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-zinc-950 rounded-xl border border-zinc-800 max-w-md">
+            <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-background rounded-xl border border-border max-w-md">
               <button
                 type="button"
                 onClick={() => setActivePaymentMethod("qr")}
                 className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
                   activePaymentMethod === "qr"
                     ? "bg-red-600 text-white shadow"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-muted-foreground hover:text-accent-foreground"
                 }`}
               >
                 <QrCode className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -216,7 +216,7 @@ export function BillingClient({ user }: BillingClientProps) {
                 className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
                   activePaymentMethod === "card"
                     ? "bg-red-600 text-white shadow"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-muted-foreground hover:text-accent-foreground"
                 }`}
               >
                 <CreditCard className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
@@ -226,10 +226,10 @@ export function BillingClient({ user }: BillingClientProps) {
 
             {/* Option 1: InstaPay QR Code Payment */}
             {activePaymentMethod === "qr" && (
-              <div className="rounded-xl border border-red-500/30 bg-gradient-to-br from-red-950/20 via-zinc-950 to-zinc-950 p-4 sm:p-8 space-y-5 sm:space-y-6">
+              <div className="rounded-xl border border-red-500/30 bg-gradient-to-br from-red-50 via-background to-muted/30 dark:from-red-950/20 dark:via-zinc-950 dark:to-zinc-950 p-4 sm:p-8 space-y-5 sm:space-y-6">
                 <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
                   {/* QR Code Container */}
-                  <div className="bg-white p-2.5 sm:p-3.5 rounded-2xl shadow-2xl border-4 border-zinc-800 shrink-0 text-center">
+                  <div className="bg-white p-2.5 sm:p-3.5 rounded-2xl shadow-2xl border-4 border-border shrink-0 text-center">
                     <img
                       src="/images/instapay-qr.jpg"
                       alt="InstaPay QR Code"
@@ -247,15 +247,15 @@ export function BillingClient({ user }: BillingClientProps) {
                         <Smartphone className="h-3.5 w-3.5" />
                         <span>Instant Philippine Mobile Payment</span>
                       </span>
-                      <h4 className="text-lg sm:text-xl font-bold text-white">
+                      <h4 className="text-lg sm:text-xl font-bold text-foreground">
                         Scan QR &bull; ₱62.78 / month
                       </h4>
-                      <p className="text-xs text-zinc-400 mt-1 leading-relaxed">
+                      <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
                         Open <strong>GCash</strong>, <strong>Maya</strong>, <strong>BDO</strong>, <strong>BPI</strong>, <strong>UnionBank</strong>, or any mobile banking app supporting <strong>QR Ph / InstaPay</strong>.
                       </p>
                     </div>
 
-                    <ol className="list-decimal list-inside space-y-1 text-xs text-zinc-300">
+                    <ol className="list-decimal list-inside space-y-1 text-xs text-foreground">
                       <li>Scan the QR code with your phone camera or banking app.</li>
                       <li>Send payment of <strong>₱62.78</strong>.</li>
                       <li>Copy the <strong>Reference Number / Transaction ID</strong> from your receipt.</li>
@@ -278,7 +278,7 @@ export function BillingClient({ user }: BillingClientProps) {
                           value={referenceNumber}
                           onChange={(e) => setReferenceNumber(e.target.value)}
                           placeholder="Enter InstaPay / GCash Reference No."
-                          className="w-full sm:flex-1 rounded-lg border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none"
+                          className="w-full sm:flex-1 rounded-lg border border-border bg-card px-3 py-2 text-xs text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none"
                         />
                         <button
                           type="submit"
@@ -301,13 +301,13 @@ export function BillingClient({ user }: BillingClientProps) {
 
             {/* Option 2: Credit / Debit Card (Stripe) */}
             {activePaymentMethod === "card" && (
-              <div className="rounded-xl border border-zinc-800 bg-zinc-950 p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="rounded-xl border border-border bg-background p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h4 className="text-base font-bold text-white flex items-center gap-2">
+                  <h4 className="text-base font-bold text-foreground flex items-center gap-2">
                     <CreditCard className="h-4 w-4 text-red-400" />
                     <span>Credit / Debit Card Checkout</span>
                   </h4>
-                  <p className="text-xs text-zinc-400 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     International card processing via Stripe ($1.00 / month). Auto-renews monthly.
                   </p>
                 </div>
@@ -329,69 +329,69 @@ export function BillingClient({ user }: BillingClientProps) {
         {/* Feature Comparison Grid */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Free Tier Card */}
-          <div className="rounded-xl border border-zinc-800 bg-zinc-950/60 p-6 flex flex-col justify-between">
+          <div className="rounded-xl border border-border bg-background p-6 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-white">Free Plan</h3>
-                <span className="text-xs text-zinc-500 font-mono">$0</span>
+                <h3 className="text-base font-bold text-foreground">Free Plan</h3>
+                <span className="text-xs text-muted-foreground font-mono">$0</span>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Essential tools for job seekers building their primary resume.
               </p>
 
-              <ul className="mt-6 space-y-3 text-xs text-zinc-300">
+              <ul className="mt-6 space-y-3 text-xs text-foreground">
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-zinc-400" />
+                  <Check className="h-4 w-4 text-muted-foreground" />
                   <span><strong>1 Resume Maximum</strong></span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-zinc-400" />
+                  <Check className="h-4 w-4 text-muted-foreground" />
                   <span>All 4 ATS Templates (Modern, Classic, Minimal, Compact)</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-zinc-400" />
+                  <Check className="h-4 w-4 text-muted-foreground" />
                   <span>Drag-and-Drop Section Reordering</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-zinc-400" />
+                  <Check className="h-4 w-4 text-muted-foreground" />
                   <span>High-Fidelity PDF & Print Export</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-zinc-400" />
+                  <Check className="h-4 w-4 text-muted-foreground" />
                   <span>Public Shareable URL Link</span>
                 </li>
               </ul>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-zinc-800">
-              <span className="text-xs text-zinc-500">
+            <div className="mt-6 pt-4 border-t border-border">
+              <span className="text-xs text-muted-foreground">
                 {!isPro ? "Current Plan" : "Included"}
               </span>
             </div>
           </div>
 
           {/* Pro Tier Card */}
-          <div className="relative rounded-xl border border-red-500/40 bg-gradient-to-b from-red-950/20 to-zinc-950/80 p-6 flex flex-col justify-between shadow-lg shadow-red-950/20">
+          <div className="relative rounded-xl border border-red-500/40 bg-gradient-to-b from-red-50 to-background dark:from-red-950/20 dark:to-zinc-950/80 p-6 flex flex-col justify-between shadow-lg shadow-red-100 dark:shadow-red-950/20">
             <div className="absolute -top-3 right-4 rounded-full bg-red-600 px-2.5 py-0.5 text-[10px] font-bold text-white tracking-wider uppercase">
               Recommended
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <h3 className="text-base font-bold text-foreground flex items-center gap-2">
                   <span>Pro Plan</span>
                   <Sparkles className="h-4 w-4 text-red-400" />
                 </h3>
-                <span className="text-base font-bold text-white">$1.00 / mo (₱62.78)</span>
+                <span className="text-base font-bold text-foreground">$1.00 / mo (₱62.78)</span>
               </div>
-              <p className="text-xs text-zinc-400 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 For active job seekers who need customized resumes tailored to every role.
               </p>
 
-              <ul className="mt-6 space-y-3 text-xs text-zinc-200">
+              <ul className="mt-6 space-y-3 text-xs text-foreground">
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-red-400" />
-                  <span><strong className="text-white">Unlimited Resumes</strong> (Tailor to every job application)</span>
+                  <span><strong className="text-foreground">Unlimited Resumes</strong> (Tailor to every job application)</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <Check className="h-4 w-4 text-red-400" />
@@ -412,17 +412,17 @@ export function BillingClient({ user }: BillingClientProps) {
               </ul>
             </div>
 
-            <div className="mt-6 pt-4 border-t border-zinc-800">
+            <div className="mt-6 pt-4 border-t border-border">
               {isPro ? (
                 <button
                   type="button"
                   onClick={handleManagePortal}
-                  className="w-full text-center py-2 text-xs font-semibold text-zinc-300 hover:text-white"
+                  className="w-full text-center py-2 text-xs font-semibold text-foreground hover:text-accent-foreground"
                 >
                   Manage Billing Details &rarr;
                 </button>
               ) : (
-                <span className="text-xs text-zinc-400 block text-center">
+                <span className="text-xs text-muted-foreground block text-center">
                   Use QR Code or Card above to activate
                 </span>
               )}

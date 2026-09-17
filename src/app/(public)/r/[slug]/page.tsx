@@ -94,14 +94,14 @@ export default async function PublicResumePage({ params }: PageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col print:!h-auto print:!min-h-0 print:!overflow-visible print:!bg-white print:!text-black print:!block">
+    <div className="min-h-screen bg-background text-foreground flex flex-col print:!h-auto print:!min-h-0 print:!overflow-visible print:!bg-white print:!text-black print:!block">
       {/* Top Banner for Public Viewers */}
-      <header className="no-print sticky top-0 z-30 border-b border-zinc-800 bg-[#09090b]/80 backdrop-blur-md px-4 py-3 flex items-center justify-between">
+      <header className="no-print sticky top-0 z-30 border-b border-border bg-background/80 backdrop-blur-md px-4 py-3 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded bg-zinc-900 border border-zinc-800">
-            <FileText className="h-3.5 w-3.5 text-zinc-300" />
+          <div className="flex h-7 w-7 items-center justify-center rounded bg-card border border-border">
+            <FileText className="h-3.5 w-3.5 text-foreground" />
           </div>
-          <span className="text-base font-bold tracking-tight text-[#fafafa]">
+          <span className="text-base font-bold tracking-tight text-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
           </span>
         </Link>
@@ -126,7 +126,7 @@ export default async function PublicResumePage({ params }: PageProps) {
       </main>
 
       {/* Public Footer */}
-      <footer className="no-print py-6 border-t border-zinc-900 text-center text-xs text-zinc-500 flex flex-col sm:flex-row items-center justify-center gap-2">
+      <footer className="no-print py-6 border-t border-zinc-900 text-center text-xs text-muted-foreground flex flex-col sm:flex-row items-center justify-center gap-2">
         <span className="flex items-center gap-1">
           <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
           Verified ATS-formatted document
@@ -134,7 +134,7 @@ export default async function PublicResumePage({ params }: PageProps) {
         <span className="hidden sm:inline">•</span>
         <span>
           Powered by{" "}
-          <Link href="/" className="font-semibold text-zinc-300 hover:text-white">
+          <Link href="/" className="font-semibold text-foreground hover:text-accent-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
           </Link>
         </span>

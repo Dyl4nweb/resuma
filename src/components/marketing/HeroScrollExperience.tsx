@@ -80,7 +80,7 @@ export function HeroScrollExperience() {
     <div ref={wrapperRef} className="relative h-[200vh]">
       {/* Sticky Fullscreen Stage */}
       <div
-        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-[#09090b] select-none"
+        className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-background select-none"
         style={{ perspective: "1200px" }}
       >
         {/* Ambient Crimson Glow - Soft, deep, elegant backdrop */}
@@ -145,9 +145,9 @@ export function HeroScrollExperience() {
             const el = document.getElementById("hero-tagline-section");
             if (el) el.scrollIntoView({ behavior: "smooth" });
           }}
-          className="absolute bottom-8 sm:bottom-12 flex flex-col items-center gap-2 text-xs text-zinc-500 hover:text-zinc-300 cursor-pointer transition-colors duration-200"
+          className="absolute bottom-8 sm:bottom-12 flex flex-col items-center gap-2 text-xs text-muted-foreground hover:text-foreground cursor-pointer transition-colors duration-200"
         >
-          <span className="tracking-widest uppercase text-[10px] font-medium text-zinc-500">
+          <span className="tracking-widest uppercase text-[10px] font-medium text-muted-foreground">
             Scroll to assemble
           </span>
           <ChevronDown className="h-4 w-4 text-red-500/80 animate-bounce" />

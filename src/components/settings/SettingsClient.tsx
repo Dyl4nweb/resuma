@@ -285,10 +285,10 @@ export function SettingsClient({ user }: SettingsClientProps) {
           <Shield className="h-3.5 w-3.5" />
           <span>Account & Security Settings</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">
           Security & Credentials
         </h1>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           Manage your login password, set up a 6-digit Quick PIN, and configure
           your account profile.
         </p>
@@ -297,17 +297,17 @@ export function SettingsClient({ user }: SettingsClientProps) {
       {/* Grid of Settings Cards */}
       <div className="grid grid-cols-1 gap-8">
         {/* CARD 1: Password Management */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
-          <div className="flex items-start justify-between border-b border-zinc-800/80 pb-5">
+        <div className="rounded-xl border border-border bg-card p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
+          <div className="flex items-start justify-between border-b border-border pb-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700/80 text-zinc-200">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted border border-border text-foreground">
                 <Lock className="h-5 w-5 text-red-400" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-foreground">
                   Password Management
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-muted-foreground">
                   {user.hasPassword
                     ? "Change your master account password regularly to keep your account safe."
                     : "You do not have a password configured yet. Set a password below."}
@@ -346,7 +346,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
             {/* Current Password (if already has one) */}
             {user.hasPassword && (
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   Current Password <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -356,12 +356,12 @@ export function SettingsClient({ user }: SettingsClientProps) {
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     required
                     placeholder="••••••••••••"
-                    className="w-full rounded-lg border border-zinc-700 bg-zinc-950/70 px-3.5 py-2.5 pr-10 text-sm text-white placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                    className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 pr-10 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                   />
                   <button
                     type="button"
                     onClick={() => setShowCurrentPassword(!showCurrentPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent-foreground"
                   >
                     {showCurrentPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -376,7 +376,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* New Password */}
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   New Password <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -387,12 +387,12 @@ export function SettingsClient({ user }: SettingsClientProps) {
                     required
                     minLength={6}
                     placeholder="Min 6 characters"
-                    className="w-full rounded-lg border border-zinc-700 bg-zinc-950/70 px-3.5 py-2.5 pr-10 text-sm text-white placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                    className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 pr-10 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                   />
                   <button
                     type="button"
                     onClick={() => setShowNewPassword(!showNewPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent-foreground"
                   >
                     {showNewPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -405,7 +405,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
 
               {/* Confirm Password */}
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   Confirm New Password <span className="text-red-400">*</span>
                 </label>
                 <div className="relative">
@@ -416,12 +416,12 @@ export function SettingsClient({ user }: SettingsClientProps) {
                     required
                     minLength={6}
                     placeholder="Re-enter new password"
-                    className="w-full rounded-lg border border-zinc-700 bg-zinc-950/70 px-3.5 py-2.5 pr-10 text-sm text-white placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                    className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 pr-10 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-accent-foreground"
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="h-4 w-4" />
@@ -456,17 +456,17 @@ export function SettingsClient({ user }: SettingsClientProps) {
         </div>
 
         {/* CARD 2: Quick 6-Digit PIN */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
-          <div className="flex items-start justify-between border-b border-zinc-800/80 pb-5">
+        <div className="rounded-xl border border-border bg-card p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
+          <div className="flex items-start justify-between border-b border-border pb-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700/80 text-zinc-200">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted border border-border text-foreground">
                 <KeyRound className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-foreground">
                   Quick 6-Digit PIN
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-muted-foreground">
                   Allows instant unlocking on recognized devices without having
                   to type your email and long password each time.
                 </p>
@@ -479,7 +479,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
                 PIN Configured
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 rounded-full bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-400 border border-zinc-700">
+              <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-xs font-medium text-muted-foreground border border-border">
                 Not Setup
               </span>
             )}
@@ -503,7 +503,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* New 6-Digit PIN */}
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   6-Digit PIN <span className="text-amber-400">*</span>
                 </label>
                 <input
@@ -517,16 +517,16 @@ export function SettingsClient({ user }: SettingsClientProps) {
                   }}
                   required
                   placeholder="1 2 3 4 5 6"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950/70 px-3.5 py-2.5 text-center text-lg font-mono tracking-widest text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-center text-lg font-mono tracking-widest text-foreground placeholder-zinc-600 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 />
-                <p className="mt-1 text-[11px] text-zinc-500">
+                <p className="mt-1 text-[11px] text-muted-foreground">
                   Numbers only (0-9). Exactly 6 digits.
                 </p>
               </div>
 
               {/* Confirm 6-Digit PIN */}
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   Confirm 6-Digit PIN <span className="text-amber-400">*</span>
                 </label>
                 <input
@@ -540,9 +540,9 @@ export function SettingsClient({ user }: SettingsClientProps) {
                   }}
                   required
                   placeholder="1 2 3 4 5 6"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950/70 px-3.5 py-2.5 text-center text-lg font-mono tracking-widest text-white placeholder-zinc-600 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-center text-lg font-mono tracking-widest text-foreground placeholder-zinc-600 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 />
-                <p className="mt-1 text-[11px] text-zinc-500">
+                <p className="mt-1 text-[11px] text-muted-foreground">
                   Re-enter the 6 digits to verify.
                 </p>
               </div>
@@ -571,24 +571,24 @@ export function SettingsClient({ user }: SettingsClientProps) {
         </div>
 
         {/* CARD 3: Profile Details */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
-          <div className="flex items-start justify-between border-b border-zinc-800/80 pb-5">
+        <div className="rounded-xl border border-border bg-card p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
+          <div className="flex items-start justify-between border-b border-border pb-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700/80 text-zinc-200">
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted border border-border text-foreground">
                 <User className="h-5 w-5 text-blue-400" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-foreground">
                   Profile Information
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-muted-foreground">
                   Your identity across resumes and the Resuma application.
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center rounded-full bg-zinc-800 px-2.5 py-0.5 text-xs font-semibold text-zinc-300 border border-zinc-700">
+              <span className="inline-flex items-center rounded-full bg-muted px-2.5 py-0.5 text-xs font-semibold text-foreground border border-border">
                 {user.role}
               </span>
               <span className="inline-flex items-center rounded-full bg-red-500/10 px-2.5 py-0.5 text-xs font-semibold text-red-400 border border-red-500/20">
@@ -615,7 +615,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   Full Name <span className="text-blue-400">*</span>
                 </label>
                 <input
@@ -627,25 +627,25 @@ export function SettingsClient({ user }: SettingsClientProps) {
                   }}
                   required
                   placeholder="First and Last Name"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950/70 px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder-zinc-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 />
-                <p className="mt-1 text-[11px] text-zinc-500">
+                <p className="mt-1 text-[11px] text-muted-foreground">
                   Strict human name validation enforced (no spam or duplicates).
                 </p>
               </div>
 
               {/* Email Address */}
               <div>
-                <label className="block text-xs font-medium text-zinc-300 mb-1.5">
+                <label className="block text-xs font-medium text-foreground mb-1.5">
                   Email Address (Primary Account)
                 </label>
                 <input
                   type="email"
                   value={user.email || ""}
                   disabled
-                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950/40 px-3.5 py-2.5 text-sm text-zinc-400 cursor-not-allowed"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-muted-foreground cursor-not-allowed"
                 />
-                <p className="mt-1 text-[11px] text-zinc-500">
+                <p className="mt-1 text-[11px] text-muted-foreground">
                   Account identity email cannot be modified directly.
                 </p>
               </div>
@@ -674,17 +674,17 @@ export function SettingsClient({ user }: SettingsClientProps) {
         </div>
 
         {/* CARD 4: Device & Quick Login Memory */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
-          <div className="flex items-start justify-between border-b border-zinc-800/80 pb-5">
+        <div className="rounded-xl border border-border bg-card p-6 sm:p-7 shadow-lg shadow-black/20 backdrop-blur-sm">
+          <div className="flex items-start justify-between border-b border-border pb-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800 border border-zinc-700/80 text-zinc-200">
-                <Smartphone className="h-5 w-5 text-zinc-300" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted border border-border text-foreground">
+                <Smartphone className="h-5 w-5 text-foreground" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-white">
+                <h2 className="text-lg font-semibold text-foreground">
                   Device Memory & Quick Access
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-muted-foreground">
                   Resuma remembers your profile on this browser so you can log in
                   with just your 6-digit PIN.
                 </p>
@@ -699,21 +699,21 @@ export function SettingsClient({ user }: SettingsClientProps) {
             </div>
           )}
 
-          <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-lg border border-zinc-800 bg-zinc-950/60 p-4">
+          <div className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-lg border border-border bg-background p-4">
             <div>
-              <div className="text-sm font-medium text-white">
+              <div className="text-sm font-medium text-foreground">
                 {rememberedProfile ? (
                   <span className="flex items-center gap-2 text-emerald-400">
                     <CheckCircle2 className="h-4 w-4" />
                     Profile active on this browser: {rememberedProfile.email}
                   </span>
                 ) : (
-                  <span className="text-zinc-400">
+                  <span className="text-muted-foreground">
                     No profile currently remembered on this browser session.
                   </span>
                 )}
               </div>
-              <p className="text-xs text-zinc-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 If you are on a shared or public computer, you can clear this
                 memory at any time.
               </p>
@@ -723,7 +723,7 @@ export function SettingsClient({ user }: SettingsClientProps) {
               <button
                 type="button"
                 onClick={handleClearRememberedProfile}
-                className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800/80 px-3.5 py-2 text-xs font-medium text-zinc-300 hover:text-red-400 hover:border-red-500/40 hover:bg-zinc-800 transition-colors cursor-pointer shrink-0"
+                className="flex items-center gap-2 rounded-lg border border-border bg-muted px-3.5 py-2 text-xs font-medium text-foreground hover:text-red-400 hover:border-red-500/40 hover:bg-muted transition-colors cursor-pointer shrink-0"
               >
                 <Trash2 className="h-3.5 w-3.5 text-red-400" />
                 <span>Clear Saved Profile</span>

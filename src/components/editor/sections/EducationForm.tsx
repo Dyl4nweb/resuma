@@ -43,13 +43,13 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <label className="block text-xs font-semibold text-zinc-300">
+        <label className="block text-xs font-semibold text-foreground">
           Education ({items.length})
         </label>
         <button
           type="button"
           onClick={addItem}
-          className="flex items-center gap-1 rounded bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-200 hover:bg-zinc-700 transition-colors"
+          className="flex items-center gap-1 rounded bg-muted px-2.5 py-1 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
         >
           <Plus className="h-3.5 w-3.5" />
           <span>Add Education</span>
@@ -57,7 +57,7 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-zinc-700/80 p-6 text-center text-xs text-zinc-500">
+        <div className="rounded-lg border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
           No education items added yet. Click &quot;Add Education&quot; to begin.
         </div>
       ) : (
@@ -68,20 +68,20 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
             return (
               <div
                 key={item.id}
-                className="rounded-md border border-zinc-800 bg-zinc-900/70 overflow-hidden"
+                className="rounded-md border border-border bg-card overflow-hidden"
               >
                 {/* Accordion Header */}
                 <div
-                  className="flex items-center justify-between px-3.5 py-2.5 cursor-pointer select-none hover:bg-zinc-800/40 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 cursor-pointer select-none hover:bg-muted transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
                 >
-                  <div className="flex items-center gap-2 text-sm font-medium text-zinc-200">
+                  <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                     <span>
                       {item.degree || "Degree"}
                       {item.fieldOfStudy ? ` in ${item.fieldOfStudy}` : ""}
                     </span>
                     {item.institution && (
-                      <span className="text-xs text-zinc-500 font-normal">
+                      <span className="text-xs text-muted-foreground font-normal">
                         — {item.institution}
                       </span>
                     )}
@@ -93,25 +93,25 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                         e.stopPropagation();
                         removeItem(item.id);
                       }}
-                      className="p-1 text-zinc-500 hover:text-red-400 transition-colors"
+                      className="p-1 text-muted-foreground hover:text-red-400 transition-colors"
                       title="Delete"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                     {isExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-zinc-400" />
+                      <ChevronUp className="h-4 w-4 text-muted-foreground" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-zinc-400" />
+                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
                     )}
                   </div>
                 </div>
 
                 {/* Accordion Body */}
                 {isExpanded && (
-                  <div className="p-3.5 pt-1 space-y-3 border-t border-zinc-800/60 bg-zinc-950/40">
+                  <div className="p-3.5 pt-1 space-y-3 border-t border-border bg-background">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Degree *
                         </label>
                         <input
@@ -121,11 +121,11 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { degree: e.target.value })
                           }
                           placeholder="e.g. B.S., M.S., Ph.D."
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Field of Study
                         </label>
                         <input
@@ -135,14 +135,14 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { fieldOfStudy: e.target.value })
                           }
                           placeholder="e.g. Computer Science"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Institution / University *
                         </label>
                         <input
@@ -152,11 +152,11 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { institution: e.target.value })
                           }
                           placeholder="e.g. Stanford University"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Location
                         </label>
                         <input
@@ -166,14 +166,14 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { location: e.target.value })
                           }
                           placeholder="e.g. Stanford, CA"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Start Date
                         </label>
                         <input
@@ -183,11 +183,11 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { startDate: e.target.value })
                           }
                           placeholder="e.g. 2016-09"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           End Date / Graduation
                         </label>
                         <input
@@ -197,11 +197,11 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { endDate: e.target.value })
                           }
                           placeholder="e.g. 2020-05"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           GPA / Honors (Optional)
                         </label>
                         <input
@@ -211,13 +211,13 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                             updateItem(item.id, { gpa: e.target.value })
                           }
                           placeholder="e.g. 3.9 / 4.0"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs text-zinc-400 mb-1">
+                      <label className="block text-xs text-muted-foreground mb-1">
                         Relevant Coursework & Achievements
                       </label>
                       <textarea
@@ -227,7 +227,7 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
                           updateItem(item.id, { description: e.target.value })
                         }
                         placeholder="Dean's List, honors, specialized coursework..."
-                        className="w-full rounded border border-zinc-700 bg-zinc-900 p-2 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                        className="w-full rounded border border-border bg-card p-2 text-xs text-foreground focus:border-red-500 focus:outline-none"
                       />
                     </div>
                   </div>

@@ -61,22 +61,22 @@ function ResetPasswordForm() {
 
   if (!token) {
     return (
-      <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
           <Link href="/" className="inline-block group">
-            <span className="text-3xl font-extrabold tracking-tight text-[#fafafa]">
+            <span className="text-3xl font-extrabold tracking-tight text-foreground">
               Resuma<span className="text-[#dc2626]">.</span>
             </span>
           </Link>
-          <div className="mt-8 rounded-2xl border border-zinc-800 bg-zinc-900/70 p-8 shadow-xl backdrop-blur-md">
+          <div className="mt-8 rounded-2xl border border-border bg-card p-8 shadow-xl backdrop-blur-md">
             <AlertCircle className="mx-auto h-12 w-12 text-red-500 mb-4" />
-            <h1 className="text-xl font-bold tracking-tight text-white mb-2">Invalid Link</h1>
-            <p className="text-sm text-zinc-400 mb-6">
+            <h1 className="text-xl font-bold tracking-tight text-foreground mb-2">Invalid Link</h1>
+            <p className="text-sm text-muted-foreground mb-6">
               This password reset link is invalid or missing a token.
             </p>
             <Link
               href="/forgot-password"
-              className="flex items-center justify-center gap-2 w-full rounded-lg bg-zinc-800 py-2.5 text-sm font-semibold text-white hover:bg-zinc-700 transition-colors"
+              className="flex items-center justify-center gap-2 w-full rounded-lg bg-muted py-2.5 text-sm font-semibold text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
             >
               Request a new link
             </Link>
@@ -87,25 +87,25 @@ function ResetPasswordForm() {
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link href="/" className="inline-block group">
-          <span className="text-3xl font-extrabold tracking-tight text-[#fafafa]">
+          <span className="text-3xl font-extrabold tracking-tight text-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
           </span>
         </Link>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-white">
+        <h2 className="mt-6 text-2xl font-bold tracking-tight text-foreground">
           Set new password
         </h2>
-        <p className="mt-2 text-xs text-zinc-400">
+        <p className="mt-2 text-xs text-muted-foreground">
           Please enter your new password below.
         </p>
       </div>
 
       {/* Form Card */}
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8 shadow-xl backdrop-blur-md">
+        <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xl backdrop-blur-md">
           {status === "error" && (
             <div className="mb-5 rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-300">
               <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
@@ -132,7 +132,7 @@ function ResetPasswordForm() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-xs font-semibold text-zinc-300 mb-1"
+                  className="block text-xs font-semibold text-foreground mb-1"
                 >
                   New Password
                 </label>
@@ -142,7 +142,7 @@ function ResetPasswordForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 disabled:opacity-50"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 disabled:opacity-50"
                   required
                   minLength={8}
                   disabled={status === "loading"}
@@ -152,7 +152,7 @@ function ResetPasswordForm() {
               <div>
                 <label
                   htmlFor="confirmPassword"
-                  className="block text-xs font-semibold text-zinc-300 mb-1"
+                  className="block text-xs font-semibold text-foreground mb-1"
                 >
                   Confirm Password
                 </label>
@@ -162,7 +162,7 @@ function ResetPasswordForm() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 disabled:opacity-50"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 disabled:opacity-50"
                   required
                   minLength={8}
                   disabled={status === "loading"}
@@ -190,7 +190,7 @@ function ResetPasswordForm() {
             <div className="mt-6 text-center">
               <Link
                 href="/login"
-                className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-red-400 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-red-400 transition-colors"
               >
                 <ArrowLeft className="h-3 w-3" />
                 Back to login
@@ -206,8 +206,8 @@ function ResetPasswordForm() {
 export default function ResetPasswordPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#09090b] flex flex-col justify-center items-center">
-        <Loader2 className="h-8 w-8 animate-spin text-zinc-500" />
+      <div className="min-h-screen bg-background flex flex-col justify-center items-center">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
       </div>
     }>
       <ResetPasswordForm />

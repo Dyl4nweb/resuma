@@ -59,8 +59,8 @@ function SortableItem({ id }: SortableItemProps) {
       style={style}
       className={`flex items-center justify-between px-3 py-2 rounded-md border text-xs font-medium transition-colors ${
         isDragging
-          ? "bg-zinc-800 border-red-500 shadow-lg z-20 opacity-90 text-white"
-          : "bg-zinc-900/90 border-zinc-800 text-zinc-300 hover:border-zinc-700"
+          ? "bg-muted border-red-500 shadow-lg z-20 opacity-90 text-foreground"
+          : "bg-card border-border text-foreground hover:border-border"
       }`}
     >
       <div className="flex items-center gap-2">
@@ -68,14 +68,14 @@ function SortableItem({ id }: SortableItemProps) {
           type="button"
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing p-1 text-zinc-500 hover:text-zinc-300 transition-colors"
+          className="cursor-grab active:cursor-grabbing p-1 text-muted-foreground hover:text-foreground transition-colors"
           title="Drag to reorder"
         >
           <GripVertical className="h-3.5 w-3.5" />
         </button>
         <span>{SECTION_LABELS[id]}</span>
       </div>
-      <span className="text-[10px] text-zinc-500 font-mono uppercase tracking-wider">
+      <span className="text-[10px] text-muted-foreground font-mono uppercase tracking-wider">
         Section
       </span>
     </div>
@@ -106,12 +106,12 @@ export function SectionReorder({ sectionOrder, onChange }: SectionReorderProps) 
   };
 
   return (
-    <div className="space-y-2 p-3 bg-zinc-950/60 rounded-lg border border-zinc-800">
+    <div className="space-y-2 p-3 bg-background rounded-lg border border-border">
       <div className="flex justify-between items-center mb-1">
-        <span className="text-xs font-semibold text-zinc-300">
+        <span className="text-xs font-semibold text-foreground">
           Section Layout & Hierarchy
         </span>
-        <span className="text-[11px] text-zinc-500">
+        <span className="text-[11px] text-muted-foreground">
           Drag handles to reorder
         </span>
       </div>

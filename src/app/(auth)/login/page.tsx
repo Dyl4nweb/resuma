@@ -112,18 +112,18 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link href="/" className="inline-block group">
-          <span className="text-3xl font-extrabold tracking-tight text-[#fafafa]">
+          <span className="text-3xl font-extrabold tracking-tight text-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
           </span>
         </Link>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-white">
+        <h2 className="mt-6 text-2xl font-bold tracking-tight text-foreground">
           Sign in to your account
         </h2>
-        <p className="mt-2 text-xs text-zinc-400">
+        <p className="mt-2 text-xs text-muted-foreground">
           Or{" "}
           <Link
             href="/register"
@@ -136,7 +136,7 @@ export default function LoginPage() {
 
       {/* Form Card */}
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8 shadow-xl backdrop-blur-md">
+        <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xl backdrop-blur-md">
           {error && (
             <div className="mb-5 rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-300">
               <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
@@ -147,19 +147,19 @@ export default function LoginPage() {
           {/* Account Recognition Screen */}
           {isUsingRemembered && rememberedProfile ? (
             <div className="space-y-5">
-              <div className="rounded-xl border border-zinc-800 bg-zinc-950/80 p-4 flex items-center justify-between">
+              <div className="rounded-xl border border-border bg-background p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full bg-red-600/20 border border-red-500/30 flex items-center justify-center text-sm font-bold text-red-400 shrink-0">
                     {(rememberedProfile.name || rememberedProfile.email).charAt(0).toUpperCase()}
                   </div>
                   <div>
                     <div className="flex items-center gap-1.5">
-                      <p className="text-sm font-bold text-white">
+                      <p className="text-sm font-bold text-foreground">
                         {rememberedProfile.name}
                       </p>
                       <UserCheck className="h-3.5 w-3.5 text-emerald-400" />
                     </div>
-                    <p className="text-[11px] text-zinc-400 font-mono">
+                    <p className="text-[11px] text-muted-foreground font-mono">
                       {rememberedProfile.email}
                     </p>
                   </div>
@@ -169,7 +169,7 @@ export default function LoginPage() {
                   type="button"
                   onClick={handleSwitchAccount}
                   title="Switch to another account"
-                  className="text-xs text-zinc-400 hover:text-red-400 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-zinc-800 hover:border-zinc-700 bg-zinc-900/80 transition-colors"
+                  className="text-xs text-muted-foreground hover:text-red-400 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border hover:border-border bg-card transition-colors"
                 >
                   <RotateCcw className="h-3 w-3" />
                   <span>Switch</span>
@@ -177,8 +177,8 @@ export default function LoginPage() {
               </div>
 
               {/* Login Mode Toggle on Recognized Card */}
-              <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
-                <span className="text-xs text-zinc-400">
+              <div className="flex items-center justify-between border-b border-border pb-3">
+                <span className="text-xs text-muted-foreground">
                   {authMode === "pin" ? "Enter Quick PIN to unlock" : "Enter account password"}
                 </span>
                 <button
@@ -195,7 +195,7 @@ export default function LoginPage() {
                   <div>
                     <label
                       htmlFor="recognized-pin"
-                      className="block text-xs font-semibold text-zinc-300 mb-1"
+                      className="block text-xs font-semibold text-foreground mb-1"
                     >
                       6-Digit Quick PIN
                     </label>
@@ -210,7 +210,7 @@ export default function LoginPage() {
                       value={pin}
                       onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
                       placeholder="••••••"
-                      className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2.5 text-center tracking-widest text-xl text-zinc-100 placeholder-zinc-600 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-center tracking-widest text-xl text-foreground placeholder-zinc-600 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                     />
                   </div>
                 ) : (
@@ -218,13 +218,13 @@ export default function LoginPage() {
                     <div className="flex items-center justify-between mb-1">
                       <label
                         htmlFor="recognized-password"
-                        className="block text-xs font-semibold text-zinc-300"
+                        className="block text-xs font-semibold text-foreground"
                       >
                         Account Password
                       </label>
                       <Link 
                         href="/forgot-password" 
-                        className="text-[11px] text-zinc-400 hover:text-red-400 transition-colors"
+                        className="text-[11px] text-muted-foreground hover:text-red-400 transition-colors"
                       >
                         Forgot password?
                       </Link>
@@ -237,7 +237,7 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Enter your password"
-                      className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                     />
                   </div>
                 )}
@@ -262,14 +262,14 @@ export default function LoginPage() {
             /* Standard Full Login Form with Tabs */
             <div className="space-y-4">
               {/* Tab Selector: PIN vs Password */}
-              <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-zinc-950 border border-zinc-800">
+              <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-background border border-border">
                 <button
                   type="button"
                   onClick={() => setAuthMode("pin")}
                   className={`flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${
                     authMode === "pin"
                       ? "bg-red-600 text-white shadow-sm"
-                      : "text-zinc-400 hover:text-white"
+                      : "text-muted-foreground hover:text-accent-foreground"
                   }`}
                 >
                   <KeyRound className="h-3.5 w-3.5" />
@@ -281,7 +281,7 @@ export default function LoginPage() {
                   className={`flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${
                     authMode === "password"
                       ? "bg-red-600 text-white shadow-sm"
-                      : "text-zinc-400 hover:text-white"
+                      : "text-muted-foreground hover:text-accent-foreground"
                   }`}
                 >
                   <Lock className="h-3.5 w-3.5" />
@@ -293,7 +293,7 @@ export default function LoginPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-xs font-semibold text-zinc-300 mb-1"
+                    className="block text-xs font-semibold text-foreground mb-1"
                   >
                     Email Address
                   </label>
@@ -305,7 +305,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                    className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                   />
                 </div>
 
@@ -314,11 +314,11 @@ export default function LoginPage() {
                     <div className="flex items-center justify-between mb-1">
                       <label
                         htmlFor="pin"
-                        className="block text-xs font-semibold text-zinc-300"
+                        className="block text-xs font-semibold text-foreground"
                       >
                         6-Digit PIN
                       </label>
-                      <span className="text-[11px] text-zinc-500 flex items-center gap-1">
+                      <span className="text-[11px] text-muted-foreground flex items-center gap-1">
                         <Sparkles className="h-3 w-3 text-red-500" />
                         Fast unlock
                       </span>
@@ -334,7 +334,7 @@ export default function LoginPage() {
                       value={pin}
                       onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
                       placeholder="••••••"
-                      className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2.5 text-center tracking-widest text-lg text-zinc-100 placeholder-zinc-600 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      className="w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-center tracking-widest text-lg text-foreground placeholder-zinc-600 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                     />
                   </div>
                 ) : (
@@ -342,13 +342,13 @@ export default function LoginPage() {
                     <div className="flex items-center justify-between mb-1">
                       <label
                         htmlFor="password"
-                        className="block text-xs font-semibold text-zinc-300"
+                        className="block text-xs font-semibold text-foreground"
                       >
                         Account Password
                       </label>
                       <Link 
                         href="/forgot-password" 
-                        className="text-[11px] text-zinc-400 hover:text-red-400 transition-colors"
+                        className="text-[11px] text-muted-foreground hover:text-red-400 transition-colors"
                       >
                         Forgot password?
                       </Link>
@@ -361,7 +361,7 @@ export default function LoginPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                      className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
                     />
                   </div>
                 )}
@@ -372,15 +372,15 @@ export default function LoginPage() {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-3.5 w-3.5 rounded border-zinc-700 bg-zinc-950 text-red-600 focus:ring-red-500 focus:ring-offset-zinc-900"
+                    className="h-3.5 w-3.5 rounded border-border bg-background text-red-600 focus:ring-red-500 focus:ring-offset-zinc-900"
                   />
-                  <label htmlFor="rememberMe" className="text-xs text-zinc-400 select-none">
+                  <label htmlFor="rememberMe" className="text-xs text-muted-foreground select-none">
                     Remember my account on this device
                   </label>
                 </div>
 
                 <div className="pt-2">
-                  <div className="flex items-center gap-1.5 justify-center text-[11px] text-zinc-500 bg-zinc-950 py-1.5 rounded-md border border-zinc-800/50">
+                  <div className="flex items-center gap-1.5 justify-center text-[11px] text-muted-foreground bg-background py-1.5 rounded-md border border-border">
                     <CheckCircle2 className="h-3 w-3 text-emerald-500" />
                     <span>Protected by Bank-Grade Anti-Bot Security</span>
                   </div>

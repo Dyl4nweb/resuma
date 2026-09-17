@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { Navbar } from "@/components/common/Navbar";
-import { Footer } from "@/components/common/Footer";
 import { SettingsClient } from "@/components/settings/SettingsClient";
 
 export const metadata = {
@@ -46,12 +45,11 @@ export default async function SettingsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar user={user} />
       <main className="flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8">
         <SettingsClient user={clientUser} />
       </main>
-      <Footer />
     </div>
   );
 }

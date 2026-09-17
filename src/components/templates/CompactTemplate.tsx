@@ -86,7 +86,7 @@ export function CompactTemplate({ data }: TemplateProps) {
                       {formatDate(edu.startDate)} – {edu.isCurrent ? "Present" : formatDate(edu.endDate)}
                     </span>
                   </div>
-                  {edu.gpa && <div className="text-[11px] text-zinc-500">GPA: {edu.gpa}</div>}
+                  {edu.gpa && <div className="text-[11px] text-muted-foreground">GPA: {edu.gpa}</div>}
                 </div>
               ))}
             </div>
@@ -133,10 +133,10 @@ export function CompactTemplate({ data }: TemplateProps) {
                   <div className="flex justify-between font-bold text-zinc-900">
                     <span>
                       {proj.title}
-                      {proj.url && <span className="font-mono font-normal text-zinc-500 text-[11px] ml-1.5">[{proj.url}]</span>}
+                      {proj.url && <span className="font-mono font-normal text-muted-foreground text-[11px] ml-1.5">[{proj.url}]</span>}
                     </span>
                     {proj.technologies && proj.technologies.length > 0 && (
-                      <span className="font-mono text-[10.5px] text-zinc-500 font-normal">
+                      <span className="font-mono text-[10.5px] text-muted-foreground font-normal">
                         {proj.technologies.join(", ")}
                       </span>
                     )}
@@ -161,7 +161,7 @@ export function CompactTemplate({ data }: TemplateProps) {
                   <span>
                     <strong className="font-bold text-zinc-900">{cert.name}</strong> — {cert.issuer}
                   </span>
-                  <span className="font-mono text-zinc-500">{cert.date}</span>
+                  <span className="font-mono text-muted-foreground">{cert.date}</span>
                 </div>
               ))}
             </div>

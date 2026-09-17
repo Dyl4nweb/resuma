@@ -93,7 +93,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
     <div className="mb-6 rounded-2xl border border-red-500/20 bg-gradient-to-r from-red-950/30 via-zinc-900/60 to-zinc-900/40 p-4 sm:p-5 relative overflow-hidden backdrop-blur-md shadow-lg">
       <button
         onClick={handleDismiss}
-        className="absolute right-3.5 top-3.5 text-zinc-500 hover:text-zinc-300 transition-colors"
+        className="absolute right-3.5 top-3.5 text-muted-foreground hover:text-foreground transition-colors"
         title="Dismiss for now"
       >
         <X className="h-4 w-4" />
@@ -116,14 +116,14 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
               <KeyRound className="h-4 w-4" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+              <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
                 <span>Set up Quick PIN for Faster Logins</span>
                 <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-500/10 text-red-400 border border-red-500/20">
                   <Sparkles className="h-2.5 w-2.5" />
                   Recommended
                 </span>
               </h3>
-              <p className="text-xs text-zinc-400 mt-0.5">
+              <p className="text-xs text-muted-foreground mt-0.5">
                 Tired of typing your email and long password? Set up a 6-digit PIN to instantly unlock your account next time.
               </p>
             </div>
@@ -133,7 +133,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
             <button
               type="button"
               onClick={handleDismiss}
-              className="text-xs text-zinc-400 hover:text-zinc-200 px-3 py-1.5 transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground px-3 py-1.5 transition-colors"
             >
               Maybe Later
             </button>
@@ -150,11 +150,11 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
       ) : (
         <form onSubmit={handleSubmit} className="space-y-3 pt-1">
           <div>
-            <h4 className="text-sm font-bold text-white flex items-center gap-2">
+            <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
               <KeyRound className="h-4 w-4 text-red-400" />
               <span>Choose your 6-Digit Quick PIN</span>
             </h4>
-            <p className="text-xs text-zinc-400 mt-0.5">
+            <p className="text-xs text-muted-foreground mt-0.5">
               Enter numbers only (0-9). You can still log in with your password anytime.
             </p>
           </div>
@@ -165,7 +165,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md">
             <div>
-              <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+              <label className="block text-[11px] font-medium text-foreground mb-1">
                 6-Digit PIN
               </label>
               <input
@@ -177,12 +177,12 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
                 value={pin}
                 onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
                 placeholder="••••••"
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-1.5 text-center tracking-widest text-base text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-center tracking-widest text-base text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
               />
             </div>
 
             <div>
-              <label className="block text-[11px] font-medium text-zinc-300 mb-1">
+              <label className="block text-[11px] font-medium text-foreground mb-1">
                 Confirm PIN
               </label>
               <input
@@ -193,7 +193,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
                 value={confirmPin}
                 onChange={(e) => setConfirmPin(e.target.value.replace(/\D/g, ""))}
                 placeholder="••••••"
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-1.5 text-center tracking-widest text-base text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
+                className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-center tracking-widest text-base text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
             <button
               type="button"
               onClick={() => setIsOpen(false)}
-              className="text-xs text-zinc-400 hover:text-zinc-200 px-3 py-2 transition-colors"
+              className="text-xs text-muted-foreground hover:text-foreground px-3 py-2 transition-colors"
             >
               Cancel
             </button>

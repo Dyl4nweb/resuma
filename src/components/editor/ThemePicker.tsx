@@ -45,10 +45,10 @@ export function ThemePicker({
   onFontChange,
 }: ThemePickerProps) {
   return (
-    <div className="space-y-4 p-4 bg-zinc-950/70 rounded-lg border border-zinc-800">
+    <div className="space-y-4 p-4 bg-background rounded-lg border border-border">
       {/* Template Selection */}
       <div>
-        <label className="block text-xs font-semibold text-zinc-300 mb-2">
+        <label className="block text-xs font-semibold text-foreground mb-2">
           Resume Template
         </label>
         <div className="grid grid-cols-2 gap-2">
@@ -59,12 +59,12 @@ export function ThemePicker({
               onClick={() => onTemplateChange(tpl.id)}
               className={`p-2.5 text-left rounded-md border transition-all ${
                 currentTemplate === tpl.id
-                  ? "border-red-500 bg-red-950/20 text-white"
-                  : "border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
+                  ? "border-red-500 bg-red-500/10 text-red-600 font-semibold"
+                  : "border-border bg-card text-muted-foreground hover:border-border hover:text-foreground"
               }`}
             >
               <div className="text-xs font-semibold">{tpl.name}</div>
-              <div className="text-[10px] text-zinc-500 mt-0.5 leading-tight">{tpl.desc}</div>
+              <div className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{tpl.desc}</div>
             </button>
           ))}
         </div>
@@ -72,7 +72,7 @@ export function ThemePicker({
 
       {/* Color Accent Selection */}
       <div>
-        <label className="block text-xs font-semibold text-zinc-300 mb-2">
+        <label className="block text-xs font-semibold text-foreground mb-2">
           Accent Color
         </label>
         <div className="flex flex-wrap items-center gap-2">
@@ -85,21 +85,21 @@ export function ThemePicker({
                 onClick={() => onColorChange(color.hex)}
                 title={color.name}
                 className={`h-7 w-7 rounded-full flex items-center justify-center transition-transform hover:scale-110 border ${
-                  isSelected ? "ring-2 ring-white scale-110" : "border-zinc-700"
+                  isSelected ? "ring-2 ring-white scale-110" : "border-border"
                 }`}
                 style={{ backgroundColor: color.hex }}
               >
-                {isSelected && <Check className="h-3.5 w-3.5 text-white drop-shadow" />}
+                {isSelected && <Check className="h-3.5 w-3.5 text-foreground drop-shadow" />}
               </button>
             );
           })}
           <div className="flex items-center gap-1.5 ml-2">
-            <span className="text-xs text-zinc-500">Hex:</span>
+            <span className="text-xs text-muted-foreground">Hex:</span>
             <input
               type="text"
               value={currentColor}
               onChange={(e) => onColorChange(e.target.value)}
-              className="w-20 rounded border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-zinc-200 font-mono focus:border-red-500 focus:outline-none"
+              className="w-20 rounded border border-border bg-card px-2 py-1 text-xs text-foreground font-mono focus:border-red-500 focus:outline-none"
             />
           </div>
         </div>
@@ -107,7 +107,7 @@ export function ThemePicker({
 
       {/* Typography Selection */}
       <div>
-        <label className="block text-xs font-semibold text-zinc-300 mb-2">
+        <label className="block text-xs font-semibold text-foreground mb-2">
           Typography Font
         </label>
         <div className="grid grid-cols-3 gap-2">
@@ -118,8 +118,8 @@ export function ThemePicker({
               onClick={() => onFontChange(f.id)}
               className={`p-2 text-center rounded border text-xs transition-colors ${f.style} ${
                 currentFont === f.id
-                  ? "border-red-500 bg-red-950/20 text-white"
-                  : "border-zinc-800 bg-zinc-900/60 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200"
+                  ? "border-red-500 bg-red-500/10 text-red-600 font-semibold"
+                  : "border-border bg-card text-muted-foreground hover:border-border hover:text-foreground"
               }`}
             >
               {f.name}

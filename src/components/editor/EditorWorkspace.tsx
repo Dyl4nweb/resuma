@@ -13,6 +13,7 @@ import { SkillsForm } from "./sections/SkillsForm";
 import { ProjectsForm } from "./sections/ProjectsForm";
 import { CertificationsForm } from "./sections/CertificationsForm";
 import { SectionReorder } from "./SectionReorder";
+import { ThemeToggle } from "../ui/ThemeToggle";
 import { ThemePicker } from "./ThemePicker";
 import { ExportModal } from "./ExportModal";
 import {
@@ -181,26 +182,26 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
   }, []);
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-[#09090b] text-[#fafafa] print:!h-auto print:!min-h-0 print:!overflow-visible print:!bg-white print:!text-black print:!block editor-root-container">
+    <div className="flex flex-col h-screen overflow-hidden bg-background text-foreground print:!h-auto print:!min-h-0 print:!overflow-visible print:!bg-white print:!text-black print:!block editor-root-container">
       {/* Top Action Toolbar */}
-      <nav className="h-14 border-b border-zinc-800 bg-[#09090b] px-4 flex items-center justify-between no-print z-30 shrink-0">
+      <nav className="h-14 border-b border-border bg-background px-4 flex items-center justify-between no-print z-30 shrink-0">
         <div className="flex items-center gap-3">
           <Link
             href="/dashboard"
-            className="flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors py-1.5 px-2 rounded-md hover:bg-zinc-800/60"
+            className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-accent-foreground transition-colors py-1.5 px-2 rounded-md hover:bg-muted"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="hidden sm:inline">Dashboard</span>
           </Link>
 
-          <div className="h-4 w-px bg-zinc-800" />
+          <div className="h-4 w-px bg-muted" />
 
           {/* Editable Title */}
           <input
             type="text"
             value={data.title}
             onChange={(e) => updateData({ title: e.target.value })}
-            className="bg-transparent text-sm font-bold text-white border border-transparent hover:border-zinc-700 focus:border-red-500 focus:bg-zinc-900 rounded px-2 py-1 max-w-[200px] sm:max-w-[320px] transition-colors focus:outline-none"
+            className="bg-transparent text-sm font-bold text-foreground border border-transparent hover:border-border focus:border-red-500 focus:bg-card rounded px-2 py-1 max-w-[200px] sm:max-w-[320px] transition-colors focus:outline-none"
             title="Click to rename resume"
           />
 
@@ -235,12 +236,12 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
         {/* Center / Right controls */}
         <div className="flex items-center gap-2">
           {/* Mobile Tab Switcher */}
-          <div className="flex sm:hidden rounded-lg bg-zinc-900 border border-zinc-800 p-0.5">
+          <div className="flex sm:hidden rounded-lg bg-card border border-border p-0.5">
             <button
               type="button"
               onClick={() => setMobileTab("editor")}
               className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                mobileTab === "editor" ? "bg-zinc-800 text-white" : "text-zinc-400"
+                mobileTab === "editor" ? "bg-muted text-foreground" : "text-muted-foreground"
               }`}
             >
               <FileEdit className="h-3.5 w-3.5" />
@@ -249,7 +250,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
               type="button"
               onClick={() => setMobileTab("preview")}
               className={`px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                mobileTab === "preview" ? "bg-zinc-800 text-white" : "text-zinc-400"
+                mobileTab === "preview" ? "bg-muted text-foreground" : "text-muted-foreground"
               }`}
             >
               <Eye className="h-3.5 w-3.5" />
@@ -257,12 +258,12 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
           </div>
 
           {/* Desktop Drawer Selector Buttons */}
-          <div className="hidden sm:flex items-center rounded-lg bg-zinc-900 border border-zinc-800 p-0.5">
+          <div className="hidden sm:flex items-center rounded-lg bg-card border border-border p-0.5">
             <button
               type="button"
               onClick={() => setActivePanel("content")}
               className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                activePanel === "content" ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-zinc-200"
+                activePanel === "content" ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <FileEdit className="h-3 w-3 text-red-400" />
@@ -272,7 +273,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
               type="button"
               onClick={() => setActivePanel("design")}
               className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                activePanel === "design" ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-zinc-200"
+                activePanel === "design" ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <Sliders className="h-3 w-3 text-amber-400" />
@@ -282,13 +283,15 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
               type="button"
               onClick={() => setActivePanel("reorder")}
               className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded-md transition-colors ${
-                activePanel === "reorder" ? "bg-zinc-800 text-white" : "text-zinc-400 hover:text-zinc-200"
+                activePanel === "reorder" ? "bg-muted text-foreground" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               <ListOrdered className="h-3 w-3 text-blue-400" />
               <span>Layout</span>
             </button>
           </div>
+
+          <ThemeToggle />
 
           {/* Export / Share Button */}
           <button
@@ -306,16 +309,16 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
       <div className="flex flex-1 overflow-hidden print:!block print:!overflow-visible print:!h-auto print:!bg-white editor-split-view">
         {/* Left Side: Form Editor */}
         <div
-          className={`w-full sm:w-[500px] lg:w-[560px] border-r border-zinc-800 flex flex-col bg-[#0b0b0e] shrink-0 no-print ${
+          className={`w-full sm:w-[500px] lg:w-[560px] border-r border-border flex flex-col bg-muted shrink-0 no-print ${
             mobileTab === "preview" ? "hidden sm:flex" : "flex"
           }`}
         >
           {/* Panel Selector on Mobile */}
-          <div className="flex sm:hidden border-b border-zinc-800 p-2 gap-1 bg-zinc-950">
+          <div className="flex sm:hidden border-b border-border p-2 gap-1 bg-background">
             <button
               onClick={() => setActivePanel("content")}
               className={`flex-1 py-1 text-xs font-medium rounded ${
-                activePanel === "content" ? "bg-zinc-800 text-white" : "text-zinc-400"
+                activePanel === "content" ? "bg-muted text-foreground" : "text-muted-foreground"
               }`}
             >
               Content
@@ -323,7 +326,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
             <button
               onClick={() => setActivePanel("design")}
               className={`flex-1 py-1 text-xs font-medium rounded ${
-                activePanel === "design" ? "bg-zinc-800 text-white" : "text-zinc-400"
+                activePanel === "design" ? "bg-muted text-foreground" : "text-muted-foreground"
               }`}
             >
               Design
@@ -331,7 +334,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
             <button
               onClick={() => setActivePanel("reorder")}
               className={`flex-1 py-1 text-xs font-medium rounded ${
-                activePanel === "reorder" ? "bg-zinc-800 text-white" : "text-zinc-400"
+                activePanel === "reorder" ? "bg-muted text-foreground" : "text-muted-foreground"
               }`}
             >
               Layout
@@ -361,8 +364,8 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
             {activePanel === "content" && (
               <div className="space-y-6">
                 {/* Personal Info */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>1. Personal & Contact Details</span>
                     <span className="text-[10px] text-red-400 font-mono">Header</span>
                   </h3>
@@ -373,10 +376,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 </div>
 
                 {/* Professional Summary */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>2. Professional Summary</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">Profile</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">Profile</span>
                   </h3>
                   <SummaryForm
                     summary={data.summary}
@@ -385,10 +388,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 </div>
 
                 {/* Experience */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>3. Work Experience</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">Career</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">Career</span>
                   </h3>
                   <ExperienceForm
                     items={data.experience}
@@ -397,10 +400,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 </div>
 
                 {/* Education */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>4. Education</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">Academic</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">Academic</span>
                   </h3>
                   <EducationForm
                     items={data.education}
@@ -409,10 +412,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 </div>
 
                 {/* Skills */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>5. Skills & Proficiencies</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">Keywords</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">Keywords</span>
                   </h3>
                   <SkillsForm
                     categories={data.skills}
@@ -421,10 +424,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 </div>
 
                 {/* Projects */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>6. Projects</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">Portfolio</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">Portfolio</span>
                   </h3>
                   <ProjectsForm
                     items={data.projects}
@@ -433,10 +436,10 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
                 </div>
 
                 {/* Certifications */}
-                <div className="rounded-lg border border-zinc-800 bg-zinc-950/70 p-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-3 flex items-center justify-between">
+                <div className="rounded-lg border border-border bg-background p-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-muted-foreground mb-3 flex items-center justify-between">
                     <span>7. Certifications & Honors</span>
-                    <span className="text-[10px] text-zinc-500 font-mono">Credentials</span>
+                    <span className="text-[10px] text-muted-foreground font-mono">Credentials</span>
                   </h3>
                   <CertificationsForm
                     items={data.certifications}
@@ -450,27 +453,27 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
 
         {/* Right Side: Live Resume Preview */}
         <div
-          className={`flex-1 bg-zinc-950/90 relative overflow-auto flex flex-col items-center p-4 sm:p-8 print:!p-0 print:!m-0 print:!bg-white print:!overflow-visible print:!w-full print:!block print:!static editor-preview-wrapper ${
+          className={`flex-1 bg-background relative overflow-auto flex flex-col items-center p-4 sm:p-8 print:!p-0 print:!m-0 print:!bg-white print:!overflow-visible print:!w-full print:!block print:!static editor-preview-wrapper ${
             mobileTab === "editor" ? "hidden sm:flex" : "flex"
           }`}
         >
           {/* Zoom Controls floating at top right */}
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-1 rounded-lg bg-zinc-900/90 border border-zinc-800 p-1 shadow-lg backdrop-blur-xs no-print">
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-1 rounded-lg bg-card border border-border p-1 shadow-lg backdrop-blur-xs no-print">
             <button
               type="button"
               onClick={() => setZoomScale((prev) => Math.max(0.5, prev - 0.1))}
-              className="p-1 rounded text-zinc-400 hover:text-white transition-colors"
+              className="p-1 rounded text-muted-foreground hover:text-accent-foreground transition-colors"
               title="Zoom out"
             >
               <ZoomOut className="h-4 w-4" />
             </button>
-            <span className="text-[11px] font-mono text-zinc-400 px-1.5">
+            <span className="text-[11px] font-mono text-muted-foreground px-1.5">
               {Math.round(zoomScale * 100)}%
             </span>
             <button
               type="button"
               onClick={() => setZoomScale((prev) => Math.min(1.2, prev + 0.1))}
-              className="p-1 rounded text-zinc-400 hover:text-white transition-colors"
+              className="p-1 rounded text-muted-foreground hover:text-accent-foreground transition-colors"
               title="Zoom in"
             >
               <ZoomIn className="h-4 w-4" />
@@ -478,7 +481,7 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
             <button
               type="button"
               onClick={() => setZoomScale(0.85)}
-              className="p-1 rounded text-zinc-400 hover:text-white transition-colors"
+              className="p-1 rounded text-muted-foreground hover:text-accent-foreground transition-colors"
               title="Reset Zoom"
             >
               <Maximize2 className="h-3.5 w-3.5" />

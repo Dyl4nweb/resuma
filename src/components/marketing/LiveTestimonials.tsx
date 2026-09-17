@@ -37,6 +37,14 @@ const TESTIMONIALS = [
     text: "I don't see any problems with it so far. Everything looks well put together, and your marketing strategy is really good—it caught my attention right away.",
     rating: 5,
   },
+  {
+    id: 5,
+    name: "Liza",
+    role: "User",
+    location: "Global",
+    text: "Your app is really helpful, especially for people who struggle with creating resumes. It makes the process much faster and gives users a better idea of how to make a resume. The only issue is that the dark theme can be a bit hard on the eyes.",
+    rating: 4,
+  },
 ];
 
 export function LiveTestimonials() {
@@ -123,10 +131,10 @@ export function LiveTestimonials() {
           : "translate-y-12 opacity-0 scale-95 pointer-events-none"
       }`}
     >
-      <div className="relative overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950/90 p-3 sm:p-4 shadow-2xl backdrop-blur-xl">
+      <div className="relative overflow-hidden rounded-2xl border border-border bg-background p-3 sm:p-4 shadow-2xl backdrop-blur-xl">
         <button
           onClick={() => setIsDismissed(true)}
-          className="absolute right-2 top-2 rounded-md p-1 text-zinc-500 hover:bg-zinc-800 hover:text-white transition-colors"
+          className="absolute right-2 top-2 rounded-md p-1 text-muted-foreground hover:bg-muted hover:text-accent-foreground transition-colors"
           aria-label="Dismiss"
         >
           <X className="h-3 w-3 sm:h-4 sm:w-4" />
@@ -136,10 +144,10 @@ export function LiveTestimonials() {
           {[...Array(currentTestimonial.rating)].map((_, i) => (
             <Star key={i} className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-amber-400 text-amber-400" />
           ))}
-          <span className="ml-1 text-[9px] sm:text-[10px] text-zinc-500 font-medium">Just now</span>
+          <span className="ml-1 text-[9px] sm:text-[10px] text-muted-foreground font-medium">Just now</span>
         </div>
 
-        <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-zinc-200 leading-relaxed italic">
+        <p className="mb-2 sm:mb-3 text-xs sm:text-sm text-foreground leading-relaxed italic">
           "{currentTestimonial.text}"
         </p>
 
@@ -148,8 +156,8 @@ export function LiveTestimonials() {
             {currentTestimonial.name.charAt(0)}
           </div>
           <div>
-            <p className="text-[11px] sm:text-xs font-bold text-white">{currentTestimonial.name}</p>
-            <p className="text-[9px] sm:text-[10px] text-zinc-400">
+            <p className="text-[11px] sm:text-xs font-bold text-foreground">{currentTestimonial.name}</p>
+            <p className="text-[9px] sm:text-[10px] text-muted-foreground">
               {currentTestimonial.role} &bull; {currentTestimonial.location}
             </p>
           </div>

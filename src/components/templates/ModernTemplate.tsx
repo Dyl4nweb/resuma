@@ -51,7 +51,7 @@ export function ModernTemplate({ data }: TemplateProps) {
                 <div key={exp.id} className="text-sm">
                   <div className="flex justify-between items-baseline">
                     <h3 className="font-bold text-zinc-900">{exp.position}</h3>
-                    <span className="text-xs font-medium text-zinc-500">
+                    <span className="text-xs font-medium text-muted-foreground">
                       {formatDate(exp.startDate)} – {exp.isCurrent ? "Present" : formatDate(exp.endDate)}
                     </span>
                   </div>
@@ -93,7 +93,7 @@ export function ModernTemplate({ data }: TemplateProps) {
                       {edu.degree}
                       {edu.fieldOfStudy ? ` in ${edu.fieldOfStudy}` : ""}
                     </h3>
-                    <span className="text-xs font-medium text-zinc-500">
+                    <span className="text-xs font-medium text-muted-foreground">
                       {formatDate(edu.startDate)} – {edu.isCurrent ? "Present" : formatDate(edu.endDate)}
                     </span>
                   </div>
@@ -152,13 +152,13 @@ export function ModernTemplate({ data }: TemplateProps) {
                         href={proj.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="text-zinc-500 hover:text-zinc-800 inline-flex items-center"
+                        className="text-muted-foreground hover:text-zinc-800 inline-flex items-center"
                       >
                         <ExternalLink className="h-3 w-3" />
                       </a>
                     )}
                     {proj.technologies && proj.technologies.length > 0 && (
-                      <span className="text-xs font-normal text-zinc-500 ml-auto">
+                      <span className="text-xs font-normal text-muted-foreground ml-auto">
                         [{proj.technologies.join(", ")}]
                       </span>
                     )}
@@ -194,7 +194,7 @@ export function ModernTemplate({ data }: TemplateProps) {
                     <span className="font-semibold text-zinc-800">{cert.name}</span>
                     <span className="text-zinc-600"> — {cert.issuer}</span>
                   </div>
-                  <span className="text-zinc-500">{cert.date}</span>
+                  <span className="text-muted-foreground">{cert.date}</span>
                 </div>
               ))}
             </div>
@@ -225,37 +225,37 @@ export function ModernTemplate({ data }: TemplateProps) {
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-zinc-600 mt-3 pt-2">
           {personalInfo.email && (
             <span className="flex items-center gap-1">
-              <Mail className="h-3 w-3 text-zinc-400" />
+              <Mail className="h-3 w-3 text-muted-foreground" />
               {personalInfo.email}
             </span>
           )}
           {personalInfo.phone && (
             <span className="flex items-center gap-1">
-              <Phone className="h-3 w-3 text-zinc-400" />
+              <Phone className="h-3 w-3 text-muted-foreground" />
               {personalInfo.phone}
             </span>
           )}
           {personalInfo.location && (
             <span className="flex items-center gap-1">
-              <MapPin className="h-3 w-3 text-zinc-400" />
+              <MapPin className="h-3 w-3 text-muted-foreground" />
               {personalInfo.location}
             </span>
           )}
           {personalInfo.website && (
             <span className="flex items-center gap-1">
-              <Globe className="h-3 w-3 text-zinc-400" />
+              <Globe className="h-3 w-3 text-muted-foreground" />
               {personalInfo.website.replace(/^https?:\/\//, "")}
             </span>
           )}
           {personalInfo.linkedin && (
             <span className="flex items-center gap-1">
-              <Linkedin className="h-3 w-3 text-zinc-400" />
+              <Linkedin className="h-3 w-3 text-muted-foreground" />
               {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?linkedin\.com\/in\//, "")}
             </span>
           )}
           {personalInfo.github && (
             <span className="flex items-center gap-1">
-              <Github className="h-3 w-3 text-zinc-400" />
+              <Github className="h-3 w-3 text-muted-foreground" />
               {personalInfo.github.replace(/^https?:\/\/(www\.)?github\.com\//, "")}
             </span>
           )}

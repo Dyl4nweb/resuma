@@ -16,6 +16,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 interface NavbarProps {
   user?: {
@@ -61,39 +62,18 @@ export function Navbar({ user }: NavbarProps) {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
-  // On the home page, the navbar is hidden until the user scrolls past the solo Resuma assembly
-  const [scrolledPastHero, setScrolledPastHero] = useState(!isHomePage);
+  // Navbar background transitions on scroll
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    if (!isHomePage) {
-      setScrolledPastHero(true);
-      return;
-    }
-
     const checkScroll = () => {
-      const scrollY =
-        window.pageYOffset ||
-        document.documentElement.scrollTop ||
-        window.scrollY ||
-        0;
-
-      // The "Resuma." text finishes assembling around 65%-70% of hero scroll (~450px-500px)
-      const threshold = Math.min(window.innerHeight * 0.65, 480);
-      setScrolledPastHero(scrollY >= threshold);
+      setScrolled(window.scrollY > 20);
     };
 
     checkScroll();
     window.addEventListener("scroll", checkScroll, { passive: true });
-    window.addEventListener("resize", checkScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", checkScroll);
-      window.removeEventListener("resize", checkScroll);
-    };
-  }, [isHomePage]);
-
-  // On the homepage, navbar drops down only when "Resuma." has assembled;
-  // On other pages (dashboard, login, etc.), always visible
-  const isVisible = !isHomePage || scrolledPastHero;
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, []);
 
   const isAdmin =
     user?.role === "ADMIN" ||
@@ -106,10 +86,10 @@ export function Navbar({ user }: NavbarProps) {
     <header
       className={`${
         isHomePage ? "fixed" : "sticky"
-      } top-0 left-0 right-0 z-50 w-full border-b border-zinc-800/80 bg-[#09090b]/80 backdrop-blur-md transition-all duration-500 ease-out ${
-        isVisible
-          ? "translate-y-0 opacity-100 pointer-events-auto shadow-lg shadow-black/40"
-          : "-translate-y-full opacity-0 pointer-events-none"
+      } top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
+        scrolled || !isHomePage
+          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-transparent border-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -126,8 +106,8 @@ export function Navbar({ user }: NavbarProps) {
                 href="/dashboard"
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   pathname === "/dashboard"
-                    ? "bg-zinc-800 text-[#fafafa]"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:text-accent-foreground hover:bg-muted"
                 }`}
               >
                 <LayoutDashboard className="h-4 w-4" />
@@ -138,8 +118,8 @@ export function Navbar({ user }: NavbarProps) {
                 href="/dashboard/billing"
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   pathname === "/dashboard/billing"
-                    ? "bg-zinc-800 text-[#fafafa]"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:text-accent-foreground hover:bg-muted"
                 }`}
               >
                 <CreditCard className="h-4 w-4" />
@@ -149,7 +129,7 @@ export function Navbar({ user }: NavbarProps) {
                     PRO
                   </span>
                 ) : (
-                  <span className="ml-1 inline-flex items-center rounded-full bg-zinc-800 px-1.5 py-0.2 text-[10px] font-medium text-zinc-400 border border-zinc-700">
+                  <span className="ml-1 inline-flex items-center rounded-full bg-muted px-1.5 py-0.2 text-[10px] font-medium text-muted-foreground border border-border">
                     FREE
                   </span>
                 )}
@@ -159,8 +139,8 @@ export function Navbar({ user }: NavbarProps) {
                 href="/dashboard/settings"
                 className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                   pathname === "/dashboard/settings"
-                    ? "bg-zinc-800 text-[#fafafa]"
-                    : "text-zinc-400 hover:text-white hover:bg-zinc-800/50"
+                    ? "bg-muted text-foreground"
+                    : "text-muted-foreground hover:text-accent-foreground hover:bg-muted"
                 }`}
               >
                 <Settings className="h-4 w-4" />
@@ -173,7 +153,7 @@ export function Navbar({ user }: NavbarProps) {
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                     pathname === "/admin"
                       ? "bg-red-950/60 text-red-400 border border-red-500/30"
-                      : "text-zinc-400 hover:text-red-400 hover:bg-zinc-800/50"
+                      : "text-muted-foreground hover:text-red-400 hover:bg-muted"
                   }`}
                 >
                   <Shield className="h-4 w-4 text-red-500" />
@@ -186,7 +166,7 @@ export function Navbar({ user }: NavbarProps) {
                 onClick={handleLogout}
                 disabled={loggingOut}
                 title="Sign out"
-                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white hover:bg-zinc-800/60 rounded-md transition-colors cursor-pointer border border-transparent hover:border-zinc-700 disabled:opacity-50"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-semibold text-muted-foreground hover:text-accent-foreground hover:bg-muted rounded-md transition-colors cursor-pointer border border-transparent hover:border-border disabled:opacity-50"
               >
                 <LogOut className="h-4 w-4 text-red-400" />
                 <span>{loggingOut ? "Signing out..." : "Sign Out"}</span>
@@ -195,7 +175,7 @@ export function Navbar({ user }: NavbarProps) {
           ) : isAuthPage ? (
             <Link
               href="/"
-              className="text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+              className="text-sm font-medium text-muted-foreground hover:text-accent-foreground transition-colors"
             >
               Back to Home
             </Link>
@@ -203,7 +183,7 @@ export function Navbar({ user }: NavbarProps) {
             <>
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 text-sm font-medium text-zinc-300 hover:text-white transition-colors"
+                className="px-3.5 py-1.5 text-sm font-medium text-foreground hover:text-accent-foreground transition-colors"
               >
                 Sign In
               </Link>
@@ -216,13 +196,17 @@ export function Navbar({ user }: NavbarProps) {
               </Link>
             </>
           )}
+          <div className="pl-2 border-l border-border ml-1">
+            <ThemeToggle />
+          </div>
         </nav>
 
         {/* Mobile Menu Button (Hamburger) */}
         <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
           {/* Quick status badge if user logged in */}
           {user && (
-            <span className="inline-flex items-center rounded-full bg-zinc-800/80 px-2 py-0.5 text-[10px] font-medium text-zinc-400 border border-zinc-700/60">
+            <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground border border-border">
               {user.subscriptionTier === "PRO" ? "PRO" : "FREE"}
             </span>
           )}
@@ -230,14 +214,14 @@ export function Navbar({ user }: NavbarProps) {
           <button
             type="button"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/90 text-zinc-300 hover:text-white hover:border-zinc-700 transition-colors"
+            className="shrink-0 flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground hover:text-accent-foreground hover:border-border transition-colors"
             aria-label="Toggle navigation menu"
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? (
-              <X className="h-5 w-5 text-zinc-200" />
+              <X className="h-5 w-5 text-foreground" />
             ) : (
-              <Menu className="h-5 w-5 text-zinc-200" />
+              <Menu className="h-5 w-5 text-foreground" />
             )}
           </button>
         </div>
@@ -245,20 +229,20 @@ export function Navbar({ user }: NavbarProps) {
 
       {/* Mobile Navigation Drawer / Dropdown */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-b border-zinc-800 bg-[#09090b]/95 backdrop-blur-xl px-4 pt-3 pb-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+        <div className="md:hidden border-b border-border bg-background/95 backdrop-blur-xl px-4 pt-3 pb-4 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
           {user ? (
             <div className="space-y-3">
               {/* User Profile Card */}
-              <div className="flex items-center justify-between rounded-lg border border-zinc-800/90 bg-zinc-900/70 p-2.5">
+              <div className="flex items-center justify-between rounded-lg border border-border bg-card p-2.5">
                 <div className="flex items-center gap-2.5 overflow-hidden">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-600/10 border border-red-500/20 text-red-400 font-bold text-xs">
                     {(user.name || user.email || "U").charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">
+                    <p className="text-xs font-semibold text-foreground truncate">
                       {user.name || "Resuma User"}
                     </p>
-                    <p className="text-[11px] text-zinc-400 truncate">{user.email}</p>
+                    <p className="text-[11px] text-muted-foreground truncate">{user.email}</p>
                   </div>
                 </div>
 
@@ -268,7 +252,7 @@ export function Navbar({ user }: NavbarProps) {
                       PRO
                     </span>
                   ) : (
-                    <span className="rounded-full bg-zinc-800 px-2 py-0.5 text-[10px] font-medium text-zinc-400 border border-zinc-700">
+                    <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground border border-border">
                       FREE
                     </span>
                   )}
@@ -282,11 +266,11 @@ export function Navbar({ user }: NavbarProps) {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                     pathname === "/dashboard"
-                      ? "bg-zinc-800 text-white font-semibold"
-                      : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                      ? "bg-muted text-foreground font-semibold"
+                      : "text-foreground hover:text-accent-foreground hover:bg-muted"
                   }`}
                 >
-                  <LayoutDashboard className="h-4 w-4 text-zinc-400" />
+                  <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
                   <span>Dashboard</span>
                 </Link>
 
@@ -295,15 +279,15 @@ export function Navbar({ user }: NavbarProps) {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                     pathname === "/dashboard/billing"
-                      ? "bg-zinc-800 text-white font-semibold"
-                      : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                      ? "bg-muted text-foreground font-semibold"
+                      : "text-foreground hover:text-accent-foreground hover:bg-muted"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
-                    <CreditCard className="h-4 w-4 text-zinc-400" />
+                    <CreditCard className="h-4 w-4 text-muted-foreground" />
                     <span>Billing</span>
                   </div>
-                  <span className="text-[11px] text-zinc-400">
+                  <span className="text-[11px] text-muted-foreground">
                     {user.subscriptionTier === "PRO" ? "Pro Plan" : "Free Plan"}
                   </span>
                 </Link>
@@ -313,11 +297,11 @@ export function Navbar({ user }: NavbarProps) {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                     pathname === "/dashboard/settings"
-                      ? "bg-zinc-800 text-white font-semibold"
-                      : "text-zinc-300 hover:text-white hover:bg-zinc-800/60"
+                      ? "bg-muted text-foreground font-semibold"
+                      : "text-foreground hover:text-accent-foreground hover:bg-muted"
                   }`}
                 >
-                  <Settings className="h-4 w-4 text-zinc-400" />
+                  <Settings className="h-4 w-4 text-muted-foreground" />
                   <span>Settings</span>
                 </Link>
 
@@ -328,7 +312,7 @@ export function Navbar({ user }: NavbarProps) {
                     className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
                       pathname === "/admin"
                         ? "bg-red-950/60 text-red-400 border border-red-500/30"
-                        : "text-zinc-300 hover:text-red-400 hover:bg-zinc-800/60"
+                        : "text-foreground hover:text-red-400 hover:bg-muted"
                     }`}
                   >
                     <Shield className="h-4 w-4 text-red-500" />
@@ -338,8 +322,8 @@ export function Navbar({ user }: NavbarProps) {
               </div>
 
               {/* Sign out */}
-              <div className="pt-2 border-t border-zinc-800/80 flex items-center justify-between">
-                <span className="text-xs text-zinc-500">Account Session</span>
+              <div className="pt-2 border-t border-border flex items-center justify-between">
+                <span className="text-xs text-muted-foreground">Account Session</span>
                 <button
                   type="button"
                   onClick={handleLogout}
@@ -356,7 +340,7 @@ export function Navbar({ user }: NavbarProps) {
               <Link
                 href="/"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="inline-flex items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900/60 px-3.5 py-1.5 text-xs font-medium text-zinc-300 hover:text-white"
+                className="inline-flex items-center justify-center rounded-lg border border-border bg-card px-3.5 py-1.5 text-xs font-medium text-foreground hover:text-accent-foreground"
               >
                 Back to Home
               </Link>
@@ -366,7 +350,7 @@ export function Navbar({ user }: NavbarProps) {
               <Link
                 href="/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex-1 text-center rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs font-medium text-zinc-300 hover:text-white transition-colors"
+                className="flex-1 text-center rounded-lg border border-border bg-card px-3 py-2 text-xs font-medium text-foreground hover:text-accent-foreground transition-colors"
               >
                 Sign In
               </Link>

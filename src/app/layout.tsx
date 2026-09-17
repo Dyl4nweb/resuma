@@ -44,6 +44,7 @@ export const metadata: Metadata = {
 };
 
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,9 +54,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className={`${inter.className} min-h-screen bg-[#09090b] text-[#fafafa] antialiased selection:bg-red-600/30 selection:text-white overflow-x-hidden w-full relative`}>
-        {children}
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <body className={`${inter.className} min-h-screen bg-background text-foreground antialiased selection:bg-red-600/30 selection:text-white overflow-x-hidden w-full relative`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

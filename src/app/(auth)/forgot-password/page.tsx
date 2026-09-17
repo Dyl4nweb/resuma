@@ -37,25 +37,25 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
         <Link href="/" className="inline-block group">
-          <span className="text-3xl font-extrabold tracking-tight text-[#fafafa]">
+          <span className="text-3xl font-extrabold tracking-tight text-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
           </span>
         </Link>
-        <h2 className="mt-6 text-2xl font-bold tracking-tight text-white">
+        <h2 className="mt-6 text-2xl font-bold tracking-tight text-foreground">
           Forgot Password
         </h2>
-        <p className="mt-2 text-xs text-zinc-400">
+        <p className="mt-2 text-xs text-muted-foreground">
           Enter your email address and we'll send you a link to reset your password.
         </p>
       </div>
 
       {/* Form Card */}
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6 sm:p-8 shadow-xl backdrop-blur-md">
+        <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xl backdrop-blur-md">
           {status === "error" && (
             <div className="mb-5 rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-300">
               <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
@@ -72,13 +72,13 @@ export default function ForgotPasswordPage() {
               <p className="text-sm text-emerald-200/80 mb-4">
                 We have sent a password reset link to <strong className="text-emerald-100">{email}</strong>.
               </p>
-              <p className="text-[11px] text-zinc-500 bg-zinc-950/50 p-2 rounded border border-zinc-800">
+              <p className="text-[11px] text-muted-foreground bg-background p-2 rounded border border-border">
                 (For development, check the terminal console for the mock link)
               </p>
               <div className="mt-6 w-full">
                 <Link
                   href="/login"
-                  className="flex items-center justify-center gap-2 w-full rounded-lg bg-zinc-800 py-2 text-sm font-semibold text-white hover:bg-zinc-700 transition-colors"
+                  className="flex items-center justify-center gap-2 w-full rounded-lg bg-muted py-2 text-sm font-semibold text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Return to login
@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-xs font-semibold text-zinc-300 mb-1"
+                  className="block text-xs font-semibold text-foreground mb-1"
                 >
                   Email Address
                 </label>
@@ -100,7 +100,7 @@ export default function ForgotPasswordPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3.5 py-2 text-sm text-zinc-100 placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 disabled:opacity-50"
+                  className="w-full rounded-lg border border-border bg-background px-3.5 py-2 text-sm text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none focus:ring-1 focus:ring-red-500 disabled:opacity-50"
                   required
                   disabled={status === "loading"}
                 />
@@ -127,7 +127,7 @@ export default function ForgotPasswordPage() {
             <div className="mt-6 text-center">
               <Link
                 href="/login"
-                className="inline-flex items-center gap-1.5 text-xs text-zinc-400 hover:text-red-400 transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-red-400 transition-colors"
               >
                 <ArrowLeft className="h-3 w-3" />
                 Back to login

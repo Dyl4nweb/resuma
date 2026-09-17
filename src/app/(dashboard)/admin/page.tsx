@@ -2,7 +2,6 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { requireAdminSession } from "@/lib/admin";
 import { Navbar } from "@/components/common/Navbar";
-import { Footer } from "@/components/common/Footer";
 import { AdminDashboardClient, AdminUser, AdminStats } from "@/components/admin/AdminDashboardClient";
 
 export const metadata = {
@@ -135,7 +134,7 @@ export default async function AdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar user={authCheck.user} />
       <main className="flex-1 mx-auto max-w-7xl w-full px-4 sm:px-6 lg:px-8 py-8">
         <AdminDashboardClient
@@ -144,7 +143,6 @@ export default async function AdminPage() {
           currentAdminEmail={authCheck.user?.email || ""}
         />
       </main>
-      <Footer />
     </div>
   );
 }

@@ -132,7 +132,7 @@ export function ClassicTemplate({ data }: TemplateProps) {
                         <span className="font-normal text-zinc-600 italic"> — {proj.technologies.join(", ")}</span>
                       )}
                     </span>
-                    {proj.url && <span className="font-normal text-zinc-500">{proj.url}</span>}
+                    {proj.url && <span className="font-normal text-muted-foreground">{proj.url}</span>}
                   </div>
                   <p className="text-zinc-800 mt-0.5">{proj.description}</p>
                   {proj.highlights && proj.highlights.length > 0 && (

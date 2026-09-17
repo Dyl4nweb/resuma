@@ -25,7 +25,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
         if (!summary) return null;
         return (
           <section key="summary" className="resume-section mb-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-2">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
               About
             </h2>
             <p className="text-zinc-700 text-sm leading-relaxed">{summary}</p>
@@ -36,7 +36,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
         if (!experience || experience.length === 0) return null;
         return (
           <section key="experience" className="resume-section mb-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-3">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
               Experience
             </h2>
             <div className="space-y-4">
@@ -44,7 +44,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
                 <div key={exp.id} className="relative pl-3 border-l-2 border-zinc-200">
                   <div className="flex justify-between items-baseline">
                     <h3 className="font-semibold text-zinc-900 text-sm">{exp.position}</h3>
-                    <span className="text-xs text-zinc-400">
+                    <span className="text-xs text-muted-foreground">
                       {formatDate(exp.startDate)} — {exp.isCurrent ? "Present" : formatDate(exp.endDate)}
                     </span>
                   </div>
@@ -69,7 +69,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
         if (!education || education.length === 0) return null;
         return (
           <section key="education" className="resume-section mb-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-3">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
               Education
             </h2>
             <div className="space-y-3">
@@ -80,12 +80,12 @@ export function MinimalistTemplate({ data }: TemplateProps) {
                       {edu.degree}
                       {edu.fieldOfStudy ? ` in ${edu.fieldOfStudy}` : ""}
                     </h3>
-                    <span className="text-xs text-zinc-400">
+                    <span className="text-xs text-muted-foreground">
                       {formatDate(edu.startDate)} — {edu.isCurrent ? "Present" : formatDate(edu.endDate)}
                     </span>
                   </div>
                   <div className="text-xs font-medium text-zinc-600">{edu.institution}</div>
-                  {edu.gpa && <div className="text-xs text-zinc-500 mt-0.5">GPA: {edu.gpa}</div>}
+                  {edu.gpa && <div className="text-xs text-muted-foreground mt-0.5">GPA: {edu.gpa}</div>}
                   {edu.description && (
                     <p className="text-zinc-600 text-xs mt-1 leading-relaxed">{edu.description}</p>
                   )}
@@ -99,7 +99,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
         if (!skills || skills.length === 0) return null;
         return (
           <section key="skills" className="resume-section mb-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-2.5">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2.5">
               Skills
             </h2>
             <div className="space-y-1.5 text-xs">
@@ -117,7 +117,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
         if (!projects || projects.length === 0) return null;
         return (
           <section key="projects" className="resume-section mb-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-3">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
               Projects
             </h2>
             <div className="space-y-3 text-xs">
@@ -126,7 +126,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
                   <div className="flex justify-between items-baseline font-semibold text-zinc-900">
                     <span>{proj.title}</span>
                     {proj.technologies && (
-                      <span className="font-normal text-zinc-400 text-[11px]">
+                      <span className="font-normal text-muted-foreground text-[11px]">
                         {proj.technologies.join(" · ")}
                       </span>
                     )}
@@ -142,7 +142,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
         if (!certifications || certifications.length === 0) return null;
         return (
           <section key="certifications" className="resume-section mb-6">
-            <h2 className="text-xs font-semibold uppercase tracking-widest text-zinc-400 mb-2">
+            <h2 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
               Certifications
             </h2>
             <div className="space-y-1 text-xs">
@@ -151,7 +151,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
                   <span>
                     <strong className="font-semibold text-zinc-900">{cert.name}</strong> ({cert.issuer})
                   </span>
-                  <span className="text-zinc-400">{cert.date}</span>
+                  <span className="text-muted-foreground">{cert.date}</span>
                 </div>
               ))}
             </div>
@@ -174,7 +174,7 @@ export function MinimalistTemplate({ data }: TemplateProps) {
           {personalInfo.jobTitle}
         </p>
 
-        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500 mt-3 pt-3 border-t border-zinc-100">
+        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mt-3 pt-3 border-t border-zinc-100">
           {personalInfo.email && <span>{personalInfo.email}</span>}
           {personalInfo.phone && <span>{personalInfo.phone}</span>}
           {personalInfo.location && <span>{personalInfo.location}</span>}

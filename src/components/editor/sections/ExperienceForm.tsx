@@ -65,13 +65,13 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <label className="block text-xs font-semibold text-zinc-300">
+        <label className="block text-xs font-semibold text-foreground">
           Work Experience ({items.length})
         </label>
         <button
           type="button"
           onClick={addItem}
-          className="flex items-center gap-1 rounded bg-zinc-800 px-2.5 py-1 text-xs font-medium text-zinc-200 hover:bg-zinc-700 transition-colors"
+          className="flex items-center gap-1 rounded bg-muted px-2.5 py-1 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
         >
           <Plus className="h-3.5 w-3.5" />
           <span>Add Position</span>
@@ -79,7 +79,7 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-lg border border-dashed border-zinc-700/80 p-6 text-center text-xs text-zinc-500">
+        <div className="rounded-lg border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
           No work experience added yet. Click &quot;Add Position&quot; to begin.
         </div>
       ) : (
@@ -90,17 +90,17 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
             return (
               <div
                 key={item.id}
-                className="rounded-md border border-zinc-800 bg-zinc-900/70 overflow-hidden"
+                className="rounded-md border border-border bg-card overflow-hidden"
               >
                 {/* Accordion Header */}
                 <div
-                  className="flex items-center justify-between px-3.5 py-2.5 cursor-pointer select-none hover:bg-zinc-800/40 transition-colors"
+                  className="flex items-center justify-between px-3.5 py-2.5 cursor-pointer select-none hover:bg-muted transition-colors"
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
                 >
-                  <div className="flex items-center gap-2 text-sm font-medium text-zinc-200">
+                  <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                     <span>{item.position || "Untitled Position"}</span>
                     {item.company && (
-                      <span className="text-xs text-zinc-500 font-normal">
+                      <span className="text-xs text-muted-foreground font-normal">
                         at {item.company}
                       </span>
                     )}
@@ -112,25 +112,25 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                         e.stopPropagation();
                         removeItem(item.id);
                       }}
-                      className="p-1 text-zinc-500 hover:text-red-400 transition-colors"
+                      className="p-1 text-muted-foreground hover:text-red-400 transition-colors"
                       title="Delete"
                     >
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                     {isExpanded ? (
-                      <ChevronUp className="h-4 w-4 text-zinc-400" />
+                      <ChevronUp className="h-4 w-4 text-muted-foreground" />
                     ) : (
-                      <ChevronDown className="h-4 w-4 text-zinc-400" />
+                      <ChevronDown className="h-4 w-4 text-muted-foreground" />
                     )}
                   </div>
                 </div>
 
                 {/* Accordion Body */}
                 {isExpanded && (
-                  <div className="p-3.5 pt-1 space-y-3 border-t border-zinc-800/60 bg-zinc-950/40">
+                  <div className="p-3.5 pt-1 space-y-3 border-t border-border bg-background">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Job Title *
                         </label>
                         <input
@@ -140,11 +140,11 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                             updateItem(item.id, { position: e.target.value })
                           }
                           placeholder="e.g. Lead Software Architect"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Company / Organization *
                         </label>
                         <input
@@ -154,14 +154,14 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                             updateItem(item.id, { company: e.target.value })
                           }
                           placeholder="e.g. Stripe, Acme Corp"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Location
                         </label>
                         <input
@@ -171,11 +171,11 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                             updateItem(item.id, { location: e.target.value })
                           }
                           placeholder="e.g. Remote / New York"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs text-zinc-400 mb-1">
+                        <label className="block text-xs text-muted-foreground mb-1">
                           Start Date
                         </label>
                         <input
@@ -185,15 +185,15 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                             updateItem(item.id, { startDate: e.target.value })
                           }
                           placeholder="e.g. 2021-03"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none"
                         />
                       </div>
                       <div>
                         <div className="flex justify-between items-center mb-1">
-                          <label className="text-xs text-zinc-400">
+                          <label className="text-xs text-muted-foreground">
                             End Date
                           </label>
-                          <label className="flex items-center gap-1 text-[11px] text-zinc-400 cursor-pointer">
+                          <label className="flex items-center gap-1 text-[11px] text-muted-foreground cursor-pointer">
                             <input
                               type="checkbox"
                               checked={item.isCurrent}
@@ -203,7 +203,7 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                                   endDate: e.target.checked ? "Present" : "",
                                 })
                               }
-                              className="rounded border-zinc-700 text-red-600 focus:ring-0"
+                              className="rounded border-border text-red-600 focus:ring-0"
                             />
                             Current
                           </label>
@@ -216,13 +216,13 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                             updateItem(item.id, { endDate: e.target.value })
                           }
                           placeholder="e.g. 2024-05"
-                          className="w-full rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1.5 text-xs text-zinc-200 focus:border-red-500 focus:outline-none disabled:opacity-50"
+                          className="w-full rounded border border-border bg-card px-2.5 py-1.5 text-xs text-foreground focus:border-red-500 focus:outline-none disabled:opacity-50"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs text-zinc-400 mb-1">
+                      <label className="block text-xs text-muted-foreground mb-1">
                         High-Level Overview / Role Description
                       </label>
                       <textarea
@@ -232,14 +232,14 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                           updateItem(item.id, { description: e.target.value })
                         }
                         placeholder="Core responsibilities and scope of this role..."
-                        className="w-full rounded border border-zinc-700 bg-zinc-900 p-2 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                        className="w-full rounded border border-border bg-card p-2 text-xs text-foreground focus:border-red-500 focus:outline-none"
                       />
                     </div>
 
                     {/* Bullet Highlights */}
                     <div className="space-y-1.5">
                       <div className="flex justify-between items-center">
-                        <label className="text-xs text-zinc-400">
+                        <label className="text-xs text-muted-foreground">
                           Key Achievements & Metrics (Bullet Points)
                         </label>
                         <button
@@ -260,12 +260,12 @@ export function ExperienceForm({ items, onChange }: ExperienceFormProps) {
                               updateHighlight(item.id, hIdx, e.target.value)
                             }
                             placeholder="e.g. Scaled database queries reducing p99 latency by 35%..."
-                            className="flex-1 rounded border border-zinc-700 bg-zinc-900 px-2.5 py-1 text-xs text-zinc-200 focus:border-red-500 focus:outline-none"
+                            className="flex-1 rounded border border-border bg-card px-2.5 py-1 text-xs text-foreground focus:border-red-500 focus:outline-none"
                           />
                           <button
                             type="button"
                             onClick={() => removeHighlight(item.id, hIdx)}
-                            className="p-1 text-zinc-600 hover:text-zinc-400"
+                            className="p-1 text-zinc-600 hover:text-muted-foreground"
                           >
                             <Trash2 className="h-3 w-3" />
                           </button>
