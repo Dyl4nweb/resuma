@@ -210,7 +210,7 @@ export default async function MarketingPage() {
               </div>
 
               {/* Pro Plan */}
-              <div className="relative rounded-2xl border border-red-500/40 bg-gradient-to-b from-red-950/20 via-card to-card dark:via-zinc-900 dark:to-zinc-900 p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-red-950/20">
+              <div className="relative rounded-2xl border border-red-500/40 bg-gradient-to-b from-red-50 to-white dark:from-red-950/20 dark:to-zinc-900 p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-red-950/20">
                 <div className="absolute -top-3.5 right-6 rounded-full bg-red-600 px-3 py-1 text-[10px] font-bold text-white tracking-wide uppercase shadow">
                   Pro Plan
                 </div>
