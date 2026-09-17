@@ -202,7 +202,7 @@ export default async function MarketingPage() {
                 <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-border flex justify-center">
                   <Link
                     href="/register"
-                    className="w-full max-w-xs flex items-center justify-center gap-2 rounded-xl bg-muted-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                    className="w-full max-w-xs flex items-center justify-center gap-2 rounded-xl bg-zinc-100 text-zinc-900 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 py-3 text-sm font-semibold transition-colors"
                   >
                     <span>Get Started Free</span>
                   </Link>
