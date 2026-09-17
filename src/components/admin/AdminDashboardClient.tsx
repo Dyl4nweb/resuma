@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, PieChart, Pie, Cell } from 'recharts';
 import {
   Users,
   Crown,
@@ -15,6 +16,8 @@ import {
   Clock,
   ExternalLink,
   ChevronDown,
+  Database,
+  TrendingUp,
 } from "lucide-react";
 
 export interface AdminUserResume {
@@ -44,6 +47,11 @@ export interface AdminStats {
   freeUsers: number;
   totalResumes: number;
   totalViews: number;
+  databaseSize: string;
+  signupsLast7Days: number;
+  resumesLast7Days: number;
+  chartData: { date: string; signups: number; resumes: number; views: number }[];
+  viewSources: { name: string; value: number }[];
 }
 
 interface AdminDashboardClientProps {
@@ -61,6 +69,7 @@ export function AdminDashboardClient({
   const [stats, setStats] = useState<AdminStats>(initialStats);
   const [search, setSearch] = useState("");
   const [filterTier, setFilterTier] = useState<"ALL" | "PRO" | "FREE" | "ADMIN">("ALL");
+  const [activeTab, setActiveTab] = useState<"overview" | "users">("overview");
   const [loading, setLoading] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
   const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null);
@@ -241,56 +250,162 @@ export function AdminDashboardClient({
         </div>
       )}
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-3.5">
-        <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-400">Total Users</span>
-            <Users className="h-4 w-4 text-zinc-400" />
-          </div>
-          <p className="mt-2 text-2xl font-black text-white">{stats.totalUsers}</p>
-          <p className="text-[11px] text-zinc-500 mt-0.5">Active registrations</p>
-        </div>
-
-        <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-amber-300">PRO Members</span>
-            <Crown className="h-4 w-4 text-amber-400" />
-          </div>
-          <p className="mt-2 text-2xl font-black text-amber-200">{stats.proUsers}</p>
-          <p className="text-[11px] text-amber-400/70 mt-0.5">
-            {stats.totalUsers > 0 ? Math.round((stats.proUsers / stats.totalUsers) * 100) : 0}% conversion
-          </p>
-        </div>
-
-        <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-400">FREE Users</span>
-            <Users className="h-4 w-4 text-zinc-500" />
-          </div>
-          <p className="mt-2 text-2xl font-black text-zinc-200">{stats.freeUsers}</p>
-          <p className="text-[11px] text-zinc-500 mt-0.5">1-resume tier</p>
-        </div>
-
-        <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-400">Resumes Created</span>
-            <FileText className="h-4 w-4 text-red-400" />
-          </div>
-          <p className="mt-2 text-2xl font-black text-white">{stats.totalResumes}</p>
-          <p className="text-[11px] text-zinc-500 mt-0.5">Across platform</p>
-        </div>
-
-        <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden col-span-2 lg:col-span-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-400">Total Views</span>
-            <Eye className="h-4 w-4 text-emerald-400" />
-          </div>
-          <p className="mt-2 text-2xl font-black text-emerald-300">{stats.totalViews}</p>
-          <p className="text-[11px] text-zinc-500 mt-0.5">Public resume views</p>
-        </div>
+      {/* Tabs */}
+      <div className="flex items-center gap-6 border-b border-zinc-800/80">
+        <button
+          onClick={() => setActiveTab("overview")}
+          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === "overview"
+              ? "border-red-500 text-red-400"
+              : "border-transparent text-zinc-500 hover:text-zinc-300"
+          }`}
+        >
+          Analytics Overview
+        </button>
+        <button
+          onClick={() => setActiveTab("users")}
+          className={`pb-3 text-sm font-medium border-b-2 transition-colors ${
+            activeTab === "users"
+              ? "border-red-500 text-red-400"
+              : "border-transparent text-zinc-500 hover:text-zinc-300"
+          }`}
+        >
+          User Management
+        </button>
       </div>
 
+      {activeTab === "overview" && (
+        <div className="space-y-6">
+          {/* KPI Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5">
+            <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-zinc-400">Total Users</span>
+                <Users className="h-4 w-4 text-zinc-400" />
+              </div>
+              <p className="mt-2 text-2xl font-black text-white">{stats.totalUsers}</p>
+              <p className="text-[11px] text-zinc-500 mt-0.5">Active registrations</p>
+            </div>
+
+            <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-amber-300">PRO Members</span>
+                <Crown className="h-4 w-4 text-amber-400" />
+              </div>
+              <p className="mt-2 text-2xl font-black text-amber-200">{stats.proUsers}</p>
+              <p className="text-[11px] text-amber-400/70 mt-0.5">
+                {stats.totalUsers > 0 ? Math.round((stats.proUsers / stats.totalUsers) * 100) : 0}% conversion
+              </p>
+            </div>
+
+            <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-zinc-400">FREE Users</span>
+                <Users className="h-4 w-4 text-zinc-500" />
+              </div>
+              <p className="mt-2 text-2xl font-black text-zinc-200">{stats.freeUsers}</p>
+              <p className="text-[11px] text-zinc-500 mt-0.5">1-resume tier</p>
+            </div>
+
+            <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-zinc-400">Resumes Created</span>
+                <FileText className="h-4 w-4 text-red-400" />
+              </div>
+              <p className="mt-2 text-2xl font-black text-white">{stats.totalResumes}</p>
+              <p className="text-[11px] text-zinc-500 mt-0.5">Across platform</p>
+            </div>
+
+            <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-zinc-400">Total Views</span>
+                <Eye className="h-4 w-4 text-emerald-400" />
+              </div>
+              <p className="mt-2 text-2xl font-black text-emerald-300">{stats.totalViews}</p>
+              <p className="text-[11px] text-zinc-500 mt-0.5">Public resume views</p>
+            </div>
+
+            <div className="rounded-xl border border-blue-500/20 bg-blue-900/10 p-4 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-semibold text-blue-400">Storage Size</span>
+                <Database className="h-4 w-4 text-blue-400" />
+              </div>
+              <p className="mt-2 text-2xl font-black text-blue-300">{stats.databaseSize}</p>
+              <p className="text-[11px] text-blue-400/70 mt-0.5">PostgreSQL Database</p>
+            </div>
+          </div>
+
+          {/* Analytics Charts */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 shadow-xl">
+              <h2 className="text-lg font-bold text-white mb-6">7-Day Analytics Overview</h2>
+              <div className="h-80 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={stats.chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorSignups" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#a855f7" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorResumes" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorViews" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <XAxis dataKey="date" stroke="#52525b" fontSize={11} tickLine={false} axisLine={false} />
+                    <YAxis stroke="#52525b" fontSize={11} tickLine={false} axisLine={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}
+                      itemStyle={{ fontSize: '13px' }}
+                    />
+                    <Legend verticalAlign="top" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px' }} />
+                    <Area type="monotone" name="Signups" dataKey="signups" stroke="#a855f7" strokeWidth={2} fillOpacity={1} fill="url(#colorSignups)" />
+                    <Area type="monotone" name="Resumes Created" dataKey="resumes" stroke="#ef4444" strokeWidth={2} fillOpacity={1} fill="url(#colorResumes)" />
+                    <Area type="monotone" name="Resume Views" dataKey="views" stroke="#10b981" strokeWidth={2} fillOpacity={1} fill="url(#colorViews)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-6 shadow-xl flex flex-col">
+              <h2 className="text-lg font-bold text-white mb-6">Traffic Sources</h2>
+              <div className="flex-1 min-h-[300px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={stats.viewSources}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={5}
+                      dataKey="value"
+                      stroke="none"
+                    >
+                      {stats.viewSources.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={['#ef4444', '#3b82f6', '#10b981', '#a855f7', '#f59e0b'][index % 5]} />
+                      ))}
+                    </Pie>
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#18181b', border: '1px solid #27272a', borderRadius: '8px' }}
+                      itemStyle={{ fontSize: '13px' }}
+                    />
+                    <Legend verticalAlign="bottom" height={36} iconType="circle" wrapperStyle={{ fontSize: '12px' }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "users" && (
+        <div className="space-y-6">
       {/* Filter and Search Controls */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
         <div className="relative w-full sm:w-80">
@@ -510,6 +625,8 @@ export function AdminDashboardClient({
           </table>
         </div>
       </div>
+        </div>
+      )}
     </div>
   );
 }

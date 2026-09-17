@@ -32,7 +32,6 @@ export default function LoginPage() {
   const [authMode, setAuthMode] = useState<"pin" | "password">("pin");
   const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Account Recognition State
@@ -87,7 +86,6 @@ export default function LoginPage() {
             : "Invalid email or password. Please verify your credentials."
         );
       } else {
-        setIsRedirecting(true);
         // Save remembered profile on success if rememberMe is true or already remembered
         if (rememberMe || isUsingRemembered) {
           try {
@@ -112,25 +110,6 @@ export default function LoginPage() {
       setLoading(false);
     }
   };
-
-  if (isRedirecting) {
-    return (
-      <div className="min-h-screen bg-[#09090b] text-[#fafafa] flex flex-col justify-center items-center px-4 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="relative z-10 flex flex-col items-center text-center p-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl shadow-2xl max-w-sm w-full">
-          <div className="text-4xl font-extrabold tracking-tight text-white mb-2">
-            Resuma<span className="text-[#dc2626]">.</span>
-          </div>
-          <p className="text-xs text-zinc-400 font-medium mb-6">
-            Authentication verified! Entering dashboard...
-          </p>
-          <div className="w-full h-1 bg-zinc-800 rounded-full overflow-hidden relative">
-            <div className="h-full w-full bg-gradient-to-r from-red-600 to-amber-500 rounded-full animate-indeterminate" />
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#09090b] flex flex-col justify-center py-12 sm:px-6 lg:px-8">

@@ -8,17 +8,7 @@ export default function DashboardLoading() {
 
       {/* Main Glassmorphic Loading Card */}
       <div className="relative z-10 flex flex-col items-center text-center p-8 rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-xl shadow-2xl max-w-sm w-full">
-        {/* Animated Brand Icon */}
-        <div className="relative mb-5">
-          <div className="absolute inset-0 rounded-2xl bg-red-600/25 blur-xl animate-pulse" />
-          <div className="h-16 w-16 rounded-2xl bg-zinc-950 border border-zinc-800 shadow-2xl flex items-center justify-center relative z-10">
-            <FileText className="h-8 w-8 text-zinc-100" />
-            <span className="absolute -top-1 -right-1 flex h-4 w-4">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-red-600" />
-            </span>
-          </div>
-        </div>
+
 
         {/* Brand Name */}
         <div className="text-2xl font-extrabold tracking-tight text-white mb-1.5">

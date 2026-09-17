@@ -43,7 +43,6 @@ interface DashboardClientProps {
   userName: string;
 }
 
-import { FeedbackModal } from "./FeedbackModal";
 
 export function DashboardClient({
   initialResumes,
@@ -180,9 +179,6 @@ export function DashboardClient({
         </div>
 
         <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="hidden sm:block">
-            <FeedbackModal />
-          </div>
           <button
             type="button"
             onClick={handleCreateResume}
@@ -196,9 +192,6 @@ export function DashboardClient({
             )}
             <span>Create New Resume</span>
           </button>
-        </div>
-        <div className="sm:hidden block">
-          <FeedbackModal />
         </div>
       </div>
 
