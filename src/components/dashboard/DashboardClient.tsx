@@ -398,7 +398,7 @@ export function DashboardClient({
                   <div className="mt-6 pt-4 border-t border-border flex items-center justify-between">
                     <Link
                       href={`/resumes/${resume.id}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-foreground bg-muted hover:bg-zinc-200 dark:hover:bg-zinc-700 px-3 py-1.5 rounded-md transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-900 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:bg-zinc-700 px-3 py-1.5 rounded-md transition-colors"
                     >
                       <span>Edit Resume</span>
                     </Link>

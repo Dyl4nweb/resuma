@@ -49,7 +49,7 @@ export function EducationForm({ items, onChange }: EducationFormProps) {
         <button
           type="button"
           onClick={addItem}
-          className="flex items-center gap-1 rounded bg-muted px-2.5 py-1 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+          className="flex items-center gap-1 rounded bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100 px-2.5 py-1 text-xs font-medium hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
         >
           <Plus className="h-3.5 w-3.5" />
           <span>Add Education</span>
