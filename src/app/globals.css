@@ -63,6 +63,17 @@
 
 /* Print Styles for ATS Resumes and Clean Document Output */
 @media print {
+  :root, .dark {
+    --background: #ffffff !important;
+    --foreground: #000000 !important;
+    --card: #ffffff !important;
+    --card-foreground: #000000 !important;
+    --border: #e2e8f0 !important;
+    --muted: #f1f5f9 !important;
+    --muted-foreground: #475569 !important;
+    --accent: #f1f5f9 !important;
+    --accent-foreground: #000000 !important;
+  }
   *,
   *::before,
   *::after {
