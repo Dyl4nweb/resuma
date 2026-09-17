@@ -67,7 +67,7 @@ export function Navbar({ user }: NavbarProps) {
 
   useEffect(() => {
     const checkScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > (window.innerHeight * 1.2));
     };
 
     checkScroll();
@@ -87,9 +87,11 @@ export function Navbar({ user }: NavbarProps) {
       className={`${
         isHomePage ? "fixed" : "sticky"
       } top-0 left-0 right-0 z-50 w-full transition-all duration-300 ease-out ${
-        scrolled || !isHomePage
-          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-transparent border-transparent"
+        !isHomePage
+          ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm opacity-100 translate-y-0"
+          : scrolled
+            ? "bg-background/80 backdrop-blur-md border-b border-border shadow-sm opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-full pointer-events-none bg-transparent border-transparent"
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">

@@ -73,8 +73,8 @@ export function LiveTestimonials() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show when user scrolls past 50% of viewport height
-      if (window.scrollY > window.innerHeight * 0.5) {
+      // Show when user scrolls past the hero section (sync with navbar)
+      if (window.scrollY > (window.innerHeight * 1.2)) {
         setHasScrolled(true);
       } else {
         setHasScrolled(false);
@@ -86,14 +86,14 @@ export function LiveTestimonials() {
   }, []);
 
   useEffect(() => {
-    if (isDismissed || !hasScrolled) return;
+    if (isDismissed) return;
+    
+    if (!hasScrolled) {
+      setIsVisible(false);
+      return;
+    }
 
-    // Initial delay before showing the first toast after scroll
-    const initialTimer = setTimeout(() => {
-      setIsVisible(true);
-    }, 1000); 
-
-    return () => clearTimeout(initialTimer);
+    setIsVisible(true);
   }, [isDismissed, hasScrolled]);
 
   useEffect(() => {
