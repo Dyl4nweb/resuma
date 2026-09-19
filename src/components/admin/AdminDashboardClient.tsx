@@ -77,6 +77,11 @@ export function AdminDashboardClient({
   const [loading, setLoading] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
   const [activeResumePopover, setActiveResumePopover] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const showNotification = (type: "success" | "error", message: string) => {
     if (type === "success") {
@@ -220,7 +225,7 @@ export function AdminDashboardClient({
             <p className="text-[11px] text-muted-foreground">Auto-refresh active (15s)</p>
             <p className="text-xs text-muted-foreground flex items-center justify-end gap-1">
               <Clock className="h-3 w-3 text-muted-foreground" />
-              {lastRefreshed.toLocaleTimeString()}
+              {mounted ? lastRefreshed.toLocaleTimeString() : "--:--:--"}
             </p>
           </div>
           <button

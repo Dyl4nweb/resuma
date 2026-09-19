@@ -46,6 +46,7 @@ export const metadata: Metadata = {
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AppToaster } from "@/components/common/AppToaster";
+import { SplashScreen } from "@/components/common/SplashScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,6 +64,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <SplashScreen />
           {children}
           <AppToaster />
         </ThemeProvider>

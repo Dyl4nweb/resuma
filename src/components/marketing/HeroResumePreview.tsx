@@ -107,7 +107,7 @@ export function HeroResumePreview() {
         </div>
 
         {/* Live Resume Canvas Container */}
-        <div className="relative mt-3 sm:mt-5 bg-background rounded-xl p-2 sm:p-8 flex justify-center border border-border overflow-hidden max-h-[460px] xs:max-h-[540px] sm:max-h-[660px]">
+        <div className="relative mt-3 sm:mt-5 bg-background rounded-xl p-2 sm:p-8 flex justify-center items-start border border-border overflow-hidden min-h-[460px] sm:min-h-[540px] max-h-[460px] xs:max-h-[540px] sm:max-h-[660px]">
           {/* Subtle gradient overlay at bottom to encourage scrolling/editing */}
           <div className="absolute inset-x-0 bottom-0 h-24 sm:h-28 bg-gradient-to-t from-zinc-950 via-zinc-950/85 to-transparent z-10 pointer-events-none flex items-end justify-center pb-4 sm:pb-5 px-3">
             <Link
@@ -120,7 +120,7 @@ export function HeroResumePreview() {
           </div>
 
           {/* Scaled Live Resume Document */}
-          <div className="w-full flex justify-center transform origin-top scale-[0.52] xs:scale-[0.62] sm:scale-[0.82] lg:scale-[0.92] transition-transform">
+          <div className="flex justify-center transform origin-top scale-[0.40] xs:scale-[0.48] sm:scale-[0.65] md:scale-[0.70] lg:scale-[0.80] transition-transform w-[794px] shrink-0">
             <TemplateRenderer data={previewData} />
           </div>
         </div>

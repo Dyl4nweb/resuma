@@ -184,12 +184,12 @@ export function DashboardClient({
           </p>
         </div>
 
-        <div className="flex items-center gap-3 w-full sm:w-auto">
+        <div className="flex items-center gap-3 mt-4 sm:mt-0">
           <button
             type="button"
             onClick={handleCreateResume}
             disabled={isCreating}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-lg bg-red-600 px-3.5 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
+            className="flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 text-xs sm:text-sm font-semibold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
           >
             {isCreating ? (
               <Loader2 className="h-4 w-4 animate-spin" />
@@ -409,24 +409,24 @@ export function DashboardClient({
                       <span>Edit Resume</span>
                     </Link>
 
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 sm:gap-1.5">
                       {resume.isPublished && resume.slug && (
                         <Link
                           href={`/r/${resume.slug}`}
                           target="_blank"
                           title="View Public Link"
-                          className="p-1.5 text-muted-foreground hover:text-accent-foreground rounded hover:bg-muted transition-colors"
+                          className="p-2 sm:p-1.5 text-muted-foreground hover:text-accent-foreground rounded hover:bg-muted transition-colors"
                         >
-                          <ExternalLink className="h-3.5 w-3.5" />
+                          <ExternalLink className="h-5 w-5 sm:h-4 sm:w-4" />
                         </Link>
                       )}
 
                       <Link
                         href={`/resumes/${resume.id}?export=true`}
                         title="Download PDF"
-                        className="p-1.5 text-muted-foreground hover:text-accent-foreground rounded hover:bg-muted transition-colors"
+                        className="p-2 sm:p-1.5 text-muted-foreground hover:text-accent-foreground rounded hover:bg-muted transition-colors"
                       >
-                        <Download className="h-3.5 w-3.5" />
+                        <Download className="h-5 w-5 sm:h-4 sm:w-4" />
                       </Link>
 
                       <button
@@ -438,9 +438,9 @@ export function DashboardClient({
                             ? "Duplicate Resume"
                             : "Upgrade to PRO to duplicate resumes"
                         }
-                        className="p-1.5 text-muted-foreground hover:text-accent-foreground rounded hover:bg-muted transition-colors disabled:opacity-40"
+                        className="p-2 sm:p-1.5 text-muted-foreground hover:text-accent-foreground rounded hover:bg-muted transition-colors disabled:opacity-40"
                       >
-                        <Copy className="h-3.5 w-3.5" />
+                        <Copy className="h-5 w-5 sm:h-4 sm:w-4" />
                       </button>
 
                       <button
@@ -448,9 +448,13 @@ export function DashboardClient({
                         onClick={() => handleDelete(resume.id, resume.title)}
                         disabled={isLoading}
                         title="Delete Resume"
-                        className="p-1.5 text-muted-foreground hover:text-red-400 rounded hover:bg-muted transition-colors disabled:opacity-40"
+                        className="p-2 sm:p-1.5 text-muted-foreground hover:text-red-400 rounded hover:bg-red-500/10 transition-colors disabled:opacity-40"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        {isLoading ? (
+                          <Loader2 className="h-5 w-5 sm:h-4 sm:w-4 animate-spin text-red-500" />
+                        ) : (
+                          <Trash2 className="h-5 w-5 sm:h-4 sm:w-4" />
+                        )}
                       </button>
                     </div>
                   </div>

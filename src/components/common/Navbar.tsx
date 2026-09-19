@@ -205,13 +205,13 @@ export function Navbar({ user }: NavbarProps) {
 
         {/* Mobile Menu Button (Hamburger) */}
         <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
           {/* Quick status badge if user logged in */}
           {user && (
             <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-[10px] font-medium text-muted-foreground border border-border">
               {user.subscriptionTier === "PRO" ? "PRO" : "FREE"}
             </span>
           )}
+          <ThemeToggle />
 
           <button
             type="button"
@@ -262,34 +262,34 @@ export function Navbar({ user }: NavbarProps) {
               </div>
 
               {/* Navigation Links */}
-              <div className="space-y-0.5 pt-1">
+              <div className="space-y-1.5 pt-2">
                 <Link
                   href="/dashboard"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                     pathname === "/dashboard"
                       ? "bg-muted text-foreground font-semibold"
                       : "text-foreground hover:text-accent-foreground hover:bg-muted"
                   }`}
                 >
-                  <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
+                  <LayoutDashboard className="h-5 w-5 text-muted-foreground" />
                   <span>Dashboard</span>
                 </Link>
 
                 <Link
                   href="/dashboard/billing"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                     pathname === "/dashboard/billing"
                       ? "bg-muted text-foreground font-semibold"
                       : "text-foreground hover:text-accent-foreground hover:bg-muted"
                   }`}
                 >
-                  <div className="flex items-center gap-2.5">
-                    <CreditCard className="h-4 w-4 text-muted-foreground" />
+                  <div className="flex items-center gap-3">
+                    <CreditCard className="h-5 w-5 text-muted-foreground" />
                     <span>Billing</span>
                   </div>
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     {user.subscriptionTier === "PRO" ? "Pro Plan" : "Free Plan"}
                   </span>
                 </Link>
@@ -297,13 +297,13 @@ export function Navbar({ user }: NavbarProps) {
                 <Link
                   href="/dashboard/settings"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                     pathname === "/dashboard/settings"
                       ? "bg-muted text-foreground font-semibold"
                       : "text-foreground hover:text-accent-foreground hover:bg-muted"
                   }`}
                 >
-                  <Settings className="h-4 w-4 text-muted-foreground" />
+                  <Settings className="h-5 w-5 text-muted-foreground" />
                   <span>Settings</span>
                 </Link>
 
@@ -311,13 +311,13 @@ export function Navbar({ user }: NavbarProps) {
                   <Link
                     href="/admin"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs font-medium transition-colors ${
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors w-full ${
                       pathname === "/admin"
                         ? "bg-red-950/60 text-red-400 border border-red-500/30"
                         : "text-foreground hover:text-red-400 hover:bg-muted"
                     }`}
                   >
-                    <Shield className="h-4 w-4 text-red-500" />
+                    <Shield className="h-5 w-5 text-red-500" />
                     <span>Admin</span>
                   </Link>
                 )}
