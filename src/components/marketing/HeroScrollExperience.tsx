@@ -79,12 +79,14 @@ export function HeroScrollExperience() {
             
             const curX = item.x * factor * (1 - letterT);
             const curY = item.y * factor * (1 - letterT);
-            const curZ = item.z * (1 - letterT);
             const curRot = item.rot * (1 - letterT);
             const curOp = 0.45 + letterT * 0.55;
+            
+            // Convert Z to a scale factor to avoid heavy 3D rendering on iOS Safari
+            const curScale = 1 + (item.z * (1 - letterT)) / 1200;
 
-            // Move the wrapper
-            wrapper.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`;
+            // Move the wrapper using GPU accelerated 2D transforms
+            wrapper.style.transform = `translate3d(${curX}px, ${curY}px, 0) scale(${curScale}) rotate(${curRot}deg)`;
             wrapper.style.opacity = curOp.toString();
             
             // Crossfade the inner spans
@@ -132,14 +134,12 @@ export function HeroScrollExperience() {
       {/* Sticky Fullscreen Stage */}
       <div
         className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-background select-none"
-        style={{ perspective: "1200px" }}
       >
         {/* Ambient Crimson Glow removed to fix rendering box issues */}
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
         <div
           className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
-          style={{ transformStyle: "preserve-3d" }}
         >
           <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[11.5rem] font-black tracking-tighter select-none flex items-baseline justify-center cursor-default">
             {LETTER_CONFIG.map((item, idx) => (
@@ -148,7 +148,6 @@ export function HeroScrollExperience() {
                 ref={(el) => { letterWrappersRef.current[idx] = el; }}
                 style={{
                   willChange: "transform, opacity",
-                  transformStyle: "preserve-3d",
                 }}
                 className="relative inline-flex items-center justify-center"
               >
