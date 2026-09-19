@@ -14,14 +14,17 @@ const manualPaymentSchema = z.object({
 export async function POST(req: Request) {
   try {
     const session = await auth();
-    if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const userId = session?.user?.id;
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Unauthorized" },
+        { status: 401 }
+      );
     }
 
     const body = await req.json();
     const validatedData = manualPaymentSchema.parse(body);
-
-    const userId = session.user.id;
 
     // Check if there's already a pending manual payment
     const existingPayment = await prisma.manualPayment.findFirst({
