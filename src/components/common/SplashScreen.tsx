@@ -10,14 +10,6 @@ export function SplashScreen() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Only show once per session to avoid annoying the user on every navigation
-    const hasSeenSplash = sessionStorage.getItem("hasSeenSplashV13");
-    if (hasSeenSplash) {
-      setShow(false);
-      return;
-    }
-    sessionStorage.setItem("hasSeenSplashV13", "true");
-
     // Lock body scroll
     document.body.style.overflow = "hidden";
 
