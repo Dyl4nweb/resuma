@@ -89,7 +89,7 @@ export function HeroScrollExperience() {
             
             // Crossfade the inner spans
             blurry.style.opacity = (1 - letterT).toString();
-            sharp.style.opacity = letterT.toString();
+            sharp.style.opacity = isMobileRef.current ? "1" : letterT.toString();
           });
 
           // Update dot via CROSSFADE
@@ -162,7 +162,7 @@ export function HeroScrollExperience() {
                     filter: `blur(${item.blur}px)`,
                     willChange: "opacity"
                   }}
-                  className="hidden sm:inline-block absolute inset-0 resuma-text-effect sm:animate-text-shine sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                  className="hidden sm:inline-block absolute inset-0 resuma-text-effect sm:animate-text-shine"
                 >
                   {item.char}
                 </span>
@@ -171,7 +171,7 @@ export function HeroScrollExperience() {
                 <span
                   ref={(el) => { letterSharpRef.current[idx] = el; }}
                   style={{ willChange: "opacity" }}
-                  className="relative inline-block resuma-text-effect sm:animate-text-shine sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                  className="relative inline-block resuma-text-effect sm:animate-text-shine"
                 >
                   {item.char}
                 </span>
