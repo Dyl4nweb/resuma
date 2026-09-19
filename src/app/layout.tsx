@@ -16,7 +16,10 @@ export const metadata: Metadata = {
   authors: [{ name: "Dylan Ramos - Software Engineer" }],
   icons: {
     icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/logo.png",
   },
+  manifest: "/manifest.json",
   openGraph: {
     title: "Resuma — Lightweight Production Resume Builder",
     description:
