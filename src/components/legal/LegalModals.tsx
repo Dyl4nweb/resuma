@@ -52,7 +52,7 @@ export function LegalModals({ type, onClose }: LegalModalsProps) {
                 {type === "terms" ? "Terms and Conditions" : "Privacy Policy"}
               </h2>
               <p className="text-xs text-muted-foreground">
-                Last updated: {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                Last updated: September 19, 2026
               </p>
             </div>
           </div>

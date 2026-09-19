@@ -222,10 +222,6 @@ export default function RegisterPage() {
                   <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
                   <span>1 Free ATS-ready resume included</span>
                 </li>
-                <li className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                  <span>Bank-grade encryption & anti-bot protection</span>
-                </li>
               </ul>
             </div>
 
