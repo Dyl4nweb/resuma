@@ -262,29 +262,29 @@ export default function LoginPage() {
             /* Standard Full Login Form with Tabs */
             <div className="space-y-4">
               {/* Tab Selector: PIN vs Password */}
-              <div className="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-background border border-border">
+              <div className="grid grid-cols-2 gap-1 sm:gap-1.5 p-1 rounded-xl bg-background border border-border">
                 <button
                   type="button"
                   onClick={() => setAuthMode("pin")}
-                  className={`flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ${
                     authMode === "pin"
                       ? "bg-red-600 text-white shadow-sm"
                       : "text-muted-foreground hover:text-accent-foreground"
                   }`}
                 >
-                  <KeyRound className="h-3.5 w-3.5" />
+                  <KeyRound className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   <span>Quick PIN</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setAuthMode("password")}
-                  className={`flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ${
                     authMode === "password"
                       ? "bg-red-600 text-white shadow-sm"
                       : "text-muted-foreground hover:text-accent-foreground"
                   }`}
                 >
-                  <Lock className="h-3.5 w-3.5" />
+                  <Lock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                   <span>Password</span>
                 </button>
               </div>
