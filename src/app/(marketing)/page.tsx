@@ -210,30 +210,29 @@ export default async function MarketingPage() {
               </div>
 
               {/* Pro Plan */}
-              <div className="relative rounded-2xl border border-red-500/40 bg-gradient-to-b from-red-50 to-white dark:from-red-950/20 dark:to-zinc-900 p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-red-950/20">
+              <div className="relative rounded-2xl border border-red-500/40 bg-gradient-to-b from-red-500/10 to-background p-6 sm:p-8 flex flex-col justify-between shadow-xl shadow-red-500/10">
                 <div className="absolute -top-3.5 right-6 rounded-full bg-red-600 px-3 py-1 text-[10px] font-bold text-white tracking-wide uppercase shadow">
-                  Pro Plan
+                  Recommended
                 </div>
 
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
                     <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                      <span>Resuma PRO</span>
+                      <span>Pro Plan</span>
                       <Sparkles className="h-4 w-4 text-red-400" />
                     </h3>
                     <div className="text-right shrink-0">
-                      <span className="text-lg sm:text-2xl font-bold text-foreground whitespace-nowrap">$1.00 / ₱62.78</span>
-                      <span className="text-xs text-muted-foreground whitespace-nowrap"> / mo</span>
+                      <span className="text-lg sm:text-2xl font-bold text-foreground whitespace-nowrap">$1.00 / mo (₱62.78)</span>
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
-                    For active job hunters targeting different companies and roles.
+                    For active job seekers who need customized resumes tailored to every role.
                   </p>
 
                   <ul className="mt-6 sm:mt-8 space-y-3 sm:space-y-3.5 text-xs text-foreground">
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-red-500" />
-                      <span><strong className="text-foreground">Unlimited Resumes</strong> (Create variations for every role)</span>
+                      <span><strong className="text-foreground">Unlimited Resumes</strong> (Tailor to every job application)</span>
                     </li>
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-red-400" />
@@ -241,15 +240,15 @@ export default async function MarketingPage() {
                     </li>
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-red-400" />
-                      <span>Custom color palettes and typography controls</span>
+                      <span>Full Custom Hex Theme Colors & Typography</span>
                     </li>
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-red-400" />
-                      <span>Recruiter link tracking & view analytics</span>
+                      <span>Recruiter View Tracking & Analytics</span>
                     </li>
                     <li className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-red-400" />
-                      <span>Priority support & new template releases</span>
+                      <span>Priority ATS Parsing & Export</span>
                     </li>
                   </ul>
                 </div>
