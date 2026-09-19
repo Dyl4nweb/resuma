@@ -37,9 +37,9 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Brand Header */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+      <div className="mx-auto w-full max-w-md text-center">
         <Link href="/" className="inline-block group">
           <span className="text-3xl font-extrabold tracking-tight text-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
       </div>
 
       {/* Form Card */}
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-8 mx-auto w-full max-w-md">
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xl backdrop-blur-md">
           {status === "error" && (
             <div className="mb-5 rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-300">
