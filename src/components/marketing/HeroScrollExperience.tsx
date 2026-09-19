@@ -134,10 +134,7 @@ export function HeroScrollExperience() {
         className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-background select-none"
         style={{ perspective: "1200px" }}
       >
-        {/* Ambient Crimson Glow - Fast radial gradient instead of heavy CSS blur */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[800px] sm:h-[500px] dark:bg-[radial-gradient(circle_at_center,_rgba(220,38,38,0.12)_0%,_transparent_70%)] rounded-full pointer-events-none -z-10"
-        />
+        {/* Ambient Crimson Glow removed to fix rendering box issues */}
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
         <div
