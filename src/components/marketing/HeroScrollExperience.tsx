@@ -15,16 +15,25 @@ const LETTER_CONFIG = [
 
 export function HeroScrollExperience() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const dotRef = useRef<HTMLSpanElement>(null);
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  
   const [isMobile, setIsMobile] = useState(false);
+  const isMobileRef = useRef(false);
+
+  // Responsive ease-out cubic snap
+  const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
 
   useEffect(() => {
     const checkViewport = () => {
-      setIsMobile(window.innerWidth < 640);
+      const mobile = window.innerWidth < 640;
+      setIsMobile(mobile);
+      isMobileRef.current = mobile;
+      // Force an immediate update on resize to fix styles
+      handleScroll();
     };
-    checkViewport();
-    window.addEventListener("resize", checkViewport);
-
+    
     // Bulletproof scroll calculation with rAF throttling
     let ticking = false;
     const handleScroll = () => {
@@ -44,37 +53,72 @@ export function HeroScrollExperience() {
             wrapperRef.current.offsetHeight - window.innerHeight;
           const distance = totalDistance > 0 ? totalDistance : 600;
           const progress = Math.max(0, Math.min(scrollY / distance, 1));
-          setScrollProgress(progress);
+          
+          const rawLetterT = Math.min(progress / 0.7, 1);
+          const letterT = easeOut(rawLetterT);
+          
+          const rawDotT = Math.max(0, Math.min((progress - 0.3) / 0.45, 1));
+          const dotT = easeOut(rawDotT);
+          
+          const factor = isMobileRef.current ? 0.42 : 1.0;
+
+          // Update letters directly
+          LETTER_CONFIG.forEach((item, idx) => {
+            const span = lettersRef.current[idx];
+            if (!span) return;
+            
+            const curX = item.x * factor * (1 - letterT);
+            const curY = item.y * factor * (1 - letterT);
+            const curZ = item.z * (1 - letterT);
+            const curRot = item.rot * (1 - letterT);
+            const curBlur = item.blur * (1 - letterT);
+            const curOp = 0.45 + letterT * 0.55;
+
+            span.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`;
+            span.style.opacity = curOp.toString();
+            if (!isMobileRef.current) {
+              span.style.filter = `blur(${curBlur.toFixed(2)}px)`;
+            } else {
+              span.style.filter = "none";
+            }
+          });
+
+          // Update dot directly
+          if (dotRef.current) {
+            dotRef.current.style.transform = `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`;
+            dotRef.current.style.opacity = dotT.toString();
+            if (!isMobileRef.current) {
+              dotRef.current.style.filter = `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`;
+            } else {
+              dotRef.current.style.filter = "none";
+            }
+          }
+
+          // Update scroll indicator directly
+          if (indicatorRef.current) {
+            indicatorRef.current.style.opacity = Math.max(0, 1 - progress * 2.2).toString();
+            indicatorRef.current.style.transform = `translate3d(0, ${progress * 25}px, 0)`;
+            indicatorRef.current.style.pointerEvents = progress < 0.2 ? "auto" : "none";
+          }
+
           ticking = false;
         });
         ticking = true;
       }
     };
 
+    checkViewport();
+    window.addEventListener("resize", checkViewport);
     window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll, { passive: true });
+    
+    // Initial call to set initial styles
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
       window.removeEventListener("resize", checkViewport);
     };
   }, []);
-
-  // Responsive ease-out cubic snap
-  const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-
-  // Letter assembly completes by 70% of the hero container scroll
-  const rawLetterT = Math.min(scrollProgress / 0.7, 1);
-  const letterT = easeOut(rawLetterT);
-
-  // Red box dot drops in between 30% and 75% scroll
-  const rawDotT = Math.max(0, Math.min((scrollProgress - 0.3) / 0.45, 1));
-  const dotT = easeOut(rawDotT);
-
-  // Scale down offsets proportionally on mobile so letters stay centered
-  const factor = isMobile ? 0.42 : 1.0;
 
   return (
     <div ref={wrapperRef} className="relative h-[200vh]">
@@ -94,44 +138,24 @@ export function HeroScrollExperience() {
           style={{ transformStyle: "preserve-3d" }}
         >
           <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[11.5rem] font-black tracking-tighter select-none inline-flex items-baseline justify-center cursor-default">
-            {LETTER_CONFIG.map((item, idx) => {
-              const curX = item.x * factor * (1 - letterT);
-              const curY = item.y * factor * (1 - letterT);
-              const curZ = item.z * (1 - letterT);
-              const curRot = item.rot * (1 - letterT);
-
-              // Cinematic Hook: Starts blurred/mysterious when jumbled, clears into razor-sharp focus
-              const curBlur = item.blur * (1 - letterT);
-              const curOp = 0.45 + letterT * 0.55;
-
-              const style: React.CSSProperties = {
-                transform: `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`,
-                opacity: curOp,
-                willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
-                transformStyle: "preserve-3d",
-              };
-              
-              if (!isMobile) {
-                style.filter = `blur(${curBlur.toFixed(2)}px)`;
-              }
-
-              return (
-                <span
-                  key={idx}
-                  style={style}
-                  className="resuma-text-effect inline-block sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
-                >
-                  {item.char}
-                </span>
-              );
-            })}
+            {LETTER_CONFIG.map((item, idx) => (
+              <span
+                key={idx}
+                ref={(el) => { lettersRef.current[idx] = el; }}
+                style={{
+                  willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
+                  transformStyle: "preserve-3d",
+                }}
+                className="resuma-text-effect inline-block sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+              >
+                {item.char}
+              </span>
+            ))}
 
             {/* Enlarged Red Square Box Dot - Focuses and snaps in cleanly on baseline */}
             <span
+              ref={dotRef}
               style={{
-                transform: `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`,
-                filter: isMobile ? undefined : `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`,
-                opacity: dotT,
                 willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
               }}
               className="inline-block w-3.5 h-3.5 sm:w-6 sm:h-6 lg:w-9 lg:h-9 bg-[#dc2626] ml-1.5 sm:ml-3 lg:ml-4 rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)] align-baseline self-end mb-1 sm:mb-2.5 lg:mb-4 transition-[filter] duration-75"
@@ -141,11 +165,7 @@ export function HeroScrollExperience() {
 
         {/* Subtle Scroll Down Indicator */}
         <div
-          style={{
-            opacity: Math.max(0, 1 - scrollProgress * 2.2),
-            transform: `translate3d(0, ${scrollProgress * 25}px, 0)`,
-            pointerEvents: scrollProgress < 0.2 ? "auto" : "none",
-          }}
+          ref={indicatorRef}
           onClick={() => {
             const el = document.getElementById("hero-tagline-section");
             if (el) el.scrollIntoView({ behavior: "smooth" });
