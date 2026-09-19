@@ -4,6 +4,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
+import { Resend } from "resend";
+
 // Helper to check admin
 async function checkAdmin() {
   const session = await auth();
@@ -32,7 +34,6 @@ export async function approveManualPayment(paymentId: string, userId: string) {
     // Send email using Resend if configured
     if (process.env.RESEND_API_KEY && updatedUser.email) {
       try {
-        const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
         
         await resend.emails.send({
@@ -91,7 +92,6 @@ export async function rejectManualPayment(paymentId: string) {
 
     if (payment?.user?.email && process.env.RESEND_API_KEY) {
       try {
-        const { Resend } = await import("resend");
         const resend = new Resend(process.env.RESEND_API_KEY);
         
         await resend.emails.send({
