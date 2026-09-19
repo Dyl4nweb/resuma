@@ -47,6 +47,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AppToaster } from "@/components/common/AppToaster";
 import { SplashScreen } from "@/components/common/SplashScreen";
+import { BackToTop } from "@/components/common/BackToTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,6 +67,7 @@ export default function RootLayout({
         >
           <SplashScreen />
           {children}
+          <BackToTop />
           <AppToaster />
         </ThemeProvider>
       </body>
