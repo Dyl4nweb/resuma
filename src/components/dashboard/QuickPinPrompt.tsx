@@ -90,7 +90,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
   };
 
   return (
-    <div className="mb-6 rounded-2xl border border-red-500/20 bg-gradient-to-r from-red-950/30 via-zinc-900/60 to-zinc-900/40 p-4 sm:p-5 relative overflow-hidden backdrop-blur-md shadow-lg">
+    <div className="mb-6 rounded-2xl border border-red-500/20 bg-card text-card-foreground p-4 sm:p-5 relative overflow-hidden backdrop-blur-md shadow-sm">
       <button
         onClick={handleDismiss}
         className="absolute right-3.5 top-3.5 text-muted-foreground hover:text-foreground transition-colors"
@@ -112,13 +112,13 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
       ) : !isOpen ? (
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pr-6">
           <div className="flex items-start gap-3">
-            <div className="h-9 w-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 shrink-0 mt-0.5">
+            <div className="h-9 w-9 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-600 dark:text-red-400 shrink-0 mt-0.5">
               <KeyRound className="h-4 w-4" />
             </div>
             <div>
               <h3 className="text-sm font-bold text-foreground flex items-center gap-1.5">
                 <span>Set up Quick PIN for Faster Logins</span>
-                <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-500/10 text-red-400 border border-red-500/20">
+                <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-500/10 text-red-600 dark:text-red-400 border border-red-500/20">
                   <Sparkles className="h-2.5 w-2.5" />
                   Recommended
                 </span>
@@ -151,7 +151,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
         <form onSubmit={handleSubmit} className="space-y-3 pt-1">
           <div>
             <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
-              <KeyRound className="h-4 w-4 text-red-400" />
+              <KeyRound className="h-4 w-4 text-red-600 dark:text-red-400" />
               <span>Choose your 6-Digit Quick PIN</span>
             </h4>
             <p className="text-xs text-muted-foreground mt-0.5">
@@ -160,7 +160,7 @@ export function QuickPinPrompt({ userEmail, userName, hasPin }: QuickPinPromptPr
           </div>
 
           {error && (
-            <p className="text-xs text-red-400 font-medium">{error}</p>
+            <p className="text-xs text-red-600 dark:text-red-400 font-medium">{error}</p>
           )}
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md">

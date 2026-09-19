@@ -16,6 +16,7 @@ import { SectionReorder } from "./SectionReorder";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { ThemePicker } from "./ThemePicker";
 import { ExportModal } from "./ExportModal";
+import { showToast } from "@/lib/toast";
 import {
   ArrowLeft,
   Check,
@@ -146,9 +147,14 @@ export function EditorWorkspace({ initialResume, resumeId }: EditorWorkspaceProp
         isPublished: result.resume.isPublished,
         slug: result.resume.slug,
       }));
+      showToast.success(
+        result.resume.isPublished
+          ? "Resume published! Anyone with the link can view it."
+          : "Resume set to private."
+      );
     } catch (err) {
       console.error(err);
-      alert("Failed to toggle public status");
+      showToast.error("Failed to update public status");
     } finally {
       setIsPublishing(false);
     }

@@ -24,11 +24,7 @@ export default function DashboardLoading() {
           <div className="h-full w-full bg-gradient-to-r from-red-600 to-amber-500 rounded-full animate-indeterminate" />
         </div>
 
-        {/* Subtitle status indicator */}
-        <div className="mt-4 flex items-center gap-2 text-[11px] text-muted-foreground font-mono">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>PostgreSQL Active</span>
-        </div>
+
       </div>
     </div>
   );

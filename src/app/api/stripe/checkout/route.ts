@@ -27,28 +27,10 @@ export async function POST(req: Request) {
       process.env.STRIPE_SECRET_KEY.includes("placeholder");
 
     if (isMockStripe) {
-      if (process.env.NODE_ENV === "production") {
-        return NextResponse.json(
-          { error: "Payment service is currently unavailable. Please try again later." },
-          { status: 503 }
-        );
-      }
-
-      // In mock/development mode, simulate instant upgrade for developer testing
-      const updatedUser = await prisma.user.update({
-        where: { id: user.id },
-        data: {
-          subscriptionTier: "PRO",
-          stripeSubscriptionId: `sub_mock_${Date.now()}`,
-          stripeCurrentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-        },
-      });
-
-      return NextResponse.json({
-        url: `${appUrl}/dashboard/billing?success=true&mock=true`,
-        mock: true,
-        user: updatedUser,
-      });
+      return NextResponse.json(
+        { error: "Stripe keys are not configured. Cannot process payment." },
+        { status: 503 }
+      );
     }
 
     let customerId = user.stripeCustomerId;

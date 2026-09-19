@@ -18,7 +18,9 @@ import {
   ChevronDown,
   Database,
   TrendingUp,
+  CreditCard,
 } from "lucide-react";
+import { showToast } from "@/lib/toast";
 
 export interface AdminUserResume {
   id: string;
@@ -45,6 +47,8 @@ export interface AdminStats {
   totalUsers: number;
   proUsers: number;
   freeUsers: number;
+  stripeProUsers: number;
+  manualProUsers: number;
   totalResumes: number;
   totalViews: number;
   databaseSize: string;
@@ -72,12 +76,14 @@ export function AdminDashboardClient({
   const [activeTab, setActiveTab] = useState<"overview" | "users">("overview");
   const [loading, setLoading] = useState(false);
   const [lastRefreshed, setLastRefreshed] = useState<Date>(new Date());
-  const [notification, setNotification] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [activeResumePopover, setActiveResumePopover] = useState<string | null>(null);
 
   const showNotification = (type: "success" | "error", message: string) => {
-    setNotification({ type, message });
-    setTimeout(() => setNotification(null), 4000);
+    if (type === "success") {
+      showToast.success(message);
+    } else {
+      showToast.error(message);
+    }
   };
 
   const fetchLiveUsers = useCallback(async (isSilent = false) => {
@@ -124,7 +130,7 @@ export function AdminDashboardClient({
 
   const handleToggleRole = async (userId: string, currentRole: "USER" | "ADMIN", email: string) => {
     if (email === currentAdminEmail && currentRole === "ADMIN") {
-      alert("You cannot remove your own admin privileges.");
+      showToast.error("You cannot remove your own admin privileges.");
       return;
     }
     const newRole = currentRole === "ADMIN" ? "USER" : "ADMIN";
@@ -144,23 +150,27 @@ export function AdminDashboardClient({
 
   const handleDeleteUser = async (userId: string, email: string) => {
     if (email === currentAdminEmail) {
-      alert("You cannot delete your own admin account.");
+      showToast.error("You cannot delete your own admin account.");
       return;
     }
-    if (!confirm(`Are you sure you want to delete user "${email}" and all their resumes? This action cannot be undone.`)) {
-      return;
-    }
-
-    try {
-      const res = await fetch(`/api/admin/users?userId=${encodeURIComponent(userId)}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to delete user");
-      showNotification("success", `User ${email} deleted successfully`);
-      fetchLiveUsers(true);
-    } catch (err: unknown) {
-      showNotification("error", err instanceof Error ? err.message : "Deletion failed");
-    }
+    
+    showToast.confirm({
+      title: "Delete User",
+      message: `Are you sure you want to delete user "${email}" and all their resumes? This action cannot be undone.`,
+      confirmText: "Delete",
+      onConfirm: async () => {
+        try {
+          const res = await fetch(`/api/admin/users?userId=${encodeURIComponent(userId)}`, {
+            method: "DELETE",
+          });
+          if (!res.ok) throw new Error("Failed to delete user");
+          showNotification("success", `User ${email} deleted successfully`);
+          fetchLiveUsers(true);
+        } catch (err: unknown) {
+          showNotification("error", err instanceof Error ? err.message : "Deletion failed");
+        }
+      }
+    });
   };
 
   const filteredUsers = useMemo(() => {
@@ -214,41 +224,22 @@ export function AdminDashboardClient({
             </p>
           </div>
           <button
+            onClick={() => window.location.href = "/admin/payments"}
+            className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-emerald-600/10 border border-emerald-500/20 hover:bg-emerald-600/20 text-xs font-semibold text-emerald-500 transition-all shadow-sm"
+          >
+            <CreditCard className="h-3.5 w-3.5" />
+            <span>Payments</span>
+          </button>
+          <button
             onClick={() => fetchLiveUsers(false)}
             disabled={loading}
             className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-card border border-border hover:border-zinc-600 text-xs font-semibold text-foreground hover:text-accent-foreground transition-all disabled:opacity-50 active:scale-95 shadow-sm"
           >
             <RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin text-red-500" : ""}`} />
-            <span>{loading ? "Syncing..." : "Sync Database"}</span>
+            <span>{loading ? "Syncing..." : "Sync"}</span>
           </button>
         </div>
       </div>
-
-      {/* Notification Toast */}
-      {notification && (
-        <div
-          className={`rounded-xl border p-4 flex items-center justify-between transition-all ${
-            notification.type === "success"
-              ? "bg-emerald-950/40 border-emerald-500/30 text-emerald-300"
-              : "bg-red-950/40 border-red-500/30 text-red-300"
-          }`}
-        >
-          <div className="flex items-center gap-2 text-sm font-medium">
-            {notification.type === "success" ? (
-              <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-            ) : (
-              <AlertCircle className="h-4 w-4 text-red-400 shrink-0" />
-            )}
-            <span>{notification.message}</span>
-          </div>
-          <button
-            onClick={() => setNotification(null)}
-            className="text-xs opacity-60 hover:opacity-100 underline ml-4"
-          >
-            Dismiss
-          </button>
-        </div>
-      )}
 
       {/* Tabs */}
       <div className="flex items-center gap-6 border-b border-border">
@@ -293,9 +284,11 @@ export function AdminDashboardClient({
                 <Crown className="h-4 w-4 text-amber-400" />
               </div>
               <p className="mt-2 text-2xl font-black text-amber-200">{stats.proUsers}</p>
-              <p className="text-[11px] text-amber-400/70 mt-0.5">
-                {stats.totalUsers > 0 ? Math.round((stats.proUsers / stats.totalUsers) * 100) : 0}% conversion
-              </p>
+              <div className="text-[10px] text-amber-400/80 mt-1.5 space-y-0.5 font-mono">
+                <div className="flex justify-between"><span>Stripe:</span> <span>{stats.stripeProUsers}</span></div>
+                <div className="flex justify-between"><span>InstaPay:</span> <span>{stats.manualProUsers}</span></div>
+                <div className="flex justify-between opacity-70"><span>Gifted:</span> <span>{stats.proUsers - stats.stripeProUsers - stats.manualProUsers}</span></div>
+              </div>
             </div>
 
             <div className="rounded-xl border border-border bg-card p-4 relative overflow-hidden">

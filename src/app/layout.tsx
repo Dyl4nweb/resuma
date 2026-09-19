@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Toaster } from "react-hot-toast";
+import { AppToaster } from "@/components/common/AppToaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,7 +64,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Toaster position="top-center" />
+          <AppToaster />
         </ThemeProvider>
       </body>
     </html>

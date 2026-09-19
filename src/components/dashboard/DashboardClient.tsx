@@ -17,6 +17,7 @@ import {
   Loader2,
   Download,
 } from "lucide-react";
+import { showToast } from "@/lib/toast";
 
 interface ResumeListItem {
   id: string;
@@ -134,33 +135,38 @@ export function DashboardClient({
 
   // Delete resume
   const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`Are you sure you want to delete "${title}"?`)) return;
+    showToast.confirm({
+      title: "Delete Resume",
+      message: `Are you sure you want to delete "${title}"?`,
+      confirmText: "Delete",
+      onConfirm: async () => {
+        setActionLoadingId(id);
+        setErrorMessage(null);
 
-    setActionLoadingId(id);
-    setErrorMessage(null);
+        try {
+          const res = await fetch(`/api/resumes/${id}`, {
+            method: "DELETE",
+          });
 
-    try {
-      const res = await fetch(`/api/resumes/${id}`, {
-        method: "DELETE",
-      });
+          if (!res.ok) {
+            const data = await res.json();
+            throw new Error(data.error || "Failed to delete resume");
+          }
 
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Failed to delete resume");
+          setResumes(resumes.filter((r) => r.id !== id));
+          setUsage((prev) => ({
+            ...prev,
+            count: Math.max(0, prev.count - 1),
+            canCreateMore: true,
+          }));
+        } catch (err: unknown) {
+          console.error(err);
+          setErrorMessage(err instanceof Error ? err.message : "Error deleting resume");
+        } finally {
+          setActionLoadingId(null);
+        }
       }
-
-      setResumes(resumes.filter((r) => r.id !== id));
-      setUsage((prev) => ({
-        ...prev,
-        count: Math.max(0, prev.count - 1),
-        canCreateMore: true,
-      }));
-    } catch (err: unknown) {
-      console.error(err);
-      setErrorMessage(err instanceof Error ? err.message : "Error deleting resume");
-    } finally {
-      setActionLoadingId(null);
-    }
+    });
   };
 
   const totalViews = resumes.reduce((acc, curr) => acc + (curr.viewsCount || 0), 0);

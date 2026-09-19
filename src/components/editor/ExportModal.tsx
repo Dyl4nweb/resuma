@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ResumeData } from "@/types/resume";
 import { Printer, Download, Upload, Share2, Copy, Check, ExternalLink, X } from "lucide-react";
+import { showToast } from "@/lib/toast";
 
 interface ExportModalProps {
   isOpen: boolean;
@@ -60,11 +61,11 @@ export function ExportModal({
       try {
         const imported = JSON.parse(event.target?.result as string);
         onImportData(imported);
-        alert("Resume data imported successfully!");
+        showToast.success("Resume data imported successfully!");
         onClose();
       } catch (err) {
         console.error(err);
-        alert("Invalid JSON format");
+        showToast.error("Invalid JSON format. Please upload a valid resume JSON.");
       }
     };
     reader.readAsText(file);
@@ -78,6 +79,7 @@ export function ExportModal({
     if (!publicUrl) return;
     navigator.clipboard.writeText(publicUrl);
     setCopied(true);
+    showToast.success("Shareable link copied to clipboard!");
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -133,10 +135,10 @@ export function ExportModal({
                 type="button"
                 onClick={onTogglePublish}
                 disabled={isPublishing}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors ${
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-opacity ${
                   data.isPublished
-                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30"
-                    : "bg-muted text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700"
+                    ? "bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 hover:opacity-80"
+                    : "bg-muted text-foreground hover:opacity-80"
                 }`}
               >
                 {isPublishing
@@ -158,7 +160,7 @@ export function ExportModal({
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                  className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:opacity-80 transition-opacity"
                 >
                   {copied ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
                   <span>{copied ? "Copied" : "Copy"}</span>
@@ -167,7 +169,7 @@ export function ExportModal({
                   href={publicUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 rounded bg-muted text-foreground hover:text-accent-foreground transition-colors"
+                  className="p-2 rounded bg-muted text-foreground hover:opacity-80 transition-opacity"
                   title="Open live link"
                 >
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -191,12 +193,12 @@ export function ExportModal({
               <button
                 type="button"
                 onClick={handleExportJson}
-                className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+                className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:opacity-80 transition-opacity"
               >
                 <Download className="h-3.5 w-3.5" />
                 <span>Backup</span>
               </button>
-              <label className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors cursor-pointer">
+              <label className="flex items-center gap-1 rounded bg-muted px-3 py-1.5 text-xs font-medium text-foreground hover:opacity-80 transition-opacity cursor-pointer">
                 <Upload className="h-3.5 w-3.5" />
                 <span>Restore</span>
                 <input
@@ -214,7 +216,7 @@ export function ExportModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-muted px-4 py-2 text-xs font-medium text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors"
+            className="rounded-lg bg-muted px-4 py-2 text-xs font-medium text-foreground hover:opacity-80 transition-opacity"
           >
             Close
           </button>

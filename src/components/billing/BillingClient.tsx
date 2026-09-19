@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
@@ -15,7 +15,7 @@ import {
   Copy,
   AlertCircle,
 } from "lucide-react";
-import toast from "react-hot-toast";
+import { showToast } from "@/lib/toast";
 
 interface BillingClientProps {
   user: {
@@ -34,7 +34,6 @@ export function BillingClient({ user }: BillingClientProps) {
   const canceled = searchParams.get("canceled");
 
   const [loading, setLoading] = useState(false);
-  const [activePaymentMethod, setActivePaymentMethod] = useState<"card" | "qr">("qr");
 
   // InstaPay Manual verification states
   const [referenceNumber, setReferenceNumber] = useState("");
@@ -44,37 +43,44 @@ export function BillingClient({ user }: BillingClientProps) {
 
   const isPro = user.subscriptionTier === "PRO";
 
-  const handleStripeUpgrade = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/stripe/checkout", { method: "POST" });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        alert(data.error || "Failed to start checkout");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Error starting checkout");
-    } finally {
-      setLoading(false);
+  // Handle return redirects from Stripe or external payment flows
+  useEffect(() => {
+    if (success) {
+      showToast.paymentSuccess({
+        title: "Welcome to Resuma PRO!",
+        message: "Your payment was processed successfully. Unlimited resumes and ATS templates are unlocked!",
+        planName: "PRO",
+      });
+      router.replace("/dashboard/billing");
+    } else if (canceled) {
+      showToast.paymentInfo({
+        title: "Checkout Canceled",
+        message: "No charges were made to your account. You can upgrade anytime.",
+        planName: "PRO",
+      });
+      router.replace("/dashboard/billing");
     }
-  };
+  }, [success, canceled, router]);
+
+
 
   const handleManagePortal = async () => {
     setLoading(true);
+    const toastId = showToast.loading("Opening billing portal...");
     try {
       const res = await fetch("/api/stripe/portal", { method: "POST" });
       const data = await res.json();
       if (data.url) {
+        showToast.dismiss(toastId);
         window.location.href = data.url;
       } else {
-        alert(data.error || "Failed to open billing portal");
+        showToast.dismiss(toastId);
+        showToast.error(data.error || "Failed to open billing portal");
       }
     } catch (err) {
       console.error(err);
-      alert("Error opening portal");
+      showToast.dismiss(toastId);
+      showToast.error("Error opening portal");
     } finally {
       setLoading(false);
     }
@@ -102,7 +108,11 @@ export function BillingClient({ user }: BillingClientProps) {
       }
 
       setRefMessage(data.message);
-      toast.success("Payment submitted successfully! Your account is now PRO.");
+      showToast.paymentSuccess({
+        title: "Reference Submitted!",
+        message: "An admin will review your payment and activate your PRO plan within 24 hours.",
+        planName: "Pending Approval",
+      });
       setTimeout(() => {
         router.refresh();
       }, 1500);
@@ -110,7 +120,11 @@ export function BillingClient({ user }: BillingClientProps) {
       console.error(err);
       const errorMsg = err instanceof Error ? err.message : "Error submitting reference";
       setRefError(errorMsg);
-      toast.error(errorMsg);
+      showToast.paymentError({
+        title: "Payment Verification Issue",
+        message: errorMsg,
+        planName: "PRO",
+      });
     } finally {
       setSubmittingRef(false);
     }
@@ -127,13 +141,14 @@ export function BillingClient({ user }: BillingClientProps) {
         </p>
       </div>
 
-      {/* Success Notification */}
+
+      {/* Success Notification (Stripe) or Pending Notification (Manual) */}
       {(success || refMessage) && (
-        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 flex items-center gap-3 text-sm text-emerald-800 dark:text-emerald-200">
-          <ShieldCheck className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+        <div className={`rounded-xl border p-4 flex items-center gap-3 text-sm ${refMessage ? 'border-amber-500/30 bg-amber-500/10 text-amber-600' : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-600'}`}>
+          {refMessage ? <AlertCircle className="h-5 w-5 shrink-0" /> : <ShieldCheck className="h-5 w-5 shrink-0" />}
           <div>
-            <p className="font-semibold">PRO Plan Active!</p>
-            <p className="text-xs text-emerald-700/90 dark:text-emerald-300/90 mt-0.5">
+            <p className="font-semibold">{refMessage ? "Verification Pending" : "PRO Plan Active!"}</p>
+            <p className={`text-xs mt-0.5 ${refMessage ? 'text-amber-600/90' : 'text-emerald-600/90'}`}>
               {refMessage || "You have successfully upgraded to Resuma PRO. Unlimited resumes are now unlocked."}
             </p>
           </div>
@@ -181,7 +196,7 @@ export function BillingClient({ user }: BillingClientProps) {
                 type="button"
                 onClick={handleManagePortal}
                 disabled={loading}
-                className="w-auto min-w-[160px] max-w-[220px] flex items-center justify-center gap-2 rounded-lg bg-muted px-3.5 py-2 text-xs font-semibold text-foreground hover:bg-zinc-200 dark:hover:bg-zinc-700 transition-colors border border-border disabled:opacity-50"
+                className="w-auto min-w-[160px] max-w-[220px] flex items-center justify-center gap-2 rounded-lg bg-muted px-3.5 py-2 text-xs font-semibold text-foreground hover:opacity-80 transition-opacity border border-border disabled:opacity-50"
               >
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <CreditCard className="h-4 w-4" />}
                 <span>Manage Subscription</span>
@@ -200,47 +215,17 @@ export function BillingClient({ user }: BillingClientProps) {
               </p>
             </div>
 
-            {/* Payment Method Switcher Tabs */}
-            <div className="flex items-center gap-1.5 sm:gap-2 p-1 bg-background rounded-xl border border-border max-w-md">
-              <button
-                type="button"
-                onClick={() => setActivePaymentMethod("qr")}
-                className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
-                  activePaymentMethod === "qr"
-                    ? "bg-red-600 text-white shadow"
-                    : "text-muted-foreground hover:text-accent-foreground"
-                }`}
-              >
-                <QrCode className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span>InstaPay / GCash</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivePaymentMethod("card")}
-                className={`flex-1 flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold rounded-lg transition-all ${
-                  activePaymentMethod === "card"
-                    ? "bg-red-600 text-white shadow"
-                    : "text-muted-foreground hover:text-accent-foreground"
-                }`}
-              >
-                <CreditCard className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span>Credit / Debit Card</span>
-              </button>
-            </div>
-
-            {/* Option 1: InstaPay QR Code Payment */}
-            {activePaymentMethod === "qr" && (
-              <div className="rounded-xl border border-red-500/30 bg-gradient-to-br from-red-50 via-background to-muted/30 dark:from-red-950/20 dark:via-zinc-950 dark:to-zinc-950 p-4 sm:p-8 space-y-5 sm:space-y-6">
+            <div className="rounded-xl border border-red-500/30 bg-gradient-to-br from-red-500/5 via-background to-muted/30 p-4 sm:p-8 space-y-5 sm:space-y-6">
                 <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
                   {/* QR Code Container */}
                   <div className="bg-white p-2.5 sm:p-3.5 rounded-2xl shadow-2xl border-4 border-border shrink-0 text-center">
                     <img
                       src="/images/instapay-qr.jpg"
-                      alt="InstaPay QR Code"
+                      alt="MariBank QR Code"
                       className="w-44 h-44 sm:w-56 sm:h-56 object-contain rounded-lg"
                     />
                     <span className="text-[10px] font-bold text-zinc-800 tracking-wider uppercase block mt-1 font-mono">
-                      QR Ph · InstaPay
+                      MariBank · QR Ph
                     </span>
                   </div>
 
@@ -249,28 +234,28 @@ export function BillingClient({ user }: BillingClientProps) {
                     <div>
                       <span className="inline-flex items-center gap-1.5 rounded-md bg-red-500/10 px-2 py-0.5 text-xs font-semibold text-red-400 border border-red-500/20 mb-1.5">
                         <Smartphone className="h-3.5 w-3.5" />
-                        <span>Instant Philippine Mobile Payment</span>
+                        <span>Instant E-Wallet Transfer</span>
                       </span>
                       <h4 className="text-lg sm:text-xl font-bold text-foreground">
                         Scan QR &bull; ₱62.78 / month
                       </h4>
                       <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                        Open <strong>GCash</strong>, <strong>Maya</strong>, <strong>BDO</strong>, <strong>BPI</strong>, <strong>UnionBank</strong>, or any mobile banking app supporting <strong>QR Ph / InstaPay</strong>.
+                        Open your <strong>MariBank</strong>, <strong>GCash</strong>, <strong>Maya</strong>, or any banking app supporting <strong>QR Ph</strong>.
                       </p>
                     </div>
 
                     <ol className="list-decimal list-inside space-y-1 text-xs text-foreground">
-                      <li>Scan the QR code with your phone camera or banking app.</li>
-                      <li>Send payment of <strong>₱62.78</strong>.</li>
+                      <li>Scan the QR code to send payment.</li>
+                      <li>Send exact amount of <strong>₱62.78</strong>.</li>
                       <li>Copy the <strong>Reference Number / Transaction ID</strong> from your receipt.</li>
-                      <li>Enter it below to activate your PRO account immediately.</li>
+                      <li>Enter it below to submit for admin approval.</li>
                     </ol>
 
                     {/* Reference Submission Form */}
                     <form onSubmit={handleSubmitReference} className="pt-2 space-y-3">
                       {refError && (
-                        <div className="rounded border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-800 dark:text-red-300 flex items-center gap-1.5">
-                          <AlertCircle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400" />
+                        <div className="rounded border border-red-500/30 bg-red-500/10 p-2 text-xs text-red-600 flex items-center gap-1.5">
+                          <AlertCircle className="h-4 w-4 shrink-0 text-red-500" />
                           <span>{refError}</span>
                         </div>
                       )}
@@ -281,7 +266,7 @@ export function BillingClient({ user }: BillingClientProps) {
                           required
                           value={referenceNumber}
                           onChange={(e) => setReferenceNumber(e.target.value)}
-                          placeholder="Enter InstaPay / GCash Reference No."
+                          placeholder="Enter 10-20 digit Reference No."
                           className="w-full sm:flex-1 rounded-lg border border-border bg-card px-3 py-2 text-xs text-foreground placeholder-zinc-500 focus:border-red-500 focus:outline-none"
                         />
                         <button
@@ -294,39 +279,13 @@ export function BillingClient({ user }: BillingClientProps) {
                           ) : (
                             <Check className="h-3.5 w-3.5" />
                           )}
-                          <span>Activate PRO</span>
+                          <span>Submit Reference</span>
                         </button>
                       </div>
                     </form>
                   </div>
                 </div>
               </div>
-            )}
-
-            {/* Option 2: Credit / Debit Card (Stripe) */}
-            {activePaymentMethod === "card" && (
-              <div className="rounded-xl border border-border bg-background p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div>
-                  <h4 className="text-base font-bold text-foreground flex items-center gap-2">
-                    <CreditCard className="h-4 w-4 text-red-400" />
-                    <span>Credit / Debit Card Checkout</span>
-                  </h4>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    International card processing via Stripe ($1.00 / month). Auto-renews monthly.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleStripeUpgrade}
-                  disabled={loading}
-                  className="w-auto min-w-[160px] max-w-[220px] self-start sm:self-auto flex items-center justify-center gap-2 rounded-lg bg-red-600 px-4 py-2 sm:px-5 sm:py-2.5 text-xs font-bold text-white hover:bg-red-500 transition-colors shadow-sm disabled:opacity-50 active:scale-95 shrink-0"
-                >
-                  {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-                  <span>Pay with Card ($1.00/mo)</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </button>
-              </div>
-            )}
           </div>
         )}
 
@@ -375,7 +334,7 @@ export function BillingClient({ user }: BillingClientProps) {
           </div>
 
           {/* Pro Tier Card */}
-          <div className="relative rounded-xl border border-red-500/40 bg-gradient-to-b from-red-50 to-background dark:from-red-950/20 dark:to-zinc-950/80 p-6 flex flex-col justify-between shadow-lg shadow-red-100 dark:shadow-red-950/20">
+          <div className="relative rounded-xl border border-red-500/40 bg-gradient-to-b from-red-500/10 to-background p-6 flex flex-col justify-between shadow-lg shadow-red-500/10">
             <div className="absolute -top-3 right-4 rounded-full bg-red-600 px-2.5 py-0.5 text-[10px] font-bold text-white tracking-wider uppercase">
               Recommended
             </div>
@@ -427,7 +386,7 @@ export function BillingClient({ user }: BillingClientProps) {
                 </button>
               ) : (
                 <span className="text-xs text-muted-foreground block text-center">
-                  Use QR Code or Card above to activate
+                  Use QR Code above to activate
                 </span>
               )}
             </div>

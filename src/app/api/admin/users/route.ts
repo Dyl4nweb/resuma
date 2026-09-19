@@ -18,6 +18,8 @@ export async function GET() {
       totalUsers,
       proUsers,
       freeUsers,
+      stripeProUsers,
+      manualProUsers,
       totalResumes,
       resumeViewsSum,
       dbSizeResult,
@@ -53,6 +55,8 @@ export async function GET() {
       prisma.user.count(),
       prisma.user.count({ where: { subscriptionTier: "PRO" } }),
       prisma.user.count({ where: { subscriptionTier: "FREE" } }),
+      prisma.user.count({ where: { subscriptionTier: "PRO", stripeSubscriptionId: { startsWith: "sub_" } } }),
+      prisma.user.count({ where: { subscriptionTier: "PRO", stripeSubscriptionId: { startsWith: "instapay_" } } }),
       prisma.resume.count(),
       prisma.resume.aggregate({
         _sum: {
@@ -109,6 +113,8 @@ export async function GET() {
       totalUsers,
       proUsers,
       freeUsers,
+      stripeProUsers,
+      manualProUsers,
       totalResumes,
       totalViews: resumeViewsSum._sum.viewsCount || 0,
       databaseSize: dbSizeResult[0]?.size || "Unknown",
