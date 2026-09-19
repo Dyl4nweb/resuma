@@ -17,7 +17,7 @@ export function HeroIntroSection({ user }: HeroIntroSectionProps) {
       className="py-20 sm:py-28 relative bg-gradient-to-b from-background via-muted/50 to-background overflow-hidden"
     >
       {/* Soft ambient center accent */}
-      <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-red-500/[0.08] dark:bg-red-600/[0.05] blur-[100px] rounded-full pointer-events-none -z-10" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-red-500/[0.08] dark:bg-red-600/[0.05] blur-[100px] rounded-full pointer-events-none -z-10" />
 
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
         {/* Modern Pill Badge */}

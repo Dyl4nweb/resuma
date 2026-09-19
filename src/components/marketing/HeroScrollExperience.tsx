@@ -76,22 +76,14 @@ export function HeroScrollExperience() {
 
             span.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`;
             span.style.opacity = curOp.toString();
-            if (!isMobileRef.current) {
-              span.style.filter = `blur(${curBlur.toFixed(2)}px)`;
-            } else {
-              span.style.filter = "none";
-            }
+            span.style.filter = `blur(${curBlur.toFixed(2)}px)`;
           });
 
           // Update dot directly
           if (dotRef.current) {
             dotRef.current.style.transform = `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`;
             dotRef.current.style.opacity = dotT.toString();
-            if (!isMobileRef.current) {
-              dotRef.current.style.filter = `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`;
-            } else {
-              dotRef.current.style.filter = "none";
-            }
+            dotRef.current.style.filter = `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`;
           }
 
           // Update scroll indicator directly
@@ -129,7 +121,7 @@ export function HeroScrollExperience() {
       >
         {/* Ambient Crimson Glow - Soft, deep, elegant backdrop */}
         <div
-          className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10"
         />
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
