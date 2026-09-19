@@ -15,8 +15,16 @@ const LETTER_CONFIG = [
 
 export function HeroScrollExperience() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const lettersRef = useRef<(HTMLSpanElement | null)[]>([]);
-  const dotRef = useRef<HTMLSpanElement>(null);
+  
+  // Use separate refs for the transform wrapper and the opacity crossfade targets
+  const letterWrappersRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const letterBlurryRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const letterSharpRef = useRef<(HTMLSpanElement | null)[]>([]);
+  
+  const dotWrapperRef = useRef<HTMLSpanElement>(null);
+  const dotBlurryRef = useRef<HTMLSpanElement>(null);
+  const dotSharpRef = useRef<HTMLSpanElement>(null);
+  
   const indicatorRef = useRef<HTMLDivElement>(null);
   
   const [isMobile, setIsMobile] = useState(false);
@@ -62,29 +70,35 @@ export function HeroScrollExperience() {
           
           const factor = isMobileRef.current ? 0.42 : 1.0;
 
-          // Update letters directly
+          // Update letters via CROSSFADE (0 layout thrashing)
           LETTER_CONFIG.forEach((item, idx) => {
-            const span = lettersRef.current[idx];
-            if (!span) return;
+            const wrapper = letterWrappersRef.current[idx];
+            const blurry = letterBlurryRef.current[idx];
+            const sharp = letterSharpRef.current[idx];
+            if (!wrapper || !blurry || !sharp) return;
             
             const curX = item.x * factor * (1 - letterT);
             const curY = item.y * factor * (1 - letterT);
             const curZ = item.z * (1 - letterT);
             const curRot = item.rot * (1 - letterT);
             const curOp = 0.45 + letterT * 0.55;
-            const curBlur = item.blur * (1 - letterT);
 
-            span.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`;
-            span.style.opacity = curOp.toString();
-            span.style.filter = `blur(${curBlur.toFixed(1)}px)`;
+            // Move the wrapper
+            wrapper.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`;
+            wrapper.style.opacity = curOp.toString();
+            
+            // Crossfade the inner spans
+            blurry.style.opacity = (1 - letterT).toString();
+            sharp.style.opacity = letterT.toString();
           });
 
-          // Update dot directly
-          if (dotRef.current) {
-            const dotT = easeOut(rawDotT);
-            dotRef.current.style.transform = `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`;
-            dotRef.current.style.opacity = dotT.toString();
-            dotRef.current.style.filter = `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(1)}px)`;
+          // Update dot via CROSSFADE
+          if (dotWrapperRef.current && dotBlurryRef.current && dotSharpRef.current) {
+            dotWrapperRef.current.style.transform = `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`;
+            dotWrapperRef.current.style.opacity = dotT.toString();
+            
+            dotBlurryRef.current.style.opacity = (1 - dotT).toString();
+            dotSharpRef.current.style.opacity = dotT.toString();
           }
 
           // Update scroll indicator directly
@@ -130,29 +144,59 @@ export function HeroScrollExperience() {
           className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center justify-center"
           style={{ transformStyle: "preserve-3d" }}
         >
-          <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[11.5rem] font-black tracking-tighter select-none inline-flex items-baseline justify-center cursor-default">
+          <h1 className="text-5xl xs:text-6xl sm:text-8xl md:text-9xl lg:text-[11.5rem] font-black tracking-tighter select-none flex items-baseline justify-center cursor-default">
             {LETTER_CONFIG.map((item, idx) => (
               <span
                 key={idx}
-                ref={(el) => { lettersRef.current[idx] = el; }}
+                ref={(el) => { letterWrappersRef.current[idx] = el; }}
                 style={{
-                  willChange: "transform, filter, opacity",
+                  willChange: "transform, opacity",
                   transformStyle: "preserve-3d",
                 }}
-                className="resuma-text-effect inline-block sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                className="relative inline-flex items-center justify-center"
               >
-                {item.char}
+                {/* BLURRY LAYER */}
+                <span
+                  ref={(el) => { letterBlurryRef.current[idx] = el; }}
+                  style={{ 
+                    filter: `blur(${item.blur}px)`,
+                    willChange: "opacity"
+                  }}
+                  className="absolute inset-0 resuma-text-effect sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                >
+                  {item.char}
+                </span>
+                
+                {/* SHARP LAYER */}
+                <span
+                  ref={(el) => { letterSharpRef.current[idx] = el; }}
+                  style={{ willChange: "opacity" }}
+                  className="relative resuma-text-effect sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                >
+                  {item.char}
+                </span>
               </span>
             ))}
 
             {/* Enlarged Red Square Box Dot - Focuses and snaps in cleanly on baseline */}
             <span
-              ref={dotRef}
+              ref={dotWrapperRef}
               style={{
-                willChange: "transform, filter, opacity",
+                willChange: "transform, opacity",
               }}
-              className="inline-block w-3.5 h-3.5 sm:w-6 sm:h-6 lg:w-9 lg:h-9 bg-[#dc2626] ml-1.5 sm:ml-3 lg:ml-4 rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)] align-baseline self-end mb-1 sm:mb-2.5 lg:mb-4 transition-[filter] duration-75"
-            />
+              className="relative inline-flex items-center justify-center w-3.5 h-3.5 sm:w-6 sm:h-6 lg:w-9 lg:h-9 ml-1.5 sm:ml-3 lg:ml-4 self-end mb-1 sm:mb-2.5 lg:mb-4"
+            >
+              <span 
+                ref={dotBlurryRef}
+                style={{ filter: "blur(5px)", willChange: "opacity" }}
+                className="absolute inset-0 bg-[#dc2626] rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)]" 
+              />
+              <span 
+                ref={dotSharpRef}
+                style={{ willChange: "opacity" }}
+                className="relative w-full h-full bg-[#dc2626] rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)]" 
+              />
+            </span>
           </h1>
         </div>
 
