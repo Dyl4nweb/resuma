@@ -1,5 +1,5 @@
 import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 
 export default function DashboardLoading() {
-  return <LoadingSpinner fullScreen={true} />;
+  return <LoadingSpinner fullScreen={true} fast={true} />;
 }

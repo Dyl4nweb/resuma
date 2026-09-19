@@ -3,12 +3,15 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export function LoadingSpinner({ fullScreen = true }: { fullScreen?: boolean }) {
+export function LoadingSpinner({ fullScreen = true, fast = false }: { fullScreen?: boolean; fast?: boolean }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith("/admin");
-  const [stage, setStage] = useState(0);
+  // If fast is true, jump directly to stage 3 (spinning circle)
+  const [stage, setStage] = useState(fast ? 3 : 0);
 
   useEffect(() => {
+    if (fast) return; // Skip all timers if fast
+
     // Stage 1: Wait 500ms, then fade out "R", leaving ONLY the dot.
     const t1 = setTimeout(() => setStage(1), 500);
     
@@ -23,7 +26,7 @@ export function LoadingSpinner({ fullScreen = true }: { fullScreen?: boolean }) 
       clearTimeout(t2);
       clearTimeout(t3);
     };
-  }, []);
+  }, [fast]);
 
   return (
     <div className={`${fullScreen ? "fixed inset-0 z-[9999]" : "w-full h-full min-h-[50vh] flex-1"} flex flex-col items-center justify-center bg-background pointer-events-none`}>
@@ -34,7 +37,7 @@ export function LoadingSpinner({ fullScreen = true }: { fullScreen?: boolean }) 
         <div className="relative flex items-center justify-center h-24 w-24">
           
           {/* The "R" Text with the REAL Square Box */}
-          <div className="absolute flex items-baseline justify-center font-black tracking-tighter text-6xl select-none origin-center -translate-x-2">
+          <div className={`absolute flex items-baseline justify-center font-black tracking-tighter text-6xl select-none origin-center -translate-x-2 ${fast ? "hidden" : ""}`}>
             <span 
               className={`text-foreground transition-all duration-[500ms] ease-in-out inline-block ${stage > 0 ? "opacity-0 -translate-x-4 scale-50" : "opacity-100 translate-x-0 scale-100"}`}
             >
@@ -98,7 +101,7 @@ export function LoadingSpinner({ fullScreen = true }: { fullScreen?: boolean }) 
 
         {/* Conditionally show Admin tag */}
         {isAdmin && (
-          <div className="mt-4 animate-fade-in-up">
+          <div className={`mt-4 animate-fade-in-up ${fast ? "hidden" : ""}`}>
             <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-500 text-xs font-bold tracking-widest uppercase border border-red-500/20 shadow-[0_0_10px_rgba(220,38,38,0.2)]">
               Admin
             </span>
