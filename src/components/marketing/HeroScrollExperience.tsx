@@ -85,7 +85,7 @@ export function HeroScrollExperience() {
       >
         {/* Ambient Crimson Glow - Soft, deep, elegant backdrop */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10"
+          className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10"
         />
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
@@ -104,16 +104,21 @@ export function HeroScrollExperience() {
               const curBlur = item.blur * (1 - letterT);
               const curOp = 0.45 + letterT * 0.55;
 
+              const style: React.CSSProperties = {
+                transform: `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`,
+                opacity: curOp,
+                willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
+                transformStyle: "preserve-3d",
+              };
+              
+              if (!isMobile) {
+                style.filter = `blur(${curBlur.toFixed(2)}px)`;
+              }
+
               return (
                 <span
                   key={idx}
-                  style={{
-                    transform: `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`,
-                    filter: `blur(${curBlur.toFixed(2)}px)`,
-                    opacity: curOp,
-                    willChange: "transform, filter, opacity",
-                    transformStyle: "preserve-3d",
-                  }}
+                  style={style}
                   className="resuma-text-effect inline-block sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
                 >
                   {item.char}
@@ -125,9 +130,9 @@ export function HeroScrollExperience() {
             <span
               style={{
                 transform: `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`,
-                filter: `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`,
+                filter: isMobile ? undefined : `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`,
                 opacity: dotT,
-                willChange: "transform, filter, opacity",
+                willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
               }}
               className="inline-block w-3.5 h-3.5 sm:w-6 sm:h-6 lg:w-9 lg:h-9 bg-[#dc2626] ml-1.5 sm:ml-3 lg:ml-4 rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)] align-baseline self-end mb-1 sm:mb-2.5 lg:mb-4 transition-[filter] duration-75"
             />
