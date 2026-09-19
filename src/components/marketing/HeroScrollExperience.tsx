@@ -71,19 +71,20 @@ export function HeroScrollExperience() {
             const curY = item.y * factor * (1 - letterT);
             const curZ = item.z * (1 - letterT);
             const curRot = item.rot * (1 - letterT);
-            const curBlur = item.blur * (1 - letterT);
             const curOp = 0.45 + letterT * 0.55;
+            const curBlur = item.blur * (1 - letterT);
 
             span.style.transform = `translate3d(${curX}px, ${curY}px, ${curZ}px) rotate(${curRot}deg)`;
             span.style.opacity = curOp.toString();
-            span.style.filter = `blur(${curBlur.toFixed(2)}px)`;
+            span.style.filter = `blur(${curBlur.toFixed(1)}px)`;
           });
 
           // Update dot directly
           if (dotRef.current) {
+            const dotT = easeOut(rawDotT);
             dotRef.current.style.transform = `translate3d(0, ${-55 * (1 - dotT)}px, 0) scale(${dotT > 0 ? 0.5 + dotT * 0.5 : 0})`;
             dotRef.current.style.opacity = dotT.toString();
-            dotRef.current.style.filter = `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(2)}px)`;
+            dotRef.current.style.filter = `blur(${Math.max(0, 5 * (1 - dotT)).toFixed(1)}px)`;
           }
 
           // Update scroll indicator directly
@@ -121,7 +122,7 @@ export function HeroScrollExperience() {
       >
         {/* Ambient Crimson Glow - Soft, deep, elegant backdrop */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10 transform-gpu"
         />
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
@@ -135,7 +136,7 @@ export function HeroScrollExperience() {
                 key={idx}
                 ref={(el) => { lettersRef.current[idx] = el; }}
                 style={{
-                  willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
+                  willChange: "transform, filter, opacity",
                   transformStyle: "preserve-3d",
                 }}
                 className="resuma-text-effect inline-block sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
@@ -148,7 +149,7 @@ export function HeroScrollExperience() {
             <span
               ref={dotRef}
               style={{
-                willChange: isMobile ? "transform, opacity" : "transform, filter, opacity",
+                willChange: "transform, filter, opacity",
               }}
               className="inline-block w-3.5 h-3.5 sm:w-6 sm:h-6 lg:w-9 lg:h-9 bg-[#dc2626] ml-1.5 sm:ml-3 lg:ml-4 rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)] align-baseline self-end mb-1 sm:mb-2.5 lg:mb-4 transition-[filter] duration-75"
             />

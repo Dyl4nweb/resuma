@@ -8,6 +8,7 @@ import Image from "next/image";
 import { FileText, ArrowRight, Loader2, AlertCircle, CheckCircle2 } from "lucide-react";
 import { validateStrictName } from "@/lib/validations/name";
 import { LegalModals, LegalModalType } from "@/components/legal/LegalModals";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -50,33 +51,27 @@ export default function RegisterPage() {
         throw new Error(registerData.error || "Failed to register account");
       }
 
-      // 2. Automatically log in
-      const signInRes = await signIn("credentials", {
-        email,
-        pin,
-        redirect: false,
-      });
-
-      if (signInRes?.error) {
-        // Redirect to login page if auto-sign in has issue
-        router.push("/login");
-      } else {
-        setIsRedirecting(true);
-        try {
-          localStorage.setItem(
-            "resuma_remembered_profile",
-            JSON.stringify({
-              email: email.toLowerCase().trim(),
-              name: validation.cleanedName,
-              hasPin: true,
-            })
-          );
-        } catch {
-          // Ignore localStorage errors
-        }
-        router.push("/dashboard");
-        router.refresh();
+      setIsRedirecting(true);
+      
+      // Save to localStorage so login page recognizes them
+      try {
+        localStorage.setItem(
+          "resuma_remembered_profile",
+          JSON.stringify({
+            email: email.toLowerCase().trim(),
+            name: validation.cleanedName,
+            hasPin: true,
+          })
+        );
+      } catch {
+        // Ignore localStorage errors
       }
+
+      // Small delay to show the loading animation before redirecting
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+
     } catch (err: unknown) {
       console.error(err);
       setError(err instanceof Error ? err.message : "An unexpected error occurred.");
@@ -85,29 +80,21 @@ export default function RegisterPage() {
     }
   };
 
-  if (isRedirecting) {
+  if (isRedirecting || loading) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col justify-center items-center px-4 relative overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="relative z-10 flex flex-col items-center text-center p-8 rounded-2xl border border-border bg-card backdrop-blur-xl shadow-2xl max-w-sm w-full">
-          <div className="text-4xl font-extrabold tracking-tight text-foreground mb-2">
-            Resuma<span className="text-[#dc2626]">.</span>
-          </div>
-          <p className="text-xs text-muted-foreground font-medium mb-6">
-            Account created! Initializing your workspace...
-          </p>
-          <div className="w-full h-1 bg-muted rounded-full overflow-hidden relative">
-            <div className="h-full w-full bg-gradient-to-r from-red-600 to-amber-500 rounded-full animate-indeterminate" />
-          </div>
-        </div>
+      <div className="min-h-screen bg-background flex flex-col justify-center items-center relative overflow-hidden">
+        <LoadingSpinner />
+        <p className="text-xs text-muted-foreground font-medium z-[10000] mt-32 absolute animate-pulse">
+          Account created! Redirecting to login...
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       {/* Brand Header */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+      <div className="mx-auto w-full max-w-md text-center">
         <Link href="/" className="inline-block group">
           <span className="text-3xl font-extrabold tracking-tight text-foreground">
             Resuma<span className="text-[#dc2626]">.</span>
@@ -128,7 +115,7 @@ export default function RegisterPage() {
       </div>
 
       {/* Form Card */}
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-8 mx-auto w-full max-w-md">
         <div className="rounded-2xl border border-border bg-card p-6 sm:p-8 shadow-xl backdrop-blur-md">
           {error && (
             <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 p-3 flex items-center gap-2 text-xs text-red-300">
