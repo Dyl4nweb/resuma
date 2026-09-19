@@ -254,7 +254,6 @@ div[role="status"] {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textShine 5s ease-in-out infinite;
-  display: inline-block;
   letter-spacing: -0.03em;
 }
 
