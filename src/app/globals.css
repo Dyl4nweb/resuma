@@ -254,7 +254,6 @@ div[role="status"] {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textShine 5s ease-in-out infinite;
   letter-spacing: -0.03em;
 }
 
@@ -335,5 +334,9 @@ div[role="status"] {
   
   .animate-fade-in-up {
     animation: fade-in-up 0.5s ease-out forwards;
+  }
+  
+  .animate-text-shine {
+    animation: textShine 5s ease-in-out infinite;
   }
 }

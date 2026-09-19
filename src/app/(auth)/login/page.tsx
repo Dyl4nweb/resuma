@@ -169,10 +169,10 @@ export default function LoginPage() {
                   type="button"
                   onClick={handleSwitchAccount}
                   title="Switch to another account"
-                  className="text-xs text-muted-foreground hover:text-red-400 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-border hover:border-border bg-card transition-colors"
+                  className="text-xs text-muted-foreground hover:text-red-400 flex items-center justify-center gap-1.5 w-8 h-8 sm:w-auto sm:h-auto sm:px-2.5 sm:py-1.5 rounded-lg border border-border hover:border-border bg-card transition-colors"
                 >
-                  <RotateCcw className="h-3 w-3" />
-                  <span>Switch</span>
+                  <RotateCcw className="h-4 w-4 sm:h-3 sm:w-3" />
+                  <span className="hidden sm:inline">Switch</span>
                 </button>
               </div>
 
