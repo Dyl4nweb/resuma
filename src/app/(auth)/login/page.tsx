@@ -266,26 +266,28 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setAuthMode("pin")}
-                  className={`flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-2 py-2 sm:py-2 rounded-lg text-xs font-semibold transition-all ${
                     authMode === "pin"
                       ? "bg-red-600 text-white shadow-sm"
                       : "text-muted-foreground hover:text-accent-foreground"
                   }`}
+                  title="Quick PIN"
                 >
-                  <KeyRound className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                  <span>Quick PIN</span>
+                  <KeyRound className="h-5 w-5 sm:h-3.5 sm:w-3.5" />
+                  <span className="hidden sm:inline">Quick PIN</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setAuthMode("password")}
-                  className={`flex items-center justify-center gap-1.5 sm:gap-2 py-1.5 sm:py-2 rounded-lg text-[11px] sm:text-xs font-semibold transition-all ${
+                  className={`flex items-center justify-center gap-2 py-2 sm:py-2 rounded-lg text-xs font-semibold transition-all ${
                     authMode === "password"
                       ? "bg-red-600 text-white shadow-sm"
                       : "text-muted-foreground hover:text-accent-foreground"
                   }`}
+                  title="Password"
                 >
-                  <Lock className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
-                  <span>Password</span>
+                  <Lock className="h-5 w-5 sm:h-3.5 sm:w-3.5" />
+                  <span className="hidden sm:inline">Password</span>
                 </button>
               </div>
 

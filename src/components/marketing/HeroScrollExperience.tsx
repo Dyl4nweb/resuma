@@ -134,9 +134,9 @@ export function HeroScrollExperience() {
         className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-background select-none"
         style={{ perspective: "1200px" }}
       >
-        {/* Ambient Crimson Glow - Soft, deep, elegant backdrop */}
+        {/* Ambient Crimson Glow - Fast radial gradient instead of heavy CSS blur */}
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[720px] sm:h-[380px] bg-red-600/[0.08] blur-[80px] sm:blur-[130px] rounded-full pointer-events-none -z-10 transform-gpu"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] sm:w-[800px] sm:h-[500px] bg-[radial-gradient(circle_at_center,_rgba(220,38,38,0.12)_0%,_transparent_70%)] rounded-full pointer-events-none -z-10"
         />
 
         {/* Central Assembling Stage: Monumental Resuma with Focus Hook */}
@@ -155,14 +155,14 @@ export function HeroScrollExperience() {
                 }}
                 className="relative inline-flex items-center justify-center"
               >
-                {/* BLURRY LAYER */}
+                {/* BLURRY LAYER - Hidden on mobile for 60fps performance */}
                 <span
                   ref={(el) => { letterBlurryRef.current[idx] = el; }}
                   style={{ 
                     filter: `blur(${item.blur}px)`,
                     willChange: "opacity"
                   }}
-                  className="absolute inset-0 resuma-text-effect sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
+                  className="hidden sm:inline-flex absolute inset-0 resuma-text-effect sm:drop-shadow-[0_4px_30px_rgba(255,255,255,0.22)]"
                 >
                   {item.char}
                 </span>
@@ -189,7 +189,7 @@ export function HeroScrollExperience() {
               <span 
                 ref={dotBlurryRef}
                 style={{ filter: "blur(5px)", willChange: "opacity" }}
-                className="absolute inset-0 bg-[#dc2626] rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)]" 
+                className="hidden sm:block absolute inset-0 bg-[#dc2626] rounded-none shadow-[0_0_18px_rgba(220,38,38,0.85)]" 
               />
               <span 
                 ref={dotSharpRef}
